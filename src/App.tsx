@@ -8,7 +8,7 @@ interface NasaPictureData {
 
 function App() {
 
-  const [picture, setPicture]=useState<string | null>(null)
+  const [picture, setPicture]=useState<string | undefined>(undefined)
 
    useEffect(() => { 
     const fetchPicture = async () => { 
