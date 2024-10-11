@@ -12,11 +12,11 @@ interface NasaPictureData {
 
 function App() {
   const [pictures, setPictures] = useState<NasaPictureData[]>([]);
-  const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]); // Updated to store JSX elements
+  const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);
 
   useEffect(() => { 
     const fetchData = async () => {
-      const downloadedPictures: NasaPictureData[]  = await fetchPicture(); // Ensure this is returning an array of NasaPictureData
+      const downloadedPictures: NasaPictureData[]  = await fetchPicture();
       setPictures(downloadedPictures);
     };
     fetchData();
@@ -33,7 +33,7 @@ function App() {
           <Image src={picture.hdurl} alt={picture.title} width='400px'/>
         </Flex>
       ));
-      setPictureRender(render); // Set the rendered JSX elements
+      setPictureRender(render);
     }
   }, [pictures]);
 
