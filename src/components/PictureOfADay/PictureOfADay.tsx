@@ -10,17 +10,23 @@ interface NasaPictureData {
   hdurl: string;
 }
 
-function PictureOfADay() {
+const PictureOfADay=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
-    
-    useEffect(() => { 
-      const fetchData = async () => {
-        const downloadedPictures: NasaPictureData[]  = await fetchPicture();
-        setPictures(downloadedPictures);
-        console.log(downloadedPictures)
-      };
-     
-      fetchData();
+  
+    useEffect(() => {
+        try {
+            fetchPicture()
+                .then(data => {
+                    setPictures(data)
+                    console.log(data)
+                })
+                .catch(error => {
+                    console.error("Error fetching gallery data:", error);
+                })
+        }
+        catch (error) {
+            console.error("Unexpected error:", error);
+        }
     }, []);
   
     return (

@@ -12,7 +12,7 @@ interface PictureRenderProps {
     pictures: Picture[];
 }
 
-function PictureRender({ pictures }: PictureRenderProps) {
+const PictureRender=({ pictures }: PictureRenderProps)=> {
     const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
