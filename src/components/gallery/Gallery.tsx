@@ -2,15 +2,7 @@ import { fetchGallery } from "../../hoocks/download";
 import { GalleryRender } from "./Render";
 import { useEffect, useState } from "react";
 import { Box, Flex} from "@chakra-ui/react";
-
-interface GalleryData {
-    collection: {
-        items: {
-            links: { href: string }[];
-            data: { title: string; nasa_id: string;  }[];
-        }[];
-    };
-}
+import { GalleryData } from "./GalleryData";
 
 const Gallery = () => {
     const [gallery, setGallery] = useState<GalleryData | null>(null);
@@ -18,7 +10,7 @@ const Gallery = () => {
 
     useEffect(() => {
         fetchGallery(text)
-            .then((data: GalleryData) => { // Użyj GalleryData
+            .then((data: GalleryData) => { 
                 setGallery(data);
                 console.log(data);
             })

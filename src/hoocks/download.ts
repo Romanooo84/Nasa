@@ -1,4 +1,5 @@
 import { token } from '../data/code'
+import { GalleryData } from '../components/gallery/GalleryData';
 
 interface NasaPictureData {
     url: string;
@@ -31,7 +32,7 @@ interface GalleryData {
     }
 };
 
-export const fetchGallery = async (text: string): Promise<GalleryData> => {
+export const fetchGallery = async (text: string) : Promise<GalleryData> => {
     const url = `https://images-api.nasa.gov/search?q=${text}`;
     try {
         const response = await fetch(url);

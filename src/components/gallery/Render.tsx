@@ -1,17 +1,10 @@
 import { useEffect, useState } from "react";
 import { Image, Button, Text } from "@chakra-ui/react";
+import { GalleryData } from "./GalleryData";
 
 interface GalleryRenderProps {
-    gallery: {
-        collection: {
-            items: {
-                links: { href: string }[]; // Linki do obrazów
-                data: { title: string; nasa_id: string }[]; // Informacje o obrazie
-                href: string; // Bezpośredni href
-            }[];
-        };
-    } | null; 
-    onButtonClick: (nasaId: string) => void; // Nasa ID do przekazania w onClick
+    gallery: GalleryData | null; // Użyj jednolitego typu
+    onButtonClick: (href: string) => void; // Nasa ID do przekazania w onClick
 }
 
 export const GalleryRender = ({ gallery, onButtonClick }: GalleryRenderProps) => {
