@@ -8,15 +8,6 @@ interface NasaPictureData {
     hdurl: string; // Make sure to include this property.
 }
 
-interface GalleryData {
-    collection: {
-        items: {
-            links: { href: string }[];
-            data: { title: string; nasa_id: string }[];
-        }[];
-    };
-}
-
   export const fetchPicture = async (): Promise<NasaPictureData[]> => {
     const url = `https://api.nasa.gov/planetary/apod?count=4&thumbs=true&api_key=${token}`;
     try {

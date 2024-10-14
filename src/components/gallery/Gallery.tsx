@@ -21,7 +21,6 @@ const Gallery = () => {
 
      const handleButtonClick = (href: string) => {
         console.log("Button clicked with NASA ID:", href);
-        // Add any additional logic you want to perform on button click
     };
 
 
