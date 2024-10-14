@@ -18,7 +18,7 @@ const Gallery = () => {
                 item: "",
                 itemType: null
             });
-    let text="moon"
+    const text="moon"
     useEffect(() => {
         fetchGallery(text)
             .then((data: GalleryData) => { 
@@ -28,7 +28,7 @@ const Gallery = () => {
             .catch(error => {
                 console.error("Error fetching gallery data:", error);
             });
-    }, []);
+    }, [text]);
 
      const handleButtonClick = (href: string) => {
         fetchGalleryItems(href)
