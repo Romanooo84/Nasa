@@ -24,14 +24,23 @@ export const GalleryRender = ({ gallery, onButtonClick }: GalleryRenderProps) =>
                             name={item.data[0].media_type}
                             height='400px'
                             width='400px'
-                            flexWrap='wrap'>
+                            flexWrap='wrap'
+                            backgroundColor='transparent'
+                           >
                             <Image 
                                 alt={item.data[0].title} 
                                 src={item.links[0].href} 
                                 width='300px' 
                                 height='300px'
+                                objectFit='contain'  
+                                background='black'
                             />
-                            <Text>{item.data[0].title}</Text>
+                            <Text 
+                            overflow='hidden'
+                            whiteSpace= 'wrap'
+                            >
+                                {item.data[0].title}
+                            </Text>
                             {item.data[0].media_type === 'video' ? (
                                 <Text><FaVideo /></Text>
                             ) : item.data[0].media_type === 'image' ? (
