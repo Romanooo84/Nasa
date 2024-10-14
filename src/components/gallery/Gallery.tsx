@@ -14,8 +14,10 @@ interface GalleryItem {
 const Gallery = () => {
     const [gallery, setGallery] = useState<GalleryData | null>(null);
     const [isModalOpen, setIsModalOpen]= useState<boolean>(false);
-    const [galleryItem, setGalleryItem]= useState<GalleryItem| null>(null);
-    const text = 'moon';
+    const [galleryItem, setGalleryItem]= useState<GalleryItem>({
+                item: "",
+                itemType: ""
+            });
 
     useEffect(() => {
         fetchGallery(text)
