@@ -55,7 +55,7 @@ export const GalleryRender = ({ gallery, onButtonClick }: GalleryRenderProps) =>
             });
             setRender(galleryMarkup.filter((item): item is JSX.Element => item !== null));
         }
-    }, [gallery]);
+    }, [gallery, onButtonClick]);
 
     return (
         <>{render}</> 

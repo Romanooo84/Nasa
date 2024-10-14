@@ -6,10 +6,15 @@ import { GalleryData } from "./GalleryData";
 import SearchBar from "./SearchBar";
 import ModalWindow from "../modal/modal";
 
+interface GalleryItem {
+    item: string
+    itemType: string
+}
+
 const Gallery = () => {
     const [gallery, setGallery] = useState<GalleryData | null>(null);
     const [isModalOpen, setIsModalOpen]= useState<boolean>(false);
-    const [galleryItem, setGalleryItem]= useState<any>(null);
+    const [galleryItem, setGalleryItem]= useState<GalleryItem| null>(null);
     const text = 'moon';
 
     useEffect(() => {
@@ -28,7 +33,7 @@ const Gallery = () => {
             .then((data: GalleryData | string[]) => { 
                 if (Array.isArray(data)) {
                     console.log(data)
-                    let type = data.filter((filtered) => {
+                    const type = data.filter((filtered) => {
                         if (filtered.endsWith('large.mp4') || filtered.endsWith('orig.mp4')) {
                               setGalleryItem({
                                     item: filtered,
