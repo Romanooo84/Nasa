@@ -6,4 +6,6 @@ export interface GalleryData {
             href: string; 
         }[];
     };
+    itemType: 'movie' | 'jpg'|null;
+    item: string;
 }

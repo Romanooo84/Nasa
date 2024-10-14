@@ -28,41 +28,43 @@ const Gallery = () => {
             .then((data: GalleryData | string[]) => { 
                 if (Array.isArray(data)) {
                     console.log(data)
-                    for (let i = 0; i < data.length; i++) {
-                        const type = data[i].split('~')[1];
-                        console.log(data[i]);
-                        if (type === 'large.mp4') {
-                            setGalleryItem({
-                                    item:data[i],
-                                    itemType:'movie'
-                                    }
+                    let type = data.filter((filtered) => {
+                        if (filtered.endsWith('large.mp4') || filtered.endsWith('orig.mp4') ) {
+                              setGalleryItem({
+                                    item: filtered,
+                                    itemType: 'movie'
+                                })
+                         }
+                     return
+                     });
+                    if (type&&type.length === 0) {
+                        for (let i = 0; i < data.length; i++) {
+                            const type = data[i].split('~')[1];
+                            
+                             if (type === 'large.jpg') {
+                                setGalleryItem({
+                                    item: data[i],
+                                    itemType: 'jpg'
+                                }
                                 );
-                            return;
-                        } else if (type === 'large.jpg') {
-                            setGalleryItem({
-                                item:data[i],
-                                itemType:'image'
+                                return;
+                            } else if (type === 'medium.jpg') {
+                                setGalleryItem({
+                                    item: data[i],
+                                    itemType: 'jpg'
                                 }
-                            );
-                            return;
-                        } else if (type === 'medium.jpg') {
-                            setGalleryItem({
-                                item:data[i],
-                                itemType:'image'
+                                );
+                                return;
+                            }
+                            else if (type === 'orig.jpg') {
+                                setGalleryItem({
+                                    item: data[i],
+                                    itemType: 'jpg'
                                 }
-                            );
-                            return;
+                                );
+                                return;
+                            }
                         }
-                        else if (type === 'orig.jpg') {
-                            setGalleryItem({
-                                item:data[i],
-                                itemType:'image'
-                                }
-                            );
-                            return;
-                        }
-
-                        
                     }
                 } else {
                     console.error("Data is not an array:", data);

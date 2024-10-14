@@ -34,7 +34,11 @@ export const fetchGallery = async (text: string) : Promise<GalleryData> => {
         return downloadedData; // Teraz zwraca pojedynczy obiekt GalleryData
     } catch (error) {
         console.error("Data error:", error);
-        return { collection: { items: [] } }; // Zwróć pusty obiekt zgodny z GalleryData
+        return {
+          collection: { items: [] },
+          itemType: null, 
+          item: ''
+      };
     }
 };
 
@@ -49,7 +53,11 @@ export const fetchGalleryItems = async(text: string) : Promise<GalleryData> =>{
           return downloadedData; // Teraz zwraca pojedynczy obiekt GalleryData
         } catch (error) {
             console.error("Data error:", error);
-            return { collection: { items: [] } }; // Zwróć pusty obiekt zgodny z GalleryData
+            return {
+              collection: { items: [] },
+              itemType: null, // lub 'movie', zależnie od kontekstu
+              item: ''
+           };
         }
 };
 
