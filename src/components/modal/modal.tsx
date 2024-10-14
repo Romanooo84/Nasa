@@ -14,13 +14,14 @@ const ModalWindow=({ setIsModalOpen, galleryItem, setGalleryItem }: ModalWindowP
 
     const onClick=()=>{
         setIsModalOpen(false) 
+        console.log(galleryItem)
         setGalleryItem('')
     }
 
     return(
         <Flex 
             justifyContent='center'
-            position='absolute'
+            position='fixed'
             width='100vw'
             height='100%'
             zIndex='2'
@@ -34,14 +35,16 @@ const ModalWindow=({ setIsModalOpen, galleryItem, setGalleryItem }: ModalWindowP
                 color='orange'
             >
                 {loading && <Spinner size="xl" color="blue.500" />}
+                {galleryItem && galleryItem.itemType==='movie'?(<div></div>):(
                 <Image
-                    src={galleryItem} 
+                    src={galleryItem.item} 
                     alt={'nasa pictures'}
                     width='80vw'
                     objectFit='contain'
                     onLoad={()=>setLoading(false)}
                     display={loading ? 'none' : 'block'}
-                />
+                />)
+            }
             </Flex> 
         </Flex>
     )

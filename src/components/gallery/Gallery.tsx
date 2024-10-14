@@ -9,8 +9,8 @@ import ModalWindow from "../modal/modal";
 const Gallery = () => {
     const [gallery, setGallery] = useState<GalleryData | null>(null);
     const [isModalOpen, setIsModalOpen]= useState<boolean>(false);
-    const [galleryItem, setGalleryItem]= useState<string>("");
-    const text = 'MARS';
+    const [galleryItem, setGalleryItem]= useState<any>(null);
+    const text = 'moon';
 
     useEffect(() => {
         fetchGallery(text)
@@ -27,16 +27,42 @@ const Gallery = () => {
         fetchGalleryItems(href)
             .then((data: GalleryData | string[]) => { 
                 if (Array.isArray(data)) {
+                    console.log(data)
                     for (let i = 0; i < data.length; i++) {
                         const type = data[i].split('~')[1];
                         console.log(data[i]);
-                        if (type === 'large.jpg') {
-                            setGalleryItem(data[i]);
+                        if (type === 'large.mp4') {
+                            setGalleryItem({
+                                    item:data[i],
+                                    itemType:'movie'
+                                    }
+                                );
+                            return;
+                        } else if (type === 'large.jpg') {
+                            setGalleryItem({
+                                item:data[i],
+                                itemType:'image'
+                                }
+                            );
                             return;
                         } else if (type === 'medium.jpg') {
-                            setGalleryItem(data[i]);
+                            setGalleryItem({
+                                item:data[i],
+                                itemType:'image'
+                                }
+                            );
                             return;
                         }
+                        else if (type === 'orig.jpg') {
+                            setGalleryItem({
+                                item:data[i],
+                                itemType:'image'
+                                }
+                            );
+                            return;
+                        }
+
+                        
                     }
                 } else {
                     console.error("Data is not an array:", data);
