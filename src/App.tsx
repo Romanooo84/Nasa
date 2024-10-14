@@ -1,6 +1,6 @@
 import PictureOfADay from "./components/PictureOfADay/PictureOfADay";
 import Gallery from "./components/gallery/Gallery";
-import { Box } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
 import backgroundImage from './media/GSFC_20171208_Archive_e000118~large.jpg'
 
 function App() {
@@ -20,10 +20,15 @@ function App() {
                 backgroundAttachment="fixed"
                 zIndex="-1"
             />
-              <Box >
+              <Flex 
+                justifyContent="space-evenly" 
+                wrap="wrap" 
+                m="0 auto" 
+                w="80vw "
+              >
                 <Gallery />
                 <PictureOfADay />
-            </Box>
+            </Flex>
         </Box>
   );
 }

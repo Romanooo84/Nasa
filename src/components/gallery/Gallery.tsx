@@ -29,14 +29,15 @@ const Gallery = () => {
                 if (Array.isArray(data)) {
                     console.log(data)
                     let type = data.filter((filtered) => {
-                        if (filtered.endsWith('large.mp4') || filtered.endsWith('orig.mp4') ) {
+                        if (filtered.endsWith('large.mp4') || filtered.endsWith('orig.mp4')) {
                               setGalleryItem({
                                     item: filtered,
                                     itemType: 'movie'
                                 })
                          }
-                     return
-                     });
+                     return(filtered)
+                    });
+                    console.log(type)
                     if (type&&type.length === 0) {
                         for (let i = 0; i < data.length; i++) {
                             const type = data[i].split('~')[1];
