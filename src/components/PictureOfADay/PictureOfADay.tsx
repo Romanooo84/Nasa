@@ -30,7 +30,7 @@ const PictureOfADay=() => {
     }, []);
   
     return (
-      <Flex>
+      <Flex flexDirection= 'column'>
         <Heading  as='h1' width='400px'>Do you know that...?</Heading>
         <PictureRender pictures={pictures} />
       </Flex> 

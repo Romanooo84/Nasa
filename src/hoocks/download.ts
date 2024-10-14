@@ -37,4 +37,20 @@ export const fetchGallery = async (text: string) : Promise<GalleryData> => {
         return { collection: { items: [] } }; // Zwróć pusty obiekt zgodny z GalleryData
     }
 };
-  
+
+export const fetchGalleryItems = async(text: string) : Promise<GalleryData> =>{
+      const url = `${text}`;
+      try {
+          const response = await fetch(url);
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const downloadedData: GalleryData = await response.json(); // Zmieniono na GalleryData
+          return downloadedData; // Teraz zwraca pojedynczy obiekt GalleryData
+        } catch (error) {
+            console.error("Data error:", error);
+            return { collection: { items: [] } }; // Zwróć pusty obiekt zgodny z GalleryData
+        }
+};
+
+
