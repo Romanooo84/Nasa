@@ -6,19 +6,19 @@ import { GalleryData } from "./GalleryData";
 import SearchBar from "./SearchBar";
 import ModalWindow from "../modal/modal";
 
-interface GalleryItem {
-    item: string
-    itemType: string
+interface GalleryItems {
+    item: string;
+    itemType: 'movie' | 'jpg' | null;
 }
 
 const Gallery = () => {
     const [gallery, setGallery] = useState<GalleryData | null>(null);
     const [isModalOpen, setIsModalOpen]= useState<boolean>(false);
-    const [galleryItem, setGalleryItem]= useState<GalleryItem>({
+    const [galleryItem, setGalleryItem]= useState<GalleryItems>({
                 item: "",
-                itemType: ""
+                itemType: null
             });
-
+    let text="moon"
     useEffect(() => {
         fetchGallery(text)
             .then((data: GalleryData) => { 
