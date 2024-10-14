@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchPicture } from '../../hoocks/download';
-import { Heading } from "@chakra-ui/react"
+import { Heading, Flex } from "@chakra-ui/react"
 import PictureRender from './render';
 
 interface NasaPictureData {
@@ -30,10 +30,10 @@ const PictureOfADay=() => {
     }, []);
   
     return (
-      <div>
+      <Flex>
         <Heading  as='h1' width='400px'>Do you know that...?</Heading>
         <PictureRender pictures={pictures} />
-      </div> 
+      </Flex> 
     );
   }
   
