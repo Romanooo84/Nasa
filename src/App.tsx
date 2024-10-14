@@ -1,5 +1,5 @@
 import PictureOfADay from "./components/PictureOfADay/PictureOfADay";
-import Gallery from "./components/gallery/gallery";
+import Gallery from "./components/gallery/Gallery";
 import { Box} from "@chakra-ui/react"
 
 function App() {
