@@ -85,9 +85,14 @@ const Gallery = () => {
     return (
         <Box>
             {isModalOpen && <ModalWindow setIsModalOpen={setIsModalOpen} galleryItem={galleryItem} setGalleryItem={setGalleryItem}/>}
-            <Flex display="flex" flexWrap='wrap'>
-                <SearchBar setGallery={setGallery}></SearchBar>
-                <GalleryRender gallery={gallery} onButtonClick={handleButtonClick} />
+            <Flex 
+                display="flex" 
+                flexWrap='wrap'
+                justifyContent="center"
+                gap='50px'
+                >
+                    <SearchBar setGallery={setGallery}></SearchBar>
+                    <GalleryRender gallery={gallery} onButtonClick={handleButtonClick} />
             </Flex>
             
         </Box>
