@@ -1,5 +1,5 @@
 import { token } from '../data/code'
-import { GalleryData } from '../components/gallery/GalleryData';
+import { GalleryData} from '../components/gallery/GalleryData';
 
 interface NasaPictureData {
     url: string;
@@ -36,8 +36,6 @@ export const fetchGallery = async (text: string) : Promise<GalleryData> => {
         console.error("Data error:", error);
         return {
           collection: { items: [] },
-          itemType: null, 
-          item: ''
       };
     }
 };
@@ -54,9 +52,7 @@ export const fetchGalleryItems = async(text: string) : Promise<GalleryData> =>{
         } catch (error) {
             console.error("Data error:", error);
             return {
-              collection: { items: [] },
-              itemType: null, // lub 'movie', zależnie od kontekstu
-              item: ''
+              collection: { items: [] }
            };
         }
 };
