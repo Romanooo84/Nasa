@@ -1,6 +1,7 @@
 import { Flex, Button, Image, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { GalleryItems} from "../gallery/GalleryData";
+import { GalleryItems } from "../gallery/GalleryData";
+import ReactPlayer from 'react-player'
 
 interface ModalWindowProps {
     setIsModalOpen: (isOpen: boolean) => void;
@@ -30,7 +31,7 @@ const ModalWindow = ({ setIsModalOpen, galleryItem, setGalleryItem }: ModalWindo
             width="100vw"
             height="100vh"
             zIndex="2"
-            background="rgba(0,0,0,0.5)" 
+            background="rgba(0,0,0,0.97)" 
             top="0"
             left="0"
         >
@@ -67,10 +68,15 @@ const ModalWindow = ({ setIsModalOpen, galleryItem, setGalleryItem }: ModalWindo
                 )}
                 
                 {galleryItem && galleryItem.itemType === 'movie' && (
-                         <video controls width="80%" style={{ display: loading ? "none" : "block" }} onCanPlayThrough={() => setLoading(false)}>
-                <source src={galleryItem.item} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+                    <ReactPlayer 
+                        url={galleryItem.item}
+                        playing={true}
+                        controls={true}
+                        loop={true}
+                        volume={0.8}
+                        width="80%"
+                        height="80%"
+                        objectFit="contain"/>
                 )}
             </Flex>
         </Flex>
