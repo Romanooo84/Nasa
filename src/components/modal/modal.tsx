@@ -1,11 +1,11 @@
 import { Flex, Button, Image, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { GalleryData } from "../gallery/GalleryData";
+import { GalleryItems} from "../gallery/GalleryData";
 
 interface ModalWindowProps {
     setIsModalOpen: (isOpen: boolean) => void;
-    setGalleryItem: (item: string) => void;
-    galleryItem: GalleryData | null;
+    setGalleryItem: (item: GalleryItems) => void;  
+    galleryItem: GalleryItems | null;  
 }
 
 const ModalWindow = ({ setIsModalOpen, galleryItem, setGalleryItem }: ModalWindowProps) => {
@@ -13,7 +13,7 @@ const ModalWindow = ({ setIsModalOpen, galleryItem, setGalleryItem }: ModalWindo
 
     const onClick = () => {
         setIsModalOpen(false);
-        setGalleryItem('');
+        setGalleryItem({ item: '', itemType: null });
     };
 
     useEffect(() => {
