@@ -6,10 +6,7 @@ export interface GalleryData {
             href: string; 
         }[];
     };
-    galleryItem:{
-        itemType: 'movie' | 'jpg'|null;
-        item: string;
-    }
+    galleryItem: GalleryItems;  // Używamy GalleryItems do reprezentacji tego pola
 }
 
 export interface GalleryItems {
