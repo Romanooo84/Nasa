@@ -30,7 +30,7 @@ const ModalWindow = ({ setIsModalOpen, galleryItem, setGalleryItem }: ModalWindo
             width="100vw"
             height="100vh"
             zIndex="2"
-            background="rgba(0,0,0,0.5)" // adds background overlay
+            background="rgba(0,0,0,0.5)" 
             top="0"
             left="0"
         >
