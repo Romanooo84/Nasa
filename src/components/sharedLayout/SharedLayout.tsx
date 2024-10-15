@@ -1,4 +1,4 @@
-import Header  from "../header/HEADER"
+import Header  from "../header/Header"
 import Footer from "../footer/Footer"
 import { Outlet } from "react-router-dom";
 import { Box, Flex } from "@chakra-ui/react"
