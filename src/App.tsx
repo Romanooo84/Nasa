@@ -1,7 +1,7 @@
 import PictureOfADay from "./components/PictureOfADay/PictureOfADay";
 import Gallery from "./components/gallery/Gallery";
 import SharedLayout from "./components/sharedLayout/SharedLayout";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 
 
 
