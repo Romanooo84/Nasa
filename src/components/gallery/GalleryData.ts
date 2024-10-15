@@ -6,7 +6,6 @@ export interface GalleryData {
             href: string; 
         }[];
     };
-    galleryItem: GalleryItems;  // Używamy GalleryItems do reprezentacji tego pola
 }
 
 export interface GalleryItems {

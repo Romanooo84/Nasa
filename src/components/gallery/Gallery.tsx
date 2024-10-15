@@ -11,10 +11,10 @@ import ModalWindow from "../modal/modal";
 const Gallery = () => {
     const [gallery, setGallery] = useState<GalleryData | null>(null);
     const [isModalOpen, setIsModalOpen]= useState<boolean>(false);
-    const [galleryItem, setGalleryItem]= useState<GalleryItems>({
-                item: "",
-                itemType: null
-            });
+    const [galleryItem, setGalleryItem] = useState<GalleryItems>({
+            item: '',
+            itemType: null,
+        });
     const text="moon"
     useEffect(() => {
         fetchGallery(text)
