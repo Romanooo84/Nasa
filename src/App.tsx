@@ -10,7 +10,7 @@ function App() {
   return (
     <Routes>
       <Route path="/Nasa/" element={<SharedLayout />}>
-        <Route path="/Nasa/pictureofaday" element={<PictureOfADay />}></Route>
+        <Route path="/Nasa/home" element={<PictureOfADay />}></Route>
         <Route path="/Nasa/gallery" element={<Gallery/>}></Route>
       </Route>
     </Routes>
