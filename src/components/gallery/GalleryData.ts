@@ -11,3 +11,8 @@ export interface GalleryData {
         item: string;
     }
 }
+
+export interface GalleryItems {
+    item: string;
+    itemType: 'movie' | 'jpg' | null;
+}

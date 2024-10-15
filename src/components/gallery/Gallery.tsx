@@ -2,14 +2,11 @@ import { fetchGallery, fetchGalleryItems  } from "../../hoocks/download";
 import { GalleryRender } from "./Render";
 import { useEffect, useState } from "react";
 import { Box, Flex} from "@chakra-ui/react";
-import { GalleryData } from "./GalleryData";
+import { GalleryData, GalleryItems } from "./GalleryData";
 import SearchBar from "./SearchBar";
 import ModalWindow from "../modal/modal";
 
-interface GalleryItems {
-    item: string;
-    itemType: 'movie' | 'jpg' | null;
-}
+
 
 const Gallery = () => {
     const [gallery, setGallery] = useState<GalleryData | null>(null);
