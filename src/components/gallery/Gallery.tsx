@@ -30,16 +30,16 @@ const Gallery = () => {
      const handleButtonClick = (href: string) => {
         fetchGalleryItems(href)
             .then((data: GalleryData | string[]) => { 
+                console.log(data    )
                 if (Array.isArray(data)) {
-                    console.log(data)
                     const type = data.filter((filtered) => {
                         if (filtered.endsWith('large.mp4') || filtered.endsWith('orig.mp4')) {
                               setGalleryItem({
                                     item: filtered,
                                     itemType: 'movie'
-                                })
+                              })
+                            return(filtered)
                          }
-                     return(filtered)
                     });
                     console.log(type)
                     if (type&&type.length === 0) {
