@@ -1,6 +1,6 @@
 
 import { GalleryData } from "./GalleryData";
-import { fetchGallery } from "../../hoocks/download";
+import { fetchGallery } from "../../../download";
 import { useState} from "react";
 import { Flex, Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react"
 import { IoSearch, } from "react-icons/io5";

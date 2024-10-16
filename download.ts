@@ -1,5 +1,5 @@
-import { token } from '../data/code'
-import { GalleryData} from '../components/gallery/GalleryData';
+import { token } from './src/data/code'
+import { GalleryData} from './src/components/gallery/GalleryData';
 
 interface NasaPictureData {
     url: string;
