@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchPicture } from '../../hoocks/download';
+import { fetchPicture } from '../../../download';
 import { Heading, Flex } from "@chakra-ui/react"
 import PictureRender from './render';
 

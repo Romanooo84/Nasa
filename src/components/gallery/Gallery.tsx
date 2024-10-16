@@ -1,4 +1,4 @@
-import { fetchGallery, fetchGalleryItems  } from "../../hoocks/download";
+import { fetchGallery, fetchGalleryItems  } from "../../../download";
 import { GalleryRender } from "./Render";
 import { useEffect, useState } from "react";
 import { Flex} from "@chakra-ui/react";
