@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { SiNasa } from "react-icons/si";
 import { Link} from "react-router-dom"
 
-let textColor='rgb(81 119 227)'
-let bgColor='black'
+const textColor='rgb(81 119 227)'
+const bgColor='black'
 
 export const Header = () => {
 

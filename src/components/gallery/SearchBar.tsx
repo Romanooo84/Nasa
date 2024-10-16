@@ -8,11 +8,12 @@ import { IoSearch, } from "react-icons/io5";
 interface SearchBarProps {
     setGallery: (data: GalleryData | null) => void;
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setNewSearch: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const mainColor = 'rgb(139 213 222)'
 
-const SearchBar =({ setGallery, setIsLoading }: SearchBarProps)=>{
+const SearchBar =({ setGallery, setIsLoading, setNewSearch }: SearchBarProps)=>{
     const [inputValue, setInputValue]=useState<string>("")
 
     const onClick=()=>{
@@ -20,6 +21,8 @@ const SearchBar =({ setGallery, setIsLoading }: SearchBarProps)=>{
         fetchGallery(inputValue)
         .then((data: GalleryData) => { 
             setGallery(data);
+            setNewSearch(true)
+            
         })
         .catch(error => {
             console.error("Error fetching gallery data:", error);

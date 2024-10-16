@@ -16,15 +16,16 @@ const Gallery = () => {
             itemType: null,
         });
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [newSearch, setNewSearch] = useState<boolean>(false);
     
     const text="moon"
     
     useEffect(() => {
         setIsLoading(true)
+        setNewSearch(true)
         fetchGallery(text)
             .then((data: GalleryData) => { 
                 setGallery(data)
-                setIsLoading(false)
             })
             .catch(error => {
                 console.error("Error fetching gallery data:", error);
@@ -85,9 +86,6 @@ const Gallery = () => {
         
     };
 
-    useEffect(()=>console.log(isLoading),[isLoading])
-
-
     return (
         <Flex 
             justifyContent="center"
@@ -100,8 +98,8 @@ const Gallery = () => {
                     alignItems='center'
                     gap='50px'
                 >
-                    <SearchBar setGallery={setGallery} setIsLoading={setIsLoading}/>
-                    <GalleryRender gallery={gallery} onButtonClick={handleButtonClick} isLoading={isLoading} setIsLoading={setIsLoading} />
+                <SearchBar setGallery={setGallery} setIsLoading={setIsLoading} setNewSearch={setNewSearch} />
+                    <GalleryRender gallery={gallery} onButtonClick={handleButtonClick} isLoading={isLoading} setIsLoading={setIsLoading} setNewSearch={setNewSearch} newSearch={newSearch} />
                 </Flex>
         </Flex>
     );
