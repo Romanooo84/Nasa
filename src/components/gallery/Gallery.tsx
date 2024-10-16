@@ -1,7 +1,7 @@
 import { fetchGallery, fetchGalleryItems  } from "../../hoocks/download";
 import { GalleryRender } from "./Render";
 import { useEffect, useState } from "react";
-import { Box, Flex} from "@chakra-ui/react";
+import { Flex} from "@chakra-ui/react";
 import { GalleryData, GalleryItems } from "./GalleryData";
 import SearchBar from "./SearchBar";
 import ModalWindow from "../modal/modal";
@@ -15,19 +15,24 @@ const Gallery = () => {
             item: '',
             itemType: null,
         });
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    
     const text="moon"
+    
     useEffect(() => {
+        setIsLoading(true)
         fetchGallery(text)
             .then((data: GalleryData) => { 
-                setGallery(data);
-                console.log(data);
+                setGallery(data)
+                setIsLoading(false)
             })
             .catch(error => {
                 console.error("Error fetching gallery data:", error);
-            });
+            });  
     }, [text]);
 
      const handleButtonClick = (href: string) => {
+        
         fetchGalleryItems(href)
             .then((data: GalleryData | string[]) => { 
                 console.log(data    )
@@ -79,23 +84,28 @@ const Gallery = () => {
                 console.error("Error fetching gallery data:", error);
             });
         setIsModalOpen(true)
+        
     };
+
+    useEffect(()=>console.log(isLoading),[isLoading])
 
 
     return (
-        <Box>
+        <Flex 
+            justifyContent="center"
+            >
             {isModalOpen && <ModalWindow setIsModalOpen={setIsModalOpen} galleryItem={galleryItem} setGalleryItem={setGalleryItem}/>}
-            <Flex 
-                display="flex" 
-                flexWrap='wrap'
-                justifyContent="center"
-                gap='50px'
+                <Flex 
+                    display="flex" 
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems='center'
+                    gap='50px'
                 >
-                    <SearchBar setGallery={setGallery}></SearchBar>
-                    <GalleryRender gallery={gallery} onButtonClick={handleButtonClick} />
-            </Flex>
-            
-        </Box>
+                    <SearchBar setGallery={setGallery} setIsLoading={setIsLoading}/>
+                    <GalleryRender gallery={gallery} onButtonClick={handleButtonClick} isLoading={isLoading} setIsLoading={setIsLoading} />
+                </Flex>
+        </Flex>
     );
 }
 
