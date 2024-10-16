@@ -18,11 +18,25 @@ const ColorBackground = "black"
 
 export const GalleryRender = ({ gallery, isLoading, setIsLoading, onButtonClick }: GalleryRenderProps) => {
     const [render, setRender] = useState<JSX.Element[]>([]);
+    const [quee, setQuee]=useState<number>(0)
+
+    const onLoadImage=()=>{
+        if(quee===0){
+            setIsLoading(false)
+            console.log("stop Loading")}
+        const value=quee-1
+        console.log(value)
+        setQuee(value)
+    }
    
+    useEffect(()=>{
+        if(gallery?.collection)
+        setQuee(gallery.collection.items.length)
+    },[gallery]
+    )
 
     useEffect(() => {
         if (gallery?.collection) {
-            console.log(gallery.collection.items.length)
             const galleryMarkup = gallery.collection.items.map((item) => {
                 if (item.links && item.links.length > 0 && item.data && item.data.length > 0) {
                     return (
@@ -52,7 +66,7 @@ export const GalleryRender = ({ gallery, isLoading, setIsLoading, onButtonClick 
                                 objectFit='contain'  
                                 background={ColorBackground}
                                 border="none"
-                                onLoad
+                                onLoad={onLoadImage}
                             />
                             <Text 
                                 overflow='hidden'

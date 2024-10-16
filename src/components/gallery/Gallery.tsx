@@ -35,7 +35,6 @@ const Gallery = () => {
         
         fetchGalleryItems(href)
             .then((data: GalleryData | string[]) => { 
-                console.log(data    )
                 if (Array.isArray(data)) {
                     const type = data.filter((filtered) => {
                         if (filtered.endsWith('large.mp4') || filtered.endsWith('orig.mp4')) {
@@ -46,7 +45,6 @@ const Gallery = () => {
                             return(filtered)
                          }
                     });
-                    console.log(type)
                     if (type&&type.length === 0) {
                         for (let i = 0; i < data.length; i++) {
                             const type = data[i].split('~')[1];
