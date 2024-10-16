@@ -4,20 +4,25 @@ import { FaImage } from "react-icons/fa"
 import { FaVideo } from "react-icons/fa6";
 import { MdAudiotrack } from "react-icons/md";
 import { GalleryData } from "./GalleryData";
+import Loader from "../Loader/Loader";
 
 interface GalleryRenderProps {
     gallery: GalleryData | null; 
     onButtonClick: (href: string) => void; 
+    isLoading: boolean;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const mainColor = 'rgb(81 119 227)'
 const ColorBackground = "black"
 
-export const GalleryRender = ({ gallery, onButtonClick }: GalleryRenderProps) => {
+export const GalleryRender = ({ gallery, isLoading, setIsLoading, onButtonClick }: GalleryRenderProps) => {
     const [render, setRender] = useState<JSX.Element[]>([]);
+   
 
     useEffect(() => {
         if (gallery?.collection) {
+            console.log(gallery.collection.items.length)
             const galleryMarkup = gallery.collection.items.map((item) => {
                 if (item.links && item.links.length > 0 && item.data && item.data.length > 0) {
                     return (
@@ -28,6 +33,7 @@ export const GalleryRender = ({ gallery, onButtonClick }: GalleryRenderProps) =>
                             height='450px'
                             width='300px'
                             flexWrap='wrap'
+                            borderRadius='15px'
                             backgroundColor= {ColorBackground}
                             padding='0px'
                             flexDirection="column"
@@ -46,6 +52,7 @@ export const GalleryRender = ({ gallery, onButtonClick }: GalleryRenderProps) =>
                                 objectFit='contain'  
                                 background={ColorBackground}
                                 border="none"
+                                onLoad
                             />
                             <Text 
                                 overflow='hidden'
@@ -79,7 +86,10 @@ export const GalleryRender = ({ gallery, onButtonClick }: GalleryRenderProps) =>
             });
             setRender(galleryMarkup.filter((item): item is JSX.Element => item !== null));
         }
+        setIsLoading(false)
     }, [gallery, onButtonClick]);
+
+
 
     return (
         <Flex 
@@ -87,7 +97,14 @@ export const GalleryRender = ({ gallery, onButtonClick }: GalleryRenderProps) =>
             justifyContent="center"
             gap='50px'
             >
-                {render}
+            {!isLoading?(
+                    <>
+                        {render}
+                    </>
+                ):(
+                    <Loader/>
+                )}
+                
         </Flex> 
     );
 };

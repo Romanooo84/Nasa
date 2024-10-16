@@ -1,7 +1,7 @@
 import Header  from "../header/Header"
 import Footer from "../footer/Footer"
 import { Outlet } from "react-router-dom";
-import { Box, Flex } from "@chakra-ui/react"
+import { Box, Flex,} from "@chakra-ui/react"
 import backgroundImage from '../../media/PIA12835~orig.jpg'
 
 const SharedLayout=()=>{
@@ -19,15 +19,16 @@ const SharedLayout=()=>{
                 backgroundRepeat="no-repeat"
                 backgroundAttachment="fixed"
                 zIndex="-1"
+                minHeight='100Vh'
             />
             <Flex
              justifyContent="space-evenly" 
-             wrap="wrap" 
+             flexDirection= 'column' 
              m="0 auto" 
-             w="80vw ">
+             w='100%'>
                 <Header />
                     <main>
-                        <Outlet />
+                            <Outlet />
                     </main>
                 <Footer />
             </Flex>
