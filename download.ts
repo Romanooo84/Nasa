@@ -1,5 +1,5 @@
-import { token } from '../data/code'
-import { GalleryData} from '../components/gallery/GalleryData';
+import { token } from './src/data/code'
+import { GalleryData} from './src/components/gallery/GalleryData';
 
 interface NasaPictureData {
     url: string;
@@ -24,13 +24,14 @@ interface NasaPictureData {
 };
 
 export const fetchGallery = async (text: string) : Promise<GalleryData> => {
-    const url = `https://images-api.nasa.gov/search?q=${text}&keywords={text}`;
+    const url = `https://images-api.nasa.gov/search?keywords=${text}&q=${text}`;
     try {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const downloadedData: GalleryData = await response.json(); // Zmieniono na GalleryData
+      const downloadedData: GalleryData = await response.json(); // Zmieniono na GalleryData
+      console.log(downloadedData)
         return downloadedData; // Teraz zwraca pojedynczy obiekt GalleryData
     } catch (error) {
         console.error("Data error:", error);
