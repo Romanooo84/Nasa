@@ -11,32 +11,19 @@ interface GalleryRenderProps {
     onButtonClick: (href: string) => void; 
     isLoading: boolean;
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    newSearch: boolean;
+    setNewSearch: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const mainColor = 'rgb(81 119 227)'
 const ColorBackground = "black"
 
-export const GalleryRender = ({ gallery, isLoading, setIsLoading, onButtonClick }: GalleryRenderProps) => {
+export const GalleryRender = ({ gallery, isLoading, setIsLoading, newSearch, setNewSearch, onButtonClick }: GalleryRenderProps) => {
     const [render, setRender] = useState<JSX.Element[]>([]);
-    const [quee, setQuee]=useState<number>(0)
 
-    const onLoadImage=()=>{
-        if(quee===0){
-            setIsLoading(false)
-            console.log("stop Loading")}
-        const value=quee-1
-        console.log(value)
-        setQuee(value)
-    }
-   
-    useEffect(()=>{
-        if(gallery?.collection)
-        setQuee(gallery.collection.items.length)
-    },[gallery]
-    )
 
     useEffect(() => {
-        if (gallery?.collection) {
+        if (gallery?.collection && newSearch) {
             const galleryMarkup = gallery.collection.items.map((item) => {
                 if (item.links && item.links.length > 0 && item.data && item.data.length > 0) {
                     return (
@@ -66,7 +53,6 @@ export const GalleryRender = ({ gallery, isLoading, setIsLoading, onButtonClick 
                                 objectFit='contain'  
                                 background={ColorBackground}
                                 border="none"
-                                onLoad={onLoadImage}
                             />
                             <Text 
                                 overflow='hidden'
@@ -99,10 +85,11 @@ export const GalleryRender = ({ gallery, isLoading, setIsLoading, onButtonClick 
                 return null; 
             });
             setRender(galleryMarkup.filter((item): item is JSX.Element => item !== null));
+            setIsLoading(false)
+            setNewSearch(false)
         }
-        setIsLoading(false)
-    }, [gallery, onButtonClick]);
-
+        
+    }, [gallery, onButtonClick, setIsLoading, newSearch, setNewSearch]);
 
 
     return (

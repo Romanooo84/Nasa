@@ -24,13 +24,14 @@ interface NasaPictureData {
 };
 
 export const fetchGallery = async (text: string) : Promise<GalleryData> => {
-    const url = `https://images-api.nasa.gov/search?q=${text}`;
+    const url = `https://images-api.nasa.gov/search?keywords=${text}&q=${text}`;
     try {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const downloadedData: GalleryData = await response.json(); // Zmieniono na GalleryData
+      const downloadedData: GalleryData = await response.json(); // Zmieniono na GalleryData
+      console.log(downloadedData)
         return downloadedData; // Teraz zwraca pojedynczy obiekt GalleryData
     } catch (error) {
         console.error("Data error:", error);
