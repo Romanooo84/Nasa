@@ -1,12 +1,8 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-//import eslintPlugin from 'vite-plugin-eslint';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/Nasa/',
-  plugins: [
-    react(),
-    //eslintPlugin() // Dodaj ESLint do tablicy plugins
-  ],
-});
+  base: '/Nasa/',  
+  plugins: [react()],
+})
