@@ -32,6 +32,7 @@ const SearchBar =({ setGallery, setIsLoading, setNewSearch }: SearchBarProps)=>{
     return(
         <Flex 
             width="20vw"
+            minWidth='300px'
             boxShadow= '0px 5px 15px 3px rgb(116 124 216 / 71%)'
             transition="transform 0.5s ease-in-out" 
             _hover={{ transform: "scale(1.05)" }}  

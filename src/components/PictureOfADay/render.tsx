@@ -18,12 +18,17 @@ const PictureRender=({ pictures }: PictureRenderProps)=> {
     useEffect(() => {
         if (pictures.length > 0) {
             const render = pictures.map((picture, index) => (
-                <Flex display="flex" key={index} marginBottom="20px">
-                    <Flex display="flex" flexDirection="column" marginRight="20px">
-                        <Heading as='h3' width='400px'>{picture.title}</Heading>
-                        <Text width='400px'>{picture.explanation}</Text>
+                <Flex display="flex" key={index} marginBottom="20px" flexWrap='wrap' justifyContent= 'center' gap='30px' >
+                    <Flex display="flex" flexDirection="column" gap='15px' alignItems='center' >
+                        <Heading as='h3' 
+                                width='400px'
+                                fontSize='30px'
+                                fontWeight='400'
+                                textAlign= 'center'
+                                >{picture.title}</Heading>
+                        <Text width='40vw' minWidth='360px'fontSize='20px' textAlign='justify'>{picture.explanation}</Text>
                     </Flex>
-                    <Image src={picture.url} alt={picture.title} width='400px' objectFit="contain"  />
+                    <Image src={picture.url} alt={picture.title} width='360px' objectFit="contain"  />
                 </Flex>
             ));
             setPictureRender(render); 
@@ -31,9 +36,9 @@ const PictureRender=({ pictures }: PictureRenderProps)=> {
     }, [pictures]); 
 
     return (
-        <Box>
+        <Flex  flexWrap='wrap' alignItems='center' justifyContent= 'center'>
             {pictureRender}
-        </Box>
+        </Flex>
     );
 }
 
