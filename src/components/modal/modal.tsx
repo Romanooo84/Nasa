@@ -60,7 +60,7 @@ const ModalWindow = ({ setIsModalOpen, galleryItem, setGalleryItem }: ModalWindo
                     <Image
                         src={galleryItem.item}
                         alt={'nasa pictures'}
-                        width="65vw"
+                        height='90vh'
                         objectFit="contain"
                         onLoad={() => setLoading(false)}
                         display={loading ? 'none' : 'block'}

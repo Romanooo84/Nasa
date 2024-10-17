@@ -20,12 +20,16 @@ const SharedLayout=()=>{
                 backgroundAttachment="fixed"
                 zIndex="-1"
                 minHeight='100Vh'
+                minWidth='360px'
             />
             <Flex
              justifyContent="space-evenly" 
              flexDirection= 'column' 
              m="0 auto" 
-             w='100%'>
+             w='100%'
+             maxWidth='1440px'
+             minWidth='360px'
+             padding='2vw'>
                 <Header />
                     <main>
                             <Outlet />

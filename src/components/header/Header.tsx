@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { SiNasa } from "react-icons/si";
 import { Link} from "react-router-dom"
 
-const textColor='rgb(81 119 227)'
-const bgColor='black'
+const textColor='rgb(112 127 150)'
+const bgColor='#3e6ebb70'
 
 export const Header = () => {
 
@@ -25,6 +25,7 @@ export const Header = () => {
                     _hover={{ bg: {bgColor}, transform: "scale(1.1)", boxShadow:'0px 4px 12px 2px rgb(116 124 216)'}}
                     fontWeight='700'
                     fontSize='1em'
+                    border='1px solid #a6b2c2'
                     
                 >   
                     {button.toUpperCase()}
@@ -37,8 +38,8 @@ export const Header = () => {
     return(
         <Flex
             justifyContent='space-between'
-            backgroundColor='#001bd447'
-            marginTop="40px"
+            backgroundColor='#090f3d00'
+            marginTop="20px"
             marginBottom='40px'
             paddingLeft='10vw'
             paddingRight='10vw'

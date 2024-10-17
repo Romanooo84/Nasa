@@ -99,7 +99,7 @@ const Gallery = () => {
                     gap='50px'
                 >
                 <SearchBar setGallery={setGallery} setIsLoading={setIsLoading} setNewSearch={setNewSearch} />
-                    <GalleryRender gallery={gallery} onButtonClick={handleButtonClick} isLoading={isLoading} setIsLoading={setIsLoading} setNewSearch={setNewSearch} newSearch={newSearch} />
+                <GalleryRender gallery={gallery} onButtonClick={handleButtonClick} isLoading={isLoading} setIsLoading={setIsLoading} setNewSearch={setNewSearch} newSearch={newSearch} />
                 </Flex>
         </Flex>
     );
