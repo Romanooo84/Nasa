@@ -1,5 +1,5 @@
 
-import { Box, Image, Text, Flex, Heading } from "@chakra-ui/react"
+import { Image, Text, Flex, Heading } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 
 interface Picture {
