@@ -1,5 +1,5 @@
 
-import { Box, Image, Text, Flex, Heading } from "@chakra-ui/react"
+import { Image, Text, Flex, Heading } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 
 interface Picture {
@@ -11,6 +11,7 @@ interface Picture {
 interface PictureRenderProps {
     pictures: Picture[];
 }
+
 
 const PictureRender=({ pictures }: PictureRenderProps)=> {
     const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);
