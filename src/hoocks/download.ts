@@ -5,7 +5,12 @@ interface NasaPictureData {
     url: string;
     title: string;
     explanation: string;
-    hdurl: string; // Make sure to include this property.
+    hdurl: string; 
+}
+
+interface PolimaticImageCamera{
+  image: string
+  date: string
 }
 
   export const fetchPicture = async (): Promise<NasaPictureData[]> => {
@@ -16,10 +21,10 @@ interface NasaPictureData {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const downloadedData: NasaPictureData[] = await response.json();
-      return downloadedData; // Upewnij się, że zwraca poprawny typ
+      return downloadedData; 
     } catch (error) {
       console.error("Data error:", error);
-      return []; // Zwróć pustą tablicę w przypadku błędu
+      return []; 
     }
 };
 
@@ -30,8 +35,8 @@ export const fetchGallery = async (text: string) : Promise<GalleryData> => {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const downloadedData: GalleryData = await response.json(); // Zmieniono na GalleryData
-        return downloadedData; // Teraz zwraca pojedynczy obiekt GalleryData
+        const downloadedData: GalleryData = await response.json(); 
+        return downloadedData; 
     } catch (error) {
         console.error("Data error:", error);
         return {
@@ -47,8 +52,8 @@ export const fetchGalleryItems = async(text: string) : Promise<GalleryData> =>{
           if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
           }
-          const downloadedData: GalleryData = await response.json(); // Zmieniono na GalleryData
-          return downloadedData; // Teraz zwraca pojedynczy obiekt GalleryData
+          const downloadedData: GalleryData = await response.json(); 
+          return downloadedData; 
         } catch (error) {
             console.error("Data error:", error);
             return {
@@ -57,4 +62,34 @@ export const fetchGalleryItems = async(text: string) : Promise<GalleryData> =>{
         }
 };
 
+export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]> =>{
+  const url = `https://epic.gsfc.nasa.gov/api/natural`; - //link from https://epic.gsfc.nasa.gov/about/api
+  console.log(url)
+  try {
+      const response = await fetch(url);
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const downloadedData: PolimaticImageCamera[] = await response.json();
+      return downloadedData; 
+    } catch (error) {
+        console.error("Data error:", error);
+        return []
+    }
+  }
 
+  export const fetchPICDate = async():Promise<PolimaticImageCamera[]> =>{
+    const url = `https://api.nasa.gov/EPIC/api/natural/all?api_key=${token}`;
+    console.log(url)
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const downloadedData: PolimaticImageCamera[] = await response.json();
+        return downloadedData; 
+      } catch (error) {
+          console.error("Data error:", error);
+          return []
+      }
+    }
