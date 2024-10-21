@@ -63,7 +63,7 @@ export const fetchGalleryItems = async(text: string) : Promise<GalleryData> =>{
 };
 
 export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]> =>{
-  const url = `https://epic.gsfc.nasa.gov/api/natural`; - //link from https://epic.gsfc.nasa.gov/about/api
+  const url = `https://epic.gsfc.nasa.gov/api/natural`;  //link from https://epic.gsfc.nasa.gov/about/api
   console.log(url)
   try {
       const response = await fetch(url);
