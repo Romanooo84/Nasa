@@ -11,3 +11,22 @@
     clip: rect(0 0 0 0);
     overflow: hidden;
   }
+
+  .earthImageDiv{
+    transition: none;
+    display: -webkit-inline-box;
+    transform: translate(0);
+    width: 500px;
+    border-radius: 50%;
+  }
+
+  .earthImage{
+    width: 500px;
+    height: 500px;
+    background-color: var(--bgcolour);
+    border-radius: 30px;
+    padding-top: 10px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scale: 1.5
+  }

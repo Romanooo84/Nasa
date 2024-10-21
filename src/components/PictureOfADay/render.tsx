@@ -19,25 +19,37 @@ const PictureRender=({ pictures }: PictureRenderProps)=> {
     useEffect(() => {
         if (pictures.length > 0) {
             const render = pictures.map((picture, index) => (
-                <Flex display="flex" key={index} marginBottom="20px" flexWrap='wrap' justifyContent= 'center' gap='30px' >
-                    <Flex display="flex" flexDirection="column" gap='15px' alignItems='center' >
-                        <Heading as='h3' 
-                                width='400px'
-                                fontSize='30px'
-                                fontWeight='400'
-                                textAlign= 'center'
-                                >{picture.title}</Heading>
-                        <Text width='40vw' minWidth='360px'fontSize='20px' textAlign='justify'>{picture.explanation}</Text>
-                    </Flex>
-                    <Image src={picture.url} alt={picture.title} width='360px' objectFit="contain"  />
-                </Flex>
+                <div key={index} style={{ overflow: 'hidden', marginBottom: '20px' }}>
+                    <Image 
+                        src={picture.url} 
+                        alt={picture.title} 
+                        width="360px" 
+                        objectFit="contain" 
+                        style={{ float: 'left', marginRight: '20px' }} // Obraz po lewej z marginesem
+                    />
+                    <div style={{ maxWidth: '550px' }}>
+                        <Heading 
+                            as="h3" 
+                            fontSize="30px" 
+                            fontWeight="400" 
+                            textAlign="left"
+                        >
+                            {picture.title}
+                        </Heading>
+                        <Text 
+                            fontSize="20px" 
+                            textAlign="justify"
+                        >
+                            {picture.explanation}
+                        </Text>
+                    </div>
+                </div>
             ));
-            setPictureRender(render); 
+            setPictureRender(render);
         }
-    }, [pictures]); 
-
+    }, [pictures]);
     return (
-        <Flex  flexWrap='wrap' alignItems='center' justifyContent= 'center'>
+        <Flex  flexDirection='column' alignItems='center' justifyContent= 'center'  width='800px'>
             {pictureRender}
         </Flex>
     );
