@@ -1,6 +1,7 @@
 
-import { Image, Text, Flex, Heading } from "@chakra-ui/react"
+import { Image, Text, Flex, Heading, Box } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
+import css from './PictureOfADay.module.css'
 
 interface Picture {
     title: string;
@@ -19,15 +20,26 @@ const PictureRender=({ pictures }: PictureRenderProps)=> {
     useEffect(() => {
         if (pictures.length > 0) {
             const render = pictures.map((picture, index) => (
-                <div key={index} style={{ overflow: 'hidden', marginBottom: '20px' }}>
+                <Box key={index}
+                    backgroundColor='#000000b3;'
+                    borderRadius='20px'
+                    padding='10px'
+                    margin='10px'
+                    className={css.pictureOfADay}
+                    minWidth={{ sm: '290px', md: '390px', lg: '490px', xl: '590px', '2xl': '780px' }}
+                    boxShadow='0px 0px 15px 5px rgb(116 124 216 / 71%)'
+                    height='400px'
+                    
+                    >
                     <Image 
                         src={picture.url} 
                         alt={picture.title} 
-                        width="360px" 
+                        width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '360px' }} 
                         objectFit="contain" 
-                        style={{ float: 'left', marginRight: '20px' }} // Obraz po lewej z marginesem
+                        float='left'
+                        marginRight='20px' 
                     />
-                    <div style={{ maxWidth: '550px' }}>
+                    <Box>
                         <Heading 
                             as="h3" 
                             fontSize="30px" 
@@ -39,17 +51,37 @@ const PictureRender=({ pictures }: PictureRenderProps)=> {
                         <Text 
                             fontSize="20px" 
                             textAlign="justify"
+                            
                         >
                             {picture.explanation}
                         </Text>
-                    </div>
-                </div>
+                    </Box>
+                </Box>
             ));
             setPictureRender(render);
         }
     }, [pictures]);
+
+    useEffect(() => {
+      if (pictures.length > 0) {
+        const intervalId = setInterval(() => {
+          const carouselContent = document.querySelector(`.${css.pictureOfADayDiv}`) as HTMLElement;
+          if (carouselContent && carouselContent.children.length > 0) {
+            const firstItem = carouselContent.children[0] as HTMLElement;
+            carouselContent.appendChild(firstItem);
+          }
+        }, 20000); 
+  
+        return () => clearInterval(intervalId);
+      }
+    }, [pictures]);
+
     return (
-        <Flex  flexDirection='column' alignItems='center' justifyContent= 'center'  width='800px'>
+        <Flex alignItems='flex-start' width={{ sm: '300px', md: '400px', lg: '500px', xl: '600px', '2xl': '800px' }}
+            className={css.pictureOfADayDiv}
+            overflow='hidden'
+            gap='30px'
+            >   
             {pictureRender}
         </Flex>
     );

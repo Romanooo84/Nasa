@@ -25,7 +25,9 @@ const PictureOfADay=() => {
                 const newDate=picture.date.replace(/-/g,'/').split(' ')[0]
                 const imageUrl=`https://epic.gsfc.nasa.gov/archive/natural/${newDate}/png/${picture.image}.png`
                 return <Flex key={index} overflow='hidden'>
-                  <Image width='500px' src={imageUrl} className={css.earthImage}/>
+                  <Image  width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
+                          src={imageUrl}
+                        className={css.earthImage} />
                 </Flex>
               })
                 setEarthPictures(newData)
@@ -78,12 +80,14 @@ const PictureOfADay=() => {
           fontFamily="Garamond"
           gap='40px'
           marginTop='10px'
-          justifyContent='center'
+        justifyContent='space-between'
+        flexDirection={{ sm: 'column', md: 'row' }}
+        
           
           >
           <Flex flexDirection='column'>
             <Heading  as='h1' 
-                      width='400px'
+                      width= {{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
                       fontWeight='600'
                       fontSize='40px'
                       >
@@ -91,11 +95,10 @@ const PictureOfADay=() => {
             </Heading>
             <PictureRender pictures={pictures} />
          </Flex>
-          <Box>
-            <Box className={css.earthImageDiv} overflow='hidden'>
+          <Box className={css.earthImageDiv} overflow='hidden'
+            width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}>
               {earthPictures}
             </Box>
-          </Box>
       </Flex> 
     );
   }

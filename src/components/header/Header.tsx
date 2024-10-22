@@ -1,4 +1,4 @@
-import { Button, Flex } from "@chakra-ui/react"
+import { Button, Flex, Box } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import { SiNasa } from "react-icons/si";
 import { Link} from "react-router-dom"
@@ -37,21 +37,25 @@ export const Header = () => {
 
     return(
         <Flex
-            justifyContent='space-between'
+            
             backgroundColor='#090f3d00'
             marginTop="20px"
             marginBottom='40px'
-            paddingLeft='10vw'
-            paddingRight='10vw'
             boxShadow= '0px 0px 50px 1px rgb(116 124 216 / 71%)'
             borderRadius='10px'
-            >
-            <SiNasa 
-                size='80px'
-                color={textColor}/>
-            <Flex alignItems='center'
-            gap='1vw'>
-                {render}
+            width='100%'
+            justifyContent='center'
+
+        >
+            <Flex width={{ sm: '320px', md: '740px', lg: '900px', xl: '1100px', '2xl': '1400px' }}
+                justifyContent='space-between'>
+                <SiNasa 
+                    size='80px'
+                    color={textColor}/>
+                <Flex alignItems='center'
+                    gap='1vw'>
+                    {render}
+                </Flex>
             </Flex>
         </Flex>
     )
