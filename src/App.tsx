@@ -10,8 +10,8 @@ function App() {
   return (
     <Routes>
       <Route path="/Nasa/" element={<SharedLayout />}>
-        <Route path="/Nasa/home" element={<PictureOfADay />}/>
-        <Route path="/Nasa/gallery" element={<Gallery/>}/>
+        <Route path="home" element={<PictureOfADay />}/>
+        <Route path="gallery" element={<Gallery/>}/>
       </Route>
     </Routes>
   )
