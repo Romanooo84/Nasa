@@ -27,7 +27,6 @@ const PictureRender=({ pictures }: PictureRenderProps)=> {
                     margin='10px'
                     className={css.pictureOfADay}
                     minWidth={{ sm: '290px', md: '390px', lg: '490px', xl: '590px', '2xl': '780px' }}
-                    boxShadow='0px 0px 15px 5px rgb(116 124 216 / 71%)'
                     height='400px'
                     
                     >
@@ -68,7 +67,13 @@ const PictureRender=({ pictures }: PictureRenderProps)=> {
           const carouselContent = document.querySelector(`.${css.pictureOfADayDiv}`) as HTMLElement;
           if (carouselContent && carouselContent.children.length > 0) {
             const firstItem = carouselContent.children[0] as HTMLElement;
-            carouselContent.appendChild(firstItem);
+            carouselContent.style.transition = 'transform 0.5s ease';
+            carouselContent.style.transform = `translateY(${firstItem.offsetWidth}px)`;
+            setTimeout(function() {
+                carouselContent.appendChild(firstItem);
+                carouselContent.style.transition = 'transform 0.5s ease';;
+                carouselContent.style.transform = 'translateY(0)';
+            }, 500);
           }
         }, 20000); 
   
@@ -77,6 +82,11 @@ const PictureRender=({ pictures }: PictureRenderProps)=> {
     }, [pictures]);
 
     return (
+        <Box overflow='hidden'
+        boxShadow='0px 0px 15px 5px rgb(116 124 216 / 71%)'
+        margin='10px'
+        borderRadius='20px'
+        backgroundColor='#040914cc'>
         <Flex alignItems='flex-start' width={{ sm: '300px', md: '400px', lg: '500px', xl: '600px', '2xl': '800px' }}
             className={css.pictureOfADayDiv}
             overflow='hidden'
@@ -84,6 +94,7 @@ const PictureRender=({ pictures }: PictureRenderProps)=> {
             >   
             {pictureRender}
         </Flex>
+        </Box>
     );
 }
 

@@ -48,7 +48,7 @@
     }
 
      .pictureOfADay::-webkit-scrollbar-thumb{
-      background-color: rgb(21, 132, 175);
+      background-color: rgba(21, 131, 175, 0.471);
       width: 10px;
       max-height: 5px;
       border-radius: 50%;
