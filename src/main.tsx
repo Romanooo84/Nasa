@@ -18,7 +18,7 @@ const theme = extendTheme({ breakpoints });
 
 
 createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/Nasa">
       <ChakraProvider theme={theme}>
         <App />
       </ChakraProvider>
