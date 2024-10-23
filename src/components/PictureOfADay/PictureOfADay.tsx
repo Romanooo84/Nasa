@@ -64,7 +64,7 @@ const PictureOfADay=() => {
             const firstItem = carouselContent.children[0] as HTMLElement;
             carouselContent.appendChild(firstItem);
           }
-        }, 1000); 
+        }, 200); 
   
         return () => clearInterval(intervalId);
       }
