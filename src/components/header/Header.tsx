@@ -8,7 +8,7 @@ const bgColor='#3e6ebb70'
 
 export const Header = () => {
 
-    const [buttonsList] = useState<string[]>(['home', 'gallery']);
+    const [buttonsList] = useState<string[]>(['home', 'gallery', 'wheather on mars']);
     const [render, setRender] = useState<JSX.Element[]>([]);
     
     
