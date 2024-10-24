@@ -87,7 +87,7 @@ const PictureOfADay=() => {
           >
           <Flex flexDirection='column'>
             <Heading  as='h1' 
-                      width= {{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
+                      minWidth={{ sm: '290px', md: '390px', lg: '490px', xl: '590px', '2xl': '780px' }}
                       fontWeight='600'
                       fontSize='40px'
                       >
@@ -96,7 +96,8 @@ const PictureOfADay=() => {
             <PictureRender pictures={pictures} />
          </Flex>
           <Box className={css.earthImageDiv} overflow='hidden'
-            width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}>
+          width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
+        marginTop='50px'>
               {earthPictures}
             </Box>
       </Flex> 

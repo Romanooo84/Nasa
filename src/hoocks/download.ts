@@ -1,5 +1,6 @@
 import { token } from '../data/code'
-import { GalleryData} from '../components/gallery/GalleryData';
+import { GalleryData } from '../components/gallery/GalleryData';
+import { createDate } from './createDate';
 
 interface NasaPictureData {
     url: string;
@@ -13,8 +14,15 @@ interface PolimaticImageCamera{
   date: string
 }
 
-  export const fetchPicture = async (): Promise<NasaPictureData[]> => {
-    const url = `https://api.nasa.gov/planetary/apod?count=4&thumbs=true&api_key=${token}`;
+export const fetchPicture = async (): Promise<NasaPictureData[]> => {
+    const today = new Date()
+    const yesterday = new Date(today)  
+    yesterday.setDate(today.getDate()-1)
+    const endDate = createDate(yesterday)
+    const sevenDayAgo = new Date(today)  
+    sevenDayAgo.setDate(today.getDate()-7)
+    const StartDate=createDate(sevenDayAgo)
+    const url = `https://api.nasa.gov/planetary/apod?start_date=${StartDate}&end_date=${endDate}&thumbs=true&api_key=${token}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {

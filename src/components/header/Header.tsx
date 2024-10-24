@@ -14,7 +14,7 @@ export const Header = () => {
     
     useEffect(() => {
         const markup = buttonsList.map((button, index) => (
-            <Link key={index} to={`/Nasa/${button}`}>
+            <Link key={index} to={`/${button}`}>
                 <Button
                     backgroundColor={bgColor}
                     boxShadow= '0px 3px 10px 1px rgb(116 124 216 / 71%)'

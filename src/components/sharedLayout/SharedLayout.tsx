@@ -21,8 +21,8 @@ const SharedLayout = () => {
                 backgroundRepeat="no-repeat"
                 backgroundAttachment="fixed"
                 zIndex="-100"
-                minHeight='100Vh'
-                minWidth='360px'
+                minHeight='110Vh'
+                minWidth='320px'
             />
             <Flex
                 justifyContent='center'
@@ -30,7 +30,7 @@ const SharedLayout = () => {
                 flexDirection= 'column' 
                  m="0 auto" 
                 w='100%'
-                minWidth='360px'  
+                minWidth='320px'  
                 paddingTop='40px'
             >
                 <Header />

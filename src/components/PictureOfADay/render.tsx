@@ -27,13 +27,13 @@ const PictureRender=({ pictures }: PictureRenderProps)=> {
                     margin='10px'
                     className={css.pictureOfADay}
                     minWidth={{ sm: '290px', md: '390px', lg: '490px', xl: '590px', '2xl': '780px' }}
-                    height='400px'
+                    height={{ sm: '60vh', md: '400px', lg: '400px', xl: '400px', '2xl': '400px' }}
                     
                     >
                     <Image 
                         src={picture.url} 
                         alt={picture.title} 
-                        width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '360px' }} 
+                        width={{ sm: '290px', md: '260px', lg: '260px', xl: '360px', '2xl': '360px' }} 
                         objectFit="contain" 
                         float='left'
                         marginRight='20px' 
