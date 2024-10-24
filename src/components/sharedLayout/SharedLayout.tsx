@@ -21,7 +21,7 @@ const SharedLayout = () => {
                 backgroundRepeat="no-repeat"
                 backgroundAttachment="fixed"
                 zIndex="-100"
-                minHeight='110Vh'
+                minHeight='120vh'
                 minWidth='320px'
             />
             <Flex

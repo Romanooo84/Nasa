@@ -68,7 +68,7 @@ const PictureRender=({ pictures }: PictureRenderProps)=> {
           if (carouselContent && carouselContent.children.length > 0) {
             const firstItem = carouselContent.children[0] as HTMLElement;
             carouselContent.style.transition = 'transform 0.5s ease';
-            carouselContent.style.transform = `translateY(${firstItem.offsetWidth}px)`;
+            carouselContent.style.transform = `translateY(${firstItem.offsetHeight}px)`;
             setTimeout(function() {
                 carouselContent.appendChild(firstItem);
                 carouselContent.style.transition = 'transform 0.5s ease';;

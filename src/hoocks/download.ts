@@ -16,9 +16,9 @@ interface PolimaticImageCamera{
 
 export const fetchPicture = async (): Promise<NasaPictureData[]> => {
     const today = new Date()
-    const yesterday = new Date(today)  
-    yesterday.setDate(today.getDate()-1)
-    const endDate = createDate(yesterday)
+    const twoDaysAgo = new Date(today)  
+    twoDaysAgo.setDate(today.getDate()-2)
+    const endDate = createDate(twoDaysAgo)
     const sevenDayAgo = new Date(today)  
     sevenDayAgo.setDate(today.getDate()-7)
     const StartDate=createDate(sevenDayAgo)
