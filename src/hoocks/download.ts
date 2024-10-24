@@ -14,6 +14,21 @@ interface PolimaticImageCamera{
   date: string
 }
 
+interface MarsPicture {
+  img_src: string;
+  sol: number;
+  camera: {
+      full_name: string;
+  };
+  rover: {
+      name: string;
+  };
+}
+
+interface MarsPicturesResponse {
+  photos: MarsPicture[];
+}
+
 export const fetchPicture = async (): Promise<NasaPictureData[]> => {
     const today = new Date()
     const twoDaysAgo = new Date(today)  
@@ -101,3 +116,19 @@ export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]>
           return []
       }
     }
+
+    export const pictureOfMars = async(date:string):Promise<MarsPicture[]> =>{
+      const url = `https://api.nasa.gov/mars-photos/api/v1/rovers/perseverance/photos?earth_date=${date}&api_key=${token}`;
+      console.log(url)
+      try {
+          const response = await fetch(url);
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const downloadedData: MarsPicturesResponse = await response.json();
+          return downloadedData.photos; 
+        } catch (error) {
+            console.error("Data error:", error);
+            return []
+        }
+      }
