@@ -9,7 +9,7 @@ const [marsPictures, setMarsPictures]=useState<JSX.Element[]>([])
 const [date, setDate] = useState<string | undefined>();
 
 useEffect(()=>{
-    let today=new Date()
+    const today=new Date()
     const twoDaysAgo = new Date(today)  
     twoDaysAgo.setDate(today.getDate()-2)
     const endDate = createDate(twoDaysAgo)
