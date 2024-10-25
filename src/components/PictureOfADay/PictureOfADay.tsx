@@ -73,7 +73,7 @@ const PictureOfADay=() => {
         }
     }, [startDate, endDate]);
 
-    /*useEffect(() => {
+    useEffect(() => {
       if (earthPictures.length > 0) {
         const intervalId = setInterval(() => {
           const carouselContent = document.querySelector(`.${css.earthImageDiv}`) as HTMLElement;
@@ -85,7 +85,7 @@ const PictureOfADay=() => {
   
         return () => clearInterval(intervalId);
       }
-    }, [earthPictures]);*/
+    }, [earthPictures])
 
 
 
