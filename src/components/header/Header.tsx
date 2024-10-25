@@ -1,4 +1,4 @@
-import { Button, Flex} from "@chakra-ui/react"
+import { Button, Flex, Text} from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import { SiNasa } from "react-icons/si";
 import { Link} from "react-router-dom"
@@ -8,7 +8,7 @@ const bgColor='#3e6ebb70'
 
 export const Header = () => {
 
-    const [buttonsList] = useState<string[]>(['home', 'gallery', 'wheather on mars']);
+    const [buttonsList] = useState<string[]>(['home', 'gallery', 'Mars Pictures']);
     const [render, setRender] = useState<JSX.Element[]>([]);
     
     
@@ -28,7 +28,7 @@ export const Header = () => {
                     border='1px solid #a6b2c2'
                     
                 >   
-                    {button.toUpperCase()}
+                    <Text whiteSpace='normal'>{button.toUpperCase()}</Text>
                 </Button>
             </Link>
         ));

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchPicture, fetchPolimaticImageCamera} from '../../hoocks/download'
 import { Heading, Flex, Image, Box } from "@chakra-ui/react"
+import { createDate } from '../../hoocks/createDate';
 import PictureRender from './render';
 import css from'./PictureOfADay.module.css'
 
@@ -15,6 +16,8 @@ interface NasaPictureData {
 const PictureOfADay=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
     const [earthPictures, setEarthPictures] = useState<JSX.Element[]>([]);
+    const [startDate, setStartDate] = useState<string>()
+    const [endDate, setEndDate]  = useState<string>()
 
 
     useEffect(()=>{
@@ -41,22 +44,36 @@ const PictureOfADay=() => {
       }
     },[]) 
 
+    useEffect(()=>{
+      const today = new Date()
+      const twoDaysAgo = new Date(today)  
+      twoDaysAgo.setDate(today.getDate()-2)
+      const endDate = createDate(twoDaysAgo)
+      setEndDate(endDate)
+      const sevenDayAgo = new Date(today)  
+      sevenDayAgo.setDate(today.getDate()-3)
+      const StartDate=createDate(sevenDayAgo)
+      console.log(StartDate)
+      setStartDate(StartDate)
+    },[])
+
     useEffect(() => {
         try {
-            fetchPicture()
+            if(startDate&&endDate){
+            fetchPicture(startDate, endDate)
                 .then(data => {
                     setPictures(data)
                 })
                 .catch(error => {
                     console.error("Error fetching gallery data:", error);
                 })
-        }
+        }}
         catch (error) {
             console.error("Unexpected error:", error);
         }
-    }, []);
+    }, [startDate, endDate]);
 
-    useEffect(() => {
+    /*useEffect(() => {
       if (earthPictures.length > 0) {
         const intervalId = setInterval(() => {
           const carouselContent = document.querySelector(`.${css.earthImageDiv}`) as HTMLElement;
@@ -68,7 +85,7 @@ const PictureOfADay=() => {
   
         return () => clearInterval(intervalId);
       }
-    }, [earthPictures]);
+    }, [earthPictures]);*/
 
 
 
@@ -81,13 +98,14 @@ const PictureOfADay=() => {
           gap='40px'
           marginTop='10px'
         justifyContent='space-between'
-        flexDirection={{ sm: 'column', md: 'row' }}
+        flexDirection={{ sm: 'column', md: 'column' }}
         
           
           >
-          <Flex flexDirection='column'>
+          <Flex flexDirection='column'
+          alignItems='center'>
             <Heading  as='h1' 
-                      minWidth={{ sm: '290px', md: '390px', lg: '490px', xl: '590px', '2xl': '780px' }}
+                      minWidth={{ sm: '290px', md: '390px', lg: '490px', xl: '590px', '2xl': '350px' }}
                       fontWeight='600'
                       fontSize='40px'
                       >
@@ -97,7 +115,7 @@ const PictureOfADay=() => {
          </Flex>
           <Box className={css.earthImageDiv} overflow='hidden'
           width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
-        marginTop='50px'>
+          marginTop='50px'>
               {earthPictures}
             </Box>
       </Flex> 

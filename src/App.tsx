@@ -13,7 +13,7 @@ function App() {
       <Route path="/" element={<SharedLayout />}>
         <Route path="/home" element={<PictureOfADay />}/>
         <Route path="/gallery" element={<Gallery/>}/>
-        <Route path="/wheather on mars" element={<PictureOfMars/>}/>
+        <Route path="/Mars Pictures" element={<PictureOfMars/>}/>
       </Route>
     </Routes>
   )
