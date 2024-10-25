@@ -1,6 +1,5 @@
 import { token } from '../data/code'
 import { GalleryData } from '../components/gallery/GalleryData';
-import { createDate } from './createDate';
 
 interface NasaPictureData {
     url: string;
@@ -29,14 +28,8 @@ interface MarsPicturesResponse {
   photos: MarsPicture[];
 }
 
-export const fetchPicture = async (): Promise<NasaPictureData[]> => {
-    const today = new Date()
-    const twoDaysAgo = new Date(today)  
-    twoDaysAgo.setDate(today.getDate()-2)
-    const endDate = createDate(twoDaysAgo)
-    const sevenDayAgo = new Date(today)  
-    sevenDayAgo.setDate(today.getDate()-7)
-    const StartDate=createDate(sevenDayAgo)
+export const fetchPicture = async (StartDate: string, endDate: string): Promise<NasaPictureData[]> => {
+   
     const url = `https://api.nasa.gov/planetary/apod?start_date=${StartDate}&end_date=${endDate}&thumbs=true&api_key=${token}`;
     try {
       const response = await fetch(url);
@@ -52,13 +45,14 @@ export const fetchPicture = async (): Promise<NasaPictureData[]> => {
 };
 
 export const fetchGallery = async (text: string) : Promise<GalleryData> => {
-    const url = `https://images-api.nasa.gov/search?q=${text}&keywords={text}`;
+    const url = `https://images-api.nasa.gov/search?q=${text}&keywords=${text}&description=${text}&description_508=${text}`;
     try {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const downloadedData: GalleryData = await response.json(); 
+        console.log(downloadedData)
         return downloadedData; 
     } catch (error) {
         console.error("Data error:", error);

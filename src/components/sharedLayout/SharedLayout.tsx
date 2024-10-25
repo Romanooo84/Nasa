@@ -8,7 +8,19 @@ const SharedLayout = () => {
     
 
     return(
-        <Flex justifyContent='center'>
+
+        <Flex >
+            <Box justifyContent='center'
+        backgroundColor='black'
+        position="absolute"
+        minHeight='120vh'
+        minWidth='320px'
+        zIndex="-101"
+        top="0"
+                left="0"
+                right="0"
+                bottom="0"/>
+                
              <Box 
                 position="absolute"
                 top="0"
@@ -23,6 +35,8 @@ const SharedLayout = () => {
                 zIndex="-100"
                 minHeight='120vh'
                 minWidth='320px'
+                opacity='0.15'
+                backgroundBlendMode= 'overlay'
             />
             <Flex
                 justifyContent='center'
