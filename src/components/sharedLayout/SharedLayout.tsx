@@ -4,17 +4,10 @@ import Home from '../Home/Home'
 import { Outlet, useLocation  } from "react-router-dom";
 import { Box, Flex,} from "@chakra-ui/react"
 import backgroundImage from '../../media/PIA12835~orig.jpg'
-import { useEffect } from "react";
 
 const SharedLayout = () => {
     const location = useLocation();
-    const { hash, pathname, search } = location;
-
-    useEffect(()=>{
-        console.log(pathname)
-        console.log(hash)
-        console.log(search)
-    },[])
+    const { pathname } = location;
 
     return(
 
