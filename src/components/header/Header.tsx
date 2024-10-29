@@ -1,14 +1,15 @@
-import { Button, Flex, Text} from "@chakra-ui/react"
+import { Button, Flex, Text, Box} from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import { SiNasa } from "react-icons/si";
 import { Link} from "react-router-dom"
+import logo from '../../media/pngegg.png'
 
 const textColor='rgb(112 127 150)'
 const bgColor='#3e6ebb70'
 
 export const Header = () => {
 
-    const [buttonsList] = useState<string[]>(['home', 'gallery', 'Mars Pictures']);
+    const [buttonsList] = useState<string[]>(['picture of a day', 'gallery', 'Mars Pictures']);
     const [render, setRender] = useState<JSX.Element[]>([]);
     
     
@@ -39,19 +40,43 @@ export const Header = () => {
         <Flex
             
             backgroundColor='#090f3d00'
+            backgroundImage={logo}
+            backgroundSize='400px'
+            backgroundPosition="center" // Center the image
+            backgroundRepeat="no-repeat"
             marginTop="20px"
             marginBottom='40px'
             boxShadow= '0px 0px 50px 1px rgb(116 124 216 / 71%)'
             borderRadius='10px'
             width='100%'
             justifyContent='center'
+            height='200px'
 
         >
             <Flex width={{ sm: '320px', md: '740px', lg: '900px', xl: '1100px', '2xl': '1400px' }}
-                justifyContent='space-between'>
-                <SiNasa 
-                    size='80px'
-                    color={textColor}/>
+                justifyContent='space-between'
+                alignContent='center'
+                alignItems='center'>
+                <Flex
+                alignItems='center'
+                 //flexDirection='column'
+                > 
+                <Flex
+                    width='128px'
+                    height='65px'
+                    overflow='hidden'
+                    alignItems='center'
+                    marginRight='10px'>  
+                    <SiNasa 
+                        size='150px'
+                        color={textColor}/>
+                </Flex>  
+                <Text fontSize='50px'
+                    color='#707f96'
+                    fontWeight='700'
+                    paddingBottom='5px'
+                    >Astro Explorer</Text>
+                </Flex>
                 <Flex alignItems='center'
                     gap='1vw'>
                     {render}
