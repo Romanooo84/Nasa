@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 
+
 type MarsPictureData = {
   img_src: string;
   sol: number;

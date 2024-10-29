@@ -56,12 +56,11 @@ const Home=() => {
     }, [pictureOfAday]);
 
     useEffect(()=>{
-      
       if(Array.isArray(marsPictures)){
         console.log(marsPictures)
         setPictures2(marsPictures)
       }
-    })
+    }, [marsPictures])
 
     useEffect(() => {
       if (earthPictures.length > 0) {

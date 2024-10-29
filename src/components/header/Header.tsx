@@ -1,4 +1,4 @@
-import { Button, Flex, Text, Box} from "@chakra-ui/react"
+import { Button, Flex, Text} from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import { SiNasa } from "react-icons/si";
 import { Link} from "react-router-dom"

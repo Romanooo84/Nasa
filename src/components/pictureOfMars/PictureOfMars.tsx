@@ -6,17 +6,8 @@ import { useData } from "../../hooks/DataContext";
 
 const PictureOfMars=()=>{
 const [pictures, setPictures]=useState<JSX.Element[]>([])
-//const [date, setDate] = useState<string | undefined>();
 const {Data}=useData()
 const {marsPictures}=Data
-
-/*useEffect(()=>{
-    let today=new Date()
-    const twoDaysAgo = new Date(today)  
-    twoDaysAgo.setDate(today.getDate()-2)
-    const endDate = createDate(twoDaysAgo)
-    setDate(endDate)
-},[])*/
 
 
 useEffect(() => {
