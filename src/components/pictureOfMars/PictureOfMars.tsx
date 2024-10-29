@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react"
-import { pictureOfMars } from "../../hoocks/download"
-import { createDate } from "../../hoocks/createDate"
+//import { createDate } from "../../hoocks/createDate"
 import { Box, Text, Image, Flex } from "@chakra-ui/react"
+import { useData } from "../../hooks/DataContext";
 
 
 const PictureOfMars=()=>{
-const [marsPictures, setMarsPictures]=useState<JSX.Element[]>([])
-const [date, setDate] = useState<string | undefined>();
+const [pictures, setPictures]=useState<JSX.Element[]>([])
+//const [date, setDate] = useState<string | undefined>();
+const {Data}=useData()
+const {marsPictures}=Data
 
-useEffect(()=>{
+/*useEffect(()=>{
     let today=new Date()
     const twoDaysAgo = new Date(today)  
     twoDaysAgo.setDate(today.getDate()-2)
     const endDate = createDate(twoDaysAgo)
     setDate(endDate)
-},[])
+},[])*/
 
 
 useEffect(() => {
-    if (date){
-    pictureOfMars(date) 
-        .then(data => {
-            const markup = data.map((item, index) => (
+    if (Array.isArray(marsPictures)){
+        console.log(marsPictures)
+            const markup = marsPictures.map((item, index) => (
                 <Box key={index}
                 color='white'>
                     <Image src={item.img_src} alt={`Mars on sol ${item.sol}`} />
@@ -32,13 +33,12 @@ useEffect(() => {
                     </Flex>
                 </Box>
             ));
-            setMarsPictures(markup);
-        });
-    }
-}, [date]);
+            setPictures(markup);
+        };
+    }, [marsPictures]);
 
     return(
-        <div>{marsPictures}</div>
+        <div>{pictures}</div>
     )
 }
 

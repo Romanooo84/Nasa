@@ -25,6 +25,14 @@
       transform: translate(0);
     }
 
+    .pictureOfADayDivMars {
+      transition: none;
+      display: -webkit-inline-box;
+      transform: translate(0);
+    }
+
+    
+
   .earthImage{
     background-color: var(--bgcolour);
     border-radius: 30px;
@@ -40,21 +48,7 @@
       overflow-y: auto;
     }
 
-    .pictureOfADay::-webkit-scrollbar{
-      background-color: rgba(37, 42, 51, 0.164);
-      width: 7px;
-      scroll-padding: 10px;
-      
-    }
 
-     .pictureOfADay::-webkit-scrollbar-thumb{
-      background-color: rgba(21, 131, 175, 0.471);
-      width: 10px;
-      max-height: 5px;
-      border-radius: 50%;
-      height: 10px;
-      
-    }
     
 
 

@@ -1,23 +1,27 @@
 import { useEffect, useState } from 'react';
-import { fetchPicture, fetchPolimaticImageCamera} from '../../hoocks/download'
+import { /*fetchPicture, */fetchPolimaticImageCamera} from '../../hooks/download'
 import { Heading, Flex, Image, Box } from "@chakra-ui/react"
-import { createDate } from '../../hoocks/createDate';
+//import { createDate } from '../../hoocks/createDate';
+import { useData } from '../../hooks/DataContext';
 import PictureRender from './render';
-import css from'./PictureOfADay.module.css'
+import css from'./Home.module.css'
 
 interface NasaPictureData {
   url: string;
   title: string;
   explanation: string;
   hdurl: string;
+  pictures:string
+  pictureOfAday: []
 }
 
 
-const PictureOfADay=() => {
+const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
+    const [pictures2, setPictures2] = useState<NasaPictureData[]>([]);
     const [earthPictures, setEarthPictures] = useState<JSX.Element[]>([]);
-    const [startDate, setStartDate] = useState<string>()
-    const [endDate, setEndDate]  = useState<string>()
+    const {Data}=useData()
+    const {pictureOfAday, marsPictures}=Data
 
 
     useEffect(()=>{
@@ -44,34 +48,20 @@ const PictureOfADay=() => {
       }
     },[]) 
 
-    useEffect(()=>{
-      const today = new Date()
-      const twoDaysAgo = new Date(today)  
-      twoDaysAgo.setDate(today.getDate()-2)
-      const endDate = createDate(twoDaysAgo)
-      setEndDate(endDate)
-      const sevenDayAgo = new Date(today)  
-      sevenDayAgo.setDate(today.getDate()-3)
-      const StartDate=createDate(sevenDayAgo)
-      console.log(StartDate)
-      setStartDate(StartDate)
-    },[])
-
     useEffect(() => {
-        try {
-            if(startDate&&endDate){
-            fetchPicture(startDate, endDate)
-                .then(data => {
-                    setPictures(data)
-                })
-                .catch(error => {
-                    console.error("Error fetching gallery data:", error);
-                })
-        }}
-        catch (error) {
-            console.error("Unexpected error:", error);
-        }
-    }, [startDate, endDate]);
+      if(Array.isArray(pictureOfAday)){
+        console.log(pictureOfAday)
+      setPictures(pictureOfAday)
+    }
+    }, [pictureOfAday]);
+
+    useEffect(()=>{
+      
+      if(Array.isArray(marsPictures)){
+        console.log(marsPictures)
+        setPictures2(marsPictures)
+      }
+    })
 
     useEffect(() => {
       if (earthPictures.length > 0) {
@@ -87,9 +77,6 @@ const PictureOfADay=() => {
       }
     }, [earthPictures])
 
-
-
-  
     return (
       <Flex 
           alignItems='flex-start'
@@ -97,29 +84,36 @@ const PictureOfADay=() => {
           fontFamily="Garamond"
           gap='40px'
           marginTop='10px'
-        justifyContent='space-between'
-        flexDirection={{ sm: 'column', md: 'column' }}
-        
-          
+          justifyContent='space-between'
+          flexDirection={{ sm: 'column', md: 'column' }}
           >
           <Flex flexDirection='column'
           alignItems='center'>
-            <Heading  as='h1' 
+            {/*<Heading  as='h1' 
                       minWidth={{ sm: '290px', md: '390px', lg: '490px', xl: '590px', '2xl': '350px' }}
                       fontWeight='600'
                       fontSize='40px'
                       >
                         Do you know that...?
-            </Heading>
-            <PictureRender pictures={pictures} />
+            </Heading>*/}
+            <Flex gap='40px'>
+              <Box>
+                <Heading>Pictures of a day</Heading>
+              <PictureRender pictures={pictures} />,
+              </Box>
+              <Box>
+              <Heading>Mars Pictures</Heading>
+              <PictureRender pictures={pictures2} />
+              </Box>
+            </Flex>
          </Flex>
-          <Box className={css.earthImageDiv} overflow='hidden'
-          width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
-          marginTop='50px'>
-              {earthPictures}
+            <Box className={css.earthImageDiv} overflow='hidden'
+                width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
+                marginTop='50px'>
+                {earthPictures}
             </Box>
       </Flex> 
     );
   }
   
-  export default PictureOfADay;
+  export default Home;
