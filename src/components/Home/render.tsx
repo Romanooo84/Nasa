@@ -17,6 +17,7 @@ interface PictureRenderProps {
     pictures: Picture[]; // Assuming pictures is an array of objects with title and url
 }
 
+
 const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
     const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);
 
@@ -30,7 +31,6 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
                     padding='10px'
                     flexDirection = 'column-reverse'
                     justifyContent='flex-end'
-                    //alignItems='center'
                     border='none'
                     height='500px'
                     >
@@ -43,7 +43,6 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
                         marginBottom='5x'
                     />
                     <Flex flexDirection='column'
-                    //marginLeft={{ sm: '0', md: '20px'}}
                     >
                         <Heading 
                             as="h3" 
@@ -110,7 +109,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
                 </Flex>
             ) : (
                 <Flex justifyContent="center" alignItems="center" height="100%">
-                    <Heading as="h3" color="white">No pictures available</Heading> {/* Fallback message */}
+                    <Heading as="h3" color="white">No pictures available</Heading>
                 </Flex>
             )}
         </Flex>

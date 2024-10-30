@@ -14,6 +14,7 @@ function App() {
   const [startDate, setStartDate] = useState<string>()
   const [endDate, setEndDate]  = useState<string>()
   const {updateData } = useData();
+  const [start, setStart]=useState<boolean>(true)
 
   useEffect(()=>{
     const today = new Date()
@@ -24,30 +25,29 @@ function App() {
     const sevenDayAgo = new Date(today)  
     sevenDayAgo.setDate(today.getDate()-7)
     const date=createDate(sevenDayAgo)
-    console.log(date)
     setStartDate(date)
   },[])
 
   useEffect(() => {
-    if (endDate){
+    if (endDate && start){
     pictureOfMars(endDate) 
         .then(data => {
-          console.log(data)
             updateData(
               {marsPictures:data}
             );
+            setStart(false)
         });
     }
   }, [endDate, updateData]);
 
   useEffect(() => {
-    if  (startDate && endDate){
+    if  (startDate && endDate && start){
       fetchPicture (startDate, endDate) 
         .then(data => {
-          console.log(data)
             updateData(
               {pictureOfAday:data}
             );
+            setStart(false)
         });
     }
   }, [startDate,endDate, updateData])

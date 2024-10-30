@@ -81,7 +81,6 @@ export const fetchGalleryItems = async(text: string) : Promise<GalleryData> =>{
 
 export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]> =>{
   const url = `https://epic.gsfc.nasa.gov/api/natural`;  //link from https://epic.gsfc.nasa.gov/about/api
-  console.log(url)
   try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -113,7 +112,6 @@ export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]>
 
     export const pictureOfMars = async(date:string):Promise<MarsPicture[]> =>{
       const url = `https://api.nasa.gov/mars-photos/api/v1/rovers/perseverance/photos?earth_date=${date}&api_key=${token}`;
-      console.log(url)
       try {
           const response = await fetch(url);
           if (!response.ok) {
