@@ -26,43 +26,44 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
     useEffect(() => {
         if (pictures.length > 0 ) {
             const render = pictures.map((picture, index) => (
-                <Box>
-                {picture.title!='Caught' && <Flex key={index}
-                    padding='10px'
-                    flexDirection = 'column-reverse'
-                    justifyContent='flex-end'
-                    border='none'
-                    height='500px'
-                    >
-                    <Image 
-                        src={!pictures[0].camera?picture.url:picture.img_src} 
-                        alt={!pictures[0].camera?picture.title:picture.camera.full_name}
-                        objectFit='cover'
-                        float='left' 
-                        height='65%'
-                        marginBottom='5x'
-                    />
-                    <Flex flexDirection='column'
-                    >
-                        <Heading 
-                            as="h3" 
-                            fontSize={{ sm: '20px', md: '30px'}} 
-                            fontWeight="400" 
-                            textAlign="left"
+                <Box  key={index}>
+                {picture.title!='Caught' && index<6 &&
+                    <Flex
+                        padding='10px'
+                        flexDirection = 'column-reverse'
+                        justifyContent='flex-end'
+                        border='none'
+                        height='500px'
                         >
-                            {!pictures[0].camera?picture.title:picture.camera.full_name}
-                        </Heading>
-                        {/*<Text 
-                            display={{ sm: 'none', md: 'block'}}
-                            className={css.pictureOfADay}
-                            fontSize="20px" 
-                            textAlign="justify"
-                            paddingTop='5px'
+                        <Image 
+                            src={!pictures[0].camera?picture.url:picture.img_src} 
+                            alt={!pictures[0].camera?picture.title:picture.camera.full_name}
+                            objectFit='cover'
+                            float='left' 
+                            height='65%'
+                            marginBottom='5x'
+                        />
+                        <Flex flexDirection='column'
                         >
-                            {picture.explanation}
-                        </Text>*/}
-                    </Flex>
-                </Flex>}
+                            <Heading 
+                                as="h3" 
+                                fontSize={{ sm: '20px', md: '30px'}} 
+                                fontWeight="400" 
+                                textAlign="left"
+                            >
+                                {!pictures[0].camera?picture.title:picture.camera.full_name}
+                            </Heading>
+                            {/*<Text 
+                                display={{ sm: 'none', md: 'block'}}
+                                className={css.pictureOfADay}
+                                fontSize="20px" 
+                                textAlign="justify"
+                                paddingTop='5px'
+                            >
+                                {picture.explanation}
+                            </Text>*/}
+                        </Flex>
+                    </Flex>}
                 </Box>
             ));
             setPictureRender(render);
