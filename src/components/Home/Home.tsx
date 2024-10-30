@@ -12,8 +12,15 @@ interface NasaPictureData {
   explanation: string;
   hdurl: string;
   pictures:string
+  img_src: string;
+  sol: number;
+  camera: { full_name: string };
+  rover: { name: string };
   pictureOfAday: []
+  marsPictures: []
 }
+
+
 
 
 const Home=() => {
@@ -49,16 +56,16 @@ const Home=() => {
     },[]) 
 
     useEffect(() => {
-      if(Array.isArray(pictureOfAday)){
+      if(pictureOfAday.length>0){
         console.log(pictureOfAday)
-      setPictures(pictureOfAday)
+      setPictures(pictureOfAday as NasaPictureData[])
     }
     }, [pictureOfAday]);
 
     useEffect(()=>{
-      if(Array.isArray(marsPictures)){
+      if(marsPictures.length>0){
         console.log(marsPictures)
-        setPictures2(marsPictures)
+        setPictures2(marsPictures as NasaPictureData[])
       }
     }, [marsPictures])
 
