@@ -38,7 +38,7 @@ function App() {
             setStart(false)
         });
     }
-  }, [endDate, updateData]);
+  }, [endDate, updateData, start]);
 
   useEffect(() => {
     if  (startDate && endDate && start){
@@ -50,7 +50,7 @@ function App() {
             setStart(false)
         });
     }
-  }, [startDate,endDate, updateData])
+  }, [startDate,endDate, updateData, start])
 
 
 

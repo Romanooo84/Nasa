@@ -8,10 +8,10 @@ interface Picture {
     title: string;
     url: string;
     type:string;
-    camera: {
+    camera?: {
         full_name:string
     }
-    img_src: string
+    img_src?: string
     
 }
 
@@ -42,7 +42,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
                         >
                         <Image 
                             src={!pictures[0].camera?picture.url:picture.img_src} 
-                            alt={!pictures[0].camera?picture.title:picture.camera.full_name}
+                            alt={picture.camera?.full_name || picture.title || "Image"}
                             objectFit='cover'
                             float='left' 
                             height='100%'
