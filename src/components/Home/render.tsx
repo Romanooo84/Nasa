@@ -7,14 +7,16 @@ import css from './Home.module.css'
 interface Picture {
     title: string;
     url: string;
+    type:string;
     camera: {
         full_name:string
     }
     img_src: string
+    
 }
 
 interface PictureRenderProps {
-    pictures: Picture[]; // Assuming pictures is an array of objects with title and url
+    pictures: Picture[]; 
 }
 
 
@@ -25,35 +27,39 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
 
     useEffect(() => {
         if (pictures.length > 0 ) {
-            const render = pictures.map((picture, index) => (
+            const render = pictures
+            .filter((_, index) => index <= 5)
+            .map((picture, index) => (
                 <Box  key={index}>
-                {picture.title!='Caught' && index<6 &&
+                {picture.title!='Caught' &&
                     <Flex
                         padding='10px'
                         flexDirection = 'column-reverse'
                         justifyContent='flex-end'
+                        alignItems='stretch'
                         border='none'
-                        height='500px'
+                        height='400px'
                         >
                         <Image 
                             src={!pictures[0].camera?picture.url:picture.img_src} 
                             alt={!pictures[0].camera?picture.title:picture.camera.full_name}
                             objectFit='cover'
                             float='left' 
-                            height='65%'
-                            marginBottom='5x'
+                            height='100%'
+                            width='330px' 
                         />
                         <Flex flexDirection='column'
                         >
-                            <Heading 
+                           {/* <Heading 
                                 as="h3" 
                                 fontSize={{ sm: '20px', md: '30px'}} 
                                 fontWeight="400" 
                                 textAlign="left"
+                                height='75px'
                             >
                                 {!pictures[0].camera?picture.title:picture.camera.full_name}
                             </Heading>
-                            {/*<Text 
+                            <Text 
                                 display={{ sm: 'none', md: 'block'}}
                                 className={css.pictureOfADay}
                                 fontSize="20px" 
@@ -73,18 +79,24 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
     useEffect(() => {
       if (pictures.length > 0) {
         const intervalId = setInterval(() => {
-          const carouselContent = document.querySelector(`.${!pictures[0].camera?css.pictureOfADayDiv:css.pictureOfADayDivMars}`) as HTMLElement;
+          const carouselContent = document.querySelector(`.${!pictures[0].camera && !pictures[0].type
+            ? css.pictureOfADayDiv
+            : !pictures[0].type
+            ? css.pictureOfADayDivMars
+            : css.GalleryDiv}`) as HTMLElement;
           if (carouselContent && carouselContent.children.length > 0) {
             const firstItem = carouselContent.children[0] as HTMLElement;
-            carouselContent.style.transition = 'transform 0.5s ease';
+            carouselContent.style.transition = 'opacity 1.5s ease, transform 1s ease-in';
             carouselContent.style.transform = `translateY(${firstItem.offsetHeight}px)`;
+            carouselContent.style.opacity= '0'
             setTimeout(function() {
                 carouselContent.appendChild(firstItem);
-                carouselContent.style.transition = 'transform 0.5s ease';;
+                carouselContent.style.transition = 'opacity 1.5s ease, transform 1s ease-out';;
                 carouselContent.style.transform = 'translateY(0)';
-            }, 1000);
+                carouselContent.style.opacity= '1'
+            }, 2000);
           }
-        }, 10000); 
+        }, 5000); 
   
         return () => clearInterval(intervalId);
       }
@@ -95,15 +107,21 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
             overflow='hidden'
             boxShadow='0px 0px 15px 5px rgba(116, 124, 216, 0.71)' 
             height='400px'
-            backgroundColor='#181d5173'
+            backgroundColor='#00000000'
         >
             {pictures && pictures.length > 0 ? ( 
                 <Flex     
                     gap='20px'
                     alignItems='flex-start' 
-                    width={{ sm: '320px', md: '750px', lg: '930px', xl: '1150px', '2xl': '350px' }}
-                    className={!pictures[0].camera ? css.pictureOfADayDiv : css.pictureOfADayDivMars}
                     flexWrap='wrap'
+                    width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '300px' }}
+                    className={
+                            !pictures[0].camera && !pictures[0].type
+                            ? css.pictureOfADayDiv
+                            : !pictures[0].type
+                            ? css.pictureOfADayDivMars
+                            : css.GalleryDiv
+                            }
                     justifyContent='space-evenly'
                 >   
                     {pictureRender}

@@ -24,7 +24,7 @@ interface NasaPictureData {
 };
 
 export const fetchGallery = async (text: string) : Promise<GalleryData> => {
-    const url = `https://images-api.nasa.gov/search?keywords=${text}&q=${text}`;
+    const url = `https://images-api.nasa.gov/search?q=${text}&keywords=${text}`;
     try {
         const response = await fetch(url);
         if (!response.ok) {
