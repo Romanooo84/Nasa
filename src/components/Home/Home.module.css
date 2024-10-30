@@ -31,6 +31,12 @@
       transform: translate(0);
     }
 
+    .GalleryDiv{
+      transition: none;
+      display: -webkit-inline-box;
+      transform: translate(0);
+    }
+
     
 
   .earthImage{

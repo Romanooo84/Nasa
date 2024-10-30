@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { /*fetchPicture, */fetchPolimaticImageCamera} from '../../hooks/download'
+import { fetchPolimaticImageCamera} from '../../hooks/download'
 import { Heading, Flex, Image, Box } from "@chakra-ui/react"
-//import { createDate } from '../../hoocks/createDate';
 import { useData } from '../../hooks/DataContext';
+import picturesForGallery from '../../data/pic_for_gallery';
 import PictureRender from './render';
 import css from'./Home.module.css'
 
@@ -18,6 +18,8 @@ interface NasaPictureData {
   rover: { name: string };
   pictureOfAday: []
   marsPictures: []
+  picturesForGallery:[]
+  type:string
 }
 
 
@@ -94,7 +96,8 @@ const Home=() => {
           flexDirection={{ sm: 'column', md: 'column' }}
           >
           <Flex flexDirection='column'
-          alignItems='center'>
+          alignItems='center'
+          width='100%'>
             {/*<Heading  as='h1' 
                       minWidth={{ sm: '290px', md: '390px', lg: '490px', xl: '590px', '2xl': '350px' }}
                       fontWeight='600'
@@ -102,14 +105,25 @@ const Home=() => {
                       >
                         Do you know that...?
             </Heading>*/}
-            <Flex gap='40px'>
+            <Flex gap='40px'
+               flexWrap='wrap'
+               justifyContent='space-between'
+               width='100%'>
               <Box>
                 <Heading>Pictures of a day</Heading>
-              <PictureRender pictures={pictures} />,
+                <PictureRender pictures={pictures} />,
               </Box>
               <Box>
-              <Heading>Mars Pictures</Heading>
-              <PictureRender pictures={pictures2} />
+                <Heading>Mars Pictures</Heading>
+                <PictureRender pictures={pictures2} />
+              </Box>
+              <Box>
+                <Heading>Nasa Gallery</Heading>
+                <PictureRender pictures={picturesForGallery} />
+              </Box>
+              <Box>
+                <Heading>Nasa Gallery</Heading>
+                <PictureRender pictures={picturesForGallery} />
               </Box>
             </Flex>
          </Flex>
