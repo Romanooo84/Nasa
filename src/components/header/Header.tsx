@@ -2,6 +2,7 @@ import { Button, Flex, Text} from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import { SiNasa } from "react-icons/si";
 import { Link} from "react-router-dom"
+import buttonsList from "../../data/buttonList";
 import logo from '../../media/pngegg.png'
 
 const textColor='rgb(112 127 150)'
@@ -9,7 +10,7 @@ const bgColor='#3e6ebb70'
 
 export const Header = () => {
 
-    const [buttonsList] = useState<string[]>(['picture of a day', 'gallery', 'Mars Pictures']);
+   
     const [render, setRender] = useState<JSX.Element[]>([]);
     
     

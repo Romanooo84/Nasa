@@ -1,4 +1,4 @@
-//import PictureOfADay from "./components/Home/Home";
+import PictureOfADay from "./components//pictureOfADay/pictureOfADay";
 import Gallery from "./components/gallery/Gallery";
 import PictureOfMars from "./components/pictureOfMars/PictureOfMars";
 import SharedLayout from "./components/sharedLayout/SharedLayout";
@@ -57,7 +57,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<SharedLayout />}>
-        {/*<Route path="/picture of a day" element={<PictureOfADay />}/>*/}
+        <Route path="/picture of a day" element={<PictureOfADay/>}/>
         <Route path="/gallery" element={<Gallery/>}/>
         <Route path="/Mars Pictures" element={<PictureOfMars/>}/>
       </Route>
