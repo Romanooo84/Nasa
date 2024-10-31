@@ -7,9 +7,6 @@ import css from '../Home/Home.module.css'
 import { useData } from "../../hooks/DataContext";
 
 
-
-
-
 const PictureOfADay= () =>{
     const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);
     const [startDate, setStartDate] = useState<string>()

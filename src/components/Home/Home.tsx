@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { fetchPolimaticImageCamera} from '../../hooks/download'
 import { Heading, Flex, Image, Box } from "@chakra-ui/react"
 import { useData } from '../../hooks/DataContext';
+import { Link} from "react-router-dom"
 import picturesForGallery from '../../data/pic_for_gallery';
+import buttonsList from "../../data/buttonList";
 import PictureRender from './render';
 import css from'./Home.module.css'
 
@@ -40,11 +42,13 @@ const Home=() => {
               const newData=data.map((picture, index)=>{
                 const newDate=picture.date.replace(/-/g,'/').split(' ')[0]
                 const imageUrl=`https://epic.gsfc.nasa.gov/archive/natural/${newDate}/png/${picture.image}.png`
-                return <Flex key={index} overflow='hidden'>
+                return <Box key={index} position='absolute'>
                   <Image  width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
                           src={imageUrl}
-                        className={css.earthImage} />
-                </Flex>
+                          
+                        //className={css.earthImage} 
+                        />
+                </Box>
               })
                 setEarthPictures(newData)
             })
@@ -72,18 +76,26 @@ const Home=() => {
     }, [marsPictures])
 
     useEffect(() => {
+      let i = 0; 
       if (earthPictures.length > 0) {
         const intervalId = setInterval(() => {
-          const carouselContent = document.querySelector(`.${css.earthImageDiv}`) as HTMLElement;
+          const carouselContent = document.querySelector(
+            `.${css.earthImageDiv}`
+          ) as HTMLElement;
+    
           if (carouselContent && carouselContent.children.length > 0) {
-            const firstItem = carouselContent.children[0] as HTMLElement;
-            carouselContent.appendChild(firstItem);
+            Array.from(carouselContent.children).forEach((child, index) => {
+              (child as HTMLElement).style.opacity = index === i ? '1' : '0';
+              (child as HTMLElement).style.transition = 'opacity 1.5s ease';
+            });
+            i = (i + 1) % carouselContent.children.length;
           }
-        }, 200); 
-  
+        }, 2000);
+    
+        // Clear the interval on component unmount to avoid memory leaks
         return () => clearInterval(intervalId);
       }
-    }, [earthPictures])
+    }, [earthPictures]);
 
     return (
       <Flex 
@@ -98,37 +110,40 @@ const Home=() => {
           <Flex flexDirection='column'
           alignItems='center'
           width='100%'>
-            {/*<Heading  as='h1' 
-                      minWidth={{ sm: '290px', md: '390px', lg: '490px', xl: '590px', '2xl': '350px' }}
-                      fontWeight='600'
-                      fontSize='40px'
-                      >
-                        Do you know that...?
-            </Heading>*/}
             <Flex gap='40px'
                flexWrap='wrap'
                justifyContent='space-between'
                width='100%'>
-              <Box>
-                <Heading>Pictures of a day</Heading>
-                <PictureRender pictures={pictures} />,
+              <Box
+              >
+                <Heading>{buttonsList[0]}</Heading>
+                <Link to={`/${buttonsList[0]}`}>
+                    <PictureRender pictures={pictures} />
+                </Link>
               </Box>
               <Box>
-                <Heading>Mars Pictures</Heading>
-                <PictureRender pictures={pictures2} />
+                <Heading>{buttonsList[1]}</Heading>
+                <Link to={`/${buttonsList[1]}`}>
+                    <PictureRender pictures={pictures2} />
+                </Link>
               </Box>
               <Box>
-                <Heading>Nasa Gallery</Heading>
-                <PictureRender pictures={picturesForGallery} />
+                <Heading>{buttonsList[2]}</Heading>
+                <Link to={`/${buttonsList[2]}`}>
+                    <PictureRender pictures={picturesForGallery} />
+                </Link>
               </Box>
               <Box>
-                <Heading>Nasa Gallery</Heading>
-                <PictureRender pictures={picturesForGallery} />
+                <Heading>{buttonsList[2]}</Heading>
+                <Link to={`/${buttonsList[3]}`}>
+                  <PictureRender pictures={picturesForGallery} />
+                </Link>
               </Box>
             </Flex>
          </Flex>
-            <Box className={css.earthImageDiv} overflow='hidden'
+            <Box className={css.earthImageDiv}
                 width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
+                height={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
                 marginTop='50px'>
                 {earthPictures}
             </Box>
