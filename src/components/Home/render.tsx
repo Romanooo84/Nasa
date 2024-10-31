@@ -1,6 +1,7 @@
 
 import { Image, /*Text,*/ Flex, Heading, Box} from "@chakra-ui/react"
 import { useEffect, useState } from "react";
+import useCarouselEffect from "../../hooks/useCarousel";
 import css from './Home.module.css'
 
 
@@ -21,8 +22,15 @@ interface PictureRenderProps {
 
 
 const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
-    const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);
-
+    const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);  
+    
+    const selectedClass = pictures && pictures.length > 0
+    ? !pictures[0].camera && !pictures[0].type
+      ? css.pictureOfADayDiv
+      : !pictures[0].type
+      ? css.pictureOfADayDivMars
+      : css.GalleryDiv
+    : css.defaultClass;
 
 
     useEffect(() => {
@@ -59,31 +67,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
         }
     }, [pictures]);
 
-    useEffect(() => {
-        let i = 0; 
-        if (pictures.length > 0) {
-          const intervalId = setInterval(() => {
-            const carouselContent = document.querySelector(
-              `.${!pictures[0].camera && !pictures[0].type
-                ? css.pictureOfADayDiv
-                : !pictures[0].type
-                ? css.pictureOfADayDivMars
-                : css.GalleryDiv}`
-            ) as HTMLElement;
-      
-            if (carouselContent && carouselContent.children.length > 0) {
-              Array.from(carouselContent.children).forEach((child, index) => {
-                (child as HTMLElement).style.opacity = index === i ? '1' : '0';
-                (child as HTMLElement).style.transition = 'opacity 5s ease';
-              });
-              i = (i + 1) % carouselContent.children.length;
-            }
-          }, 10000);
-      
-          // Clear the interval on component unmount to avoid memory leaks
-          return () => clearInterval(intervalId);
-        }
-      }, [pictures]);
+      useCarouselEffect(pictures,selectedClass)
 
     return (
         <Box

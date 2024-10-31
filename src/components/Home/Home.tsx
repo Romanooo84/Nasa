@@ -3,6 +3,7 @@ import { fetchPolimaticImageCamera} from '../../hooks/download'
 import { Heading, Flex, Image, Box } from "@chakra-ui/react"
 import { useData } from '../../hooks/DataContext';
 import { Link} from "react-router-dom"
+import useCarouselEffect from '../../hooks/useCarousel';
 import picturesForGallery from '../../data/pic_for_gallery';
 import buttonsList from "../../data/buttonList";
 import PictureRender from './render';
@@ -75,27 +76,7 @@ const Home=() => {
       }
     }, [marsPictures])
 
-    useEffect(() => {
-      let i = 0; 
-      if (earthPictures.length > 0) {
-        const intervalId = setInterval(() => {
-          const carouselContent = document.querySelector(
-            `.${css.earthImageDiv}`
-          ) as HTMLElement;
-    
-          if (carouselContent && carouselContent.children.length > 0) {
-            Array.from(carouselContent.children).forEach((child, index) => {
-              (child as HTMLElement).style.opacity = index === i ? '1' : '0';
-              (child as HTMLElement).style.transition = 'opacity 1.5s ease';
-            });
-            i = (i + 1) % carouselContent.children.length;
-          }
-        }, 2000);
-    
-        // Clear the interval on component unmount to avoid memory leaks
-        return () => clearInterval(intervalId);
-      }
-    }, [earthPictures]);
+    useCarouselEffect(earthPictures, css.earthImageDiv)
 
     return (
       <Flex 
