@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const useCarouselEffect = (picturesData: any[], Class: string) => {
+const useCarouselEffect = (picturesData: JSX.Element[], Class: string) => {
   useEffect(() => {
     let i = 0;
     if (picturesData.length > 0) {

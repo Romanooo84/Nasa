@@ -35,7 +35,7 @@ export const Header = () => {
             </Link>
         ));
         setRender(markup);
-    }, [buttonsList])
+    }, [])
 
     return(
         <Flex
