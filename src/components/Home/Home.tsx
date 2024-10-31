@@ -46,8 +46,6 @@ const Home=() => {
                 return <Box key={index} position='absolute'>
                   <Image  width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
                           src={imageUrl}
-                          
-                        //className={css.earthImage} 
                         />
                 </Box>
               })

@@ -67,7 +67,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
         }
     }, [pictures]);
 
-      useCarouselEffect(pictures,selectedClass)
+      useCarouselEffect(pictureRender,selectedClass)
 
     return (
         <Box
