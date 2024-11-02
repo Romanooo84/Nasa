@@ -40,14 +40,12 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
             .map((picture, index) => (
                 <Flex key={index}
                 position='absolute'
-                //top= '-15px'
                 >
                 {picture.title!='Caught' &&
-                    <Flex
-                        //padding='10px'
+                    <Flex     
                         flexDirection = 'column-reverse'
                         justifyContent='flex-end'
-                        //alignItems='stretch'
+
                         border='none'
                         height='400px'
                         
@@ -72,12 +70,17 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
     return (
         <Box
             overflow='hidden'
-            boxShadow='0px 0px 15px 5px rgba(116, 124, 216, 0.71)' 
+            boxShadow='0px 15px 30px -5px rgb(116 124 216 / 56%)' 
             height='400px'
             backgroundColor='#00000000'
+            border='none'
         >
             {pictures && pictures.length > 0 ? ( 
                 <Flex     
+                transition='transform 2s ease-out'
+                _hover={{
+                  transform: "scale(1.1)", // Optional: adds a slight scaling effect
+                }}
                     gap='20px'
                     alignItems='flex-start' 
                     flexWrap='wrap'
@@ -92,6 +95,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
                     justifyContent='space-evenly'
                 >   
                     {pictureRender}
+
                 </Flex>
             ) : (
                 <Flex justifyContent="center" alignItems="center" height="100%">
