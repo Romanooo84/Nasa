@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchPolimaticImageCamera} from '../../hooks/download'
 import { Heading, Flex, Image, Box } from "@chakra-ui/react"
+import Shadow from './Shadow'
 import { useData } from '../../hooks/DataContext';
 import { Link} from "react-router-dom"
 import useCarouselEffect from '../../hooks/useCarousel';
@@ -93,31 +94,47 @@ const Home=() => {
                flexWrap='wrap'
                justifyContent='space-between'
                width='100%'>
-              <Box
+              <Flex
+                flexDirection='column'
+                alignItems='center'
+              
               >
                 <Heading>{buttonsList[0]}</Heading>
                 <Link to={`/${buttonsList[0]}`}>
                     <PictureRender pictures={pictures} />
                 </Link>
-              </Box>
-              <Box>
+                <Shadow/>
+              </Flex>
+              <Flex
+                flexDirection='column'
+                alignItems='center'
+              >
                 <Heading>{buttonsList[1]}</Heading>
                 <Link to={`/${buttonsList[1]}`}>
                     <PictureRender pictures={pictures2} />
                 </Link>
-              </Box>
-              <Box>
+                <Shadow/>
+              </Flex>
+              <Flex
+                flexDirection='column'
+                alignItems='center'
+              >
                 <Heading>{buttonsList[2]}</Heading>
                 <Link to={`/${buttonsList[2]}`}>
                     <PictureRender pictures={picturesForGallery} />
                 </Link>
-              </Box>
-              <Box>
+                <Shadow/>
+              </Flex>
+              <Flex
+                flexDirection='column'
+                alignItems='center'
+              >
                 <Heading>{buttonsList[2]}</Heading>
                 <Link to={`/${buttonsList[3]}`}>
                   <PictureRender pictures={picturesForGallery} />
                 </Link>
-              </Box>
+                <Shadow/>
+              </Flex>
             </Flex>
          </Flex>
             <Box className={css.earthImageDiv}
