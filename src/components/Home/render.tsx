@@ -2,7 +2,8 @@
 import { Image, /*Text,*/ Flex, Heading, Box} from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import useCarouselEffect from "../../hooks/useCarousel";
-import css from './Home.module.css'
+import cssStyle from './Home.module.css'
+import styled, { keyframes, css } from 'styled-components'
 
 
 interface Picture {
@@ -20,17 +21,37 @@ interface PictureRenderProps {
     pictures: Picture[]; 
 }
 
+const bounce = keyframes`
+  0% { 
+    box-shadow: 0px 15px 30px -5px rgb(116 124 216 / 56%); 
+    transform: scale(1); 
+  }
+  50% {
+    box-shadow: 0px 15px 30px 5px rgb(116 124 216 / 56%);
+    transform: scale(1.05);  
+  }
+  90% { 
+    box-shadow: 0px 15px 30px -5px rgb(116 124 216 / 56%);
+    transform: scale(1);  
+  }
+`;
+
+const AnimatedBox = styled(Box)`
+  ${() => css`
+    animation: ${bounce} 4s infinite ease;
+  `}
+`;
 
 const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
     const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);  
     
     const selectedClass = pictures && pictures.length > 0
     ? !pictures[0].camera && !pictures[0].type
-      ? css.pictureOfADayDiv
+      ? cssStyle.pictureOfADayDiv
       : !pictures[0].type
-      ? css.pictureOfADayDivMars
-      : css.GalleryDiv
-    : css.defaultClass;
+      ? cssStyle.pictureOfADayDivMars
+      : cssStyle.GalleryDiv
+    : cssStyle.defaultClass;
 
 
     useEffect(() => {
@@ -68,7 +89,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
       useCarouselEffect(pictureRender,selectedClass)
 
     return (
-        <Box
+        <AnimatedBox
             overflow='hidden'
             boxShadow='0px 15px 30px -5px rgb(116 124 216 / 56%)' 
             height='400px'
@@ -79,7 +100,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
                 <Flex     
                 transition='transform 2s ease-out'
                 _hover={{
-                  transform: "scale(1.1)", // Optional: adds a slight scaling effect
+                  transform: "scale(1.1)",
                 }}
                     gap='20px'
                     alignItems='flex-start' 
@@ -87,10 +108,10 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
                     width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '300px' }}
                     className={
                             !pictures[0].camera && !pictures[0].type
-                            ? css.pictureOfADayDiv
+                            ? cssStyle.pictureOfADayDiv
                             : !pictures[0].type
-                            ? css.pictureOfADayDivMars
-                            : css.GalleryDiv
+                            ? cssStyle.pictureOfADayDivMars
+                            : cssStyle.GalleryDiv
                             }
                     justifyContent='space-evenly'
                 >   
@@ -102,7 +123,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
                     <Heading as="h3" color="white">No pictures available</Heading>
                 </Flex>
             )}
-        </Box>
+        </AnimatedBox>
     );
 }
 

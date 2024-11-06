@@ -97,7 +97,10 @@ const Home=() => {
               <Flex
                 flexDirection='column'
                 alignItems='center'
-              
+                transition='transform 2s ease-out'
+                _hover={{
+                  transform: "scale(1.1)", // Optional: adds a slight scaling effect
+                }}
               >
                 <Heading>{buttonsList[0]}</Heading>
                 <Link to={`/${buttonsList[0]}`}>
