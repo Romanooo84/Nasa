@@ -16,7 +16,7 @@ const useCarouselEffect = (picturesData: JSX.Element[], Class: string) => {
           });
           i = (i + 1) % carouselContent.children.length;
         }
-      }, 2000);
+      }, 10000);
       return () => clearInterval(intervalId);
     }
   }, [picturesData, Class]);

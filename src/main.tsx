@@ -26,5 +26,4 @@ createRoot(document.getElementById('root')!).render(
         </ChakraProvider>
       </DataProvider>
   </BrowserRouter>
-  
 )
