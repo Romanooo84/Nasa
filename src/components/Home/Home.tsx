@@ -9,6 +9,7 @@ import picturesForGallery from '../../data/pic_for_gallery';
 import buttonsList from "../../data/buttonList";
 import PictureRender from './render';
 import css from'./Home.module.css'
+import EarthAnimation from '../earthAnimation/earthAnimation';
 
 interface NasaPictureData {
   url: string;
@@ -146,6 +147,7 @@ const Home=() => {
                 marginTop='50px'>
                 {earthPictures}
             </Box>
+          <EarthAnimation/>
       </Flex> 
     );
   }
