@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import {fetchPicture} from '../../hooks/download'
 import { createDate } from "../../hooks/createDate";
 import css from '../Home/Home.module.css'
-import { useData } from "../../hooks/DataContext";
+import { useData } from "../../hooks/usaData";
 
 
 const PictureOfADay= () =>{

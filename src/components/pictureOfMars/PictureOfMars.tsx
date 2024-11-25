@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 //import { createDate } from "../../hoocks/createDate"
 import { Box, Text, Image, Flex } from "@chakra-ui/react"
-import { useData } from "../../hooks/DataContext";
+import { useData } from "../../hooks/usaData";
 
 
 const PictureOfMars=()=>{

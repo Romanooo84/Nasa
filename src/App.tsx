@@ -3,7 +3,7 @@ import Gallery from "./components/gallery/Gallery";
 import PictureOfMars from "./components/pictureOfMars/PictureOfMars";
 import SharedLayout from "./components/sharedLayout/SharedLayout";
 import { Route, Routes} from "react-router-dom";
-import { useData } from "./hooks/DataContext";
+import { useData } from "./hooks/usaData";
 import {pictureOfMars, fetchPicture} from './hooks/download'
 import { useState, useEffect } from "react";
 import { createDate } from "./hooks/createDate";

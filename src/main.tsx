@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import { ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter } from 'react-router-dom'
-import { DataProvider } from './hooks/DataContext.tsx'
+import { DataProvider } from './hooks/DataPorvider.tsx'
 import App from './App.tsx'
 
 import { extendTheme } from '@chakra-ui/react'
