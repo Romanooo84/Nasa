@@ -10,6 +10,7 @@ import buttonsList from "../../data/buttonList";
 import PictureRender from './render';
 import css from'./Home.module.css'
 import EarthAnimation from '../earthAnimation/earthAnimation';
+import { fetchHorizonsData } from '../../hooks/download';
 
 interface NasaPictureData {
   url: string;
@@ -26,6 +27,17 @@ interface NasaPictureData {
   picturesForGallery:[]
   type:string
 }
+
+const requestBody= {
+  format: 'text',
+  COMMAND: 'C/2022 E3', // Nazwa komety
+  CENTER: '500@399',    // Geocentryczny układ odniesienia (centrum Ziemi)
+  MAKE_EPHEM: 'YES',    // Generowanie efemeryd
+  TABLE_TYPE: 'VECTORS', // Wektory pozycji/prędkości
+  START_TIME: '2024-11-25', // Data początkowa
+  STOP_TIME: '2024-11-30',  // Data końcowa
+  STEP_SIZE: '1d',         // Krok czasowy (1 dzień)
+};
 
 
 
@@ -61,6 +73,22 @@ const Home=() => {
           console.error("Unexpected error:", error);
       }
     },[]) 
+
+    useEffect(()=>{
+      try {
+        fetchHorizonsData(requestBody)
+            .then(data =>
+              console.log(data)
+            )
+            .catch(error => {
+                console.error("Error fetching gallery data:", error);
+            })
+      }
+      catch (error) {
+          console.error("Unexpected error:", error);
+      }
+
+    },[])
 
     useEffect(() => {
       if(pictureOfAday.length>0){
