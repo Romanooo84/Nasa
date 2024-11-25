@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchPolimaticImageCamera} from '../../hooks/download'
 import { Heading, Flex, Image, Box } from "@chakra-ui/react"
 import Shadow from './Shadow'
-import { useData } from '../../hooks/DataContext';
+import { useData } from '../../hooks/usaData';
 import { Link} from "react-router-dom"
 import useCarouselEffect from '../../hooks/useCarousel';
 import picturesForGallery from '../../data/pic_for_gallery';
@@ -115,7 +115,7 @@ const Home=() => {
               >
                 <Heading>{buttonsList[1]}</Heading>
                 <Link to={`/${buttonsList[1]}`}>
-                    <PictureRender pictures={pictures2} />
+                    <PictureRender pictures={picturesForGallery} />
                 </Link>
                 <Shadow/>
               </Flex>
@@ -125,7 +125,7 @@ const Home=() => {
               >
                 <Heading>{buttonsList[2]}</Heading>
                 <Link to={`/${buttonsList[2]}`}>
-                    <PictureRender pictures={picturesForGallery} />
+                    <PictureRender pictures={pictures2} />
                 </Link>
                 <Shadow/>
               </Flex>
