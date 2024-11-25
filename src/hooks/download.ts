@@ -28,6 +28,23 @@ interface MarsPicturesResponse {
   photos: MarsPicture[];
 }
 
+interface HorizonsRequest {
+  format: string;
+  COMMAND: string;
+  CENTER: string;
+  MAKE_EPHEM: string;
+  TABLE_TYPE: string;
+  START_TIME: string;
+  STOP_TIME: string;
+  STEP_SIZE: string;
+}
+
+interface HorizonsResponse {
+  rawData: string; // Surowa odpowiedź z API
+}
+
+const horizonsApiUrl = 'https://ssd.jpl.nasa.gov/api/horizons.api';
+
 export const fetchPicture = async (StartDate: string, endDate: string): Promise<NasaPictureData[]> => {
    
     const url = `https://api.nasa.gov/planetary/apod?start_date=${StartDate}&end_date=${endDate}&thumbs=true&api_key=${token}`;
@@ -124,3 +141,25 @@ export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]>
             return []
         }
       }
+
+    export const fetchHorizonsData = async (requestBody: HorizonsRequest): Promise<HorizonsResponse> => {
+      try {
+        const response = await fetch(horizonsApiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+          mode: 'no-cors'
+        });
+    
+        if (!response.ok) {
+          throw new Error(`API returned status code ${response.status}`);
+        }
+    
+        const rawData = await response.text(); // Pobierz odpowiedź jako tekst
+        return { rawData };
+      } catch (error) {
+        throw new Error(`Error fetching Horizons data: ${error instanceof Error ? error.message : String(error)}`);
+      }
+    };
