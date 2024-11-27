@@ -65,7 +65,7 @@ const Home=() => {
         try {
           const data = await nearObjectList(); // Assume nearObjectList() is a function that returns a promise. 
           const tempData = Object.keys(data);
-          let idList = [];
+          const idList = [];
           for (let i = 0; i < tempData.length; i++) {
             const tempArray = data[tempData[i]];
             for (let l = 0; l < tempArray.length; l++) {
