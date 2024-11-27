@@ -3,7 +3,6 @@ import { Image, /*Text,*/ Flex, Heading, Box} from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import useCarouselEffect from "../../hooks/useCarousel";
 import cssStyle from './Home.module.css'
-import styled, { keyframes, css } from 'styled-components'
 
 
 interface Picture {
@@ -20,22 +19,6 @@ interface Picture {
 interface PictureRenderProps {
     pictures: Picture[]; 
 }
-
-/*const bounce = keyframes`
-  0% { 
-    box-shadow: 0px 15px 30px -5px rgb(116 124 216 / 56%); 
-    transform: scale(1); 
-  }
-  50% {
-    box-shadow: 0px 15px 30px 5px rgb(116 124 216 / 56%);
-    transform: scale(1.05);  
-  }
-  90% { 
-    box-shadow: 0px 15px 30px -5px rgb(116 124 216 / 56%);
-    transform: scale(1);  
-  }
-`;*/
-
 
 const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
     const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);  
