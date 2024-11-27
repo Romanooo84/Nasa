@@ -28,20 +28,6 @@ interface NasaPictureData {
   type:string
 }
 
-const requestBody= {
-  format: 'text',
-  COMMAND: 'C/2022 E3', // Nazwa komety
-  CENTER: '500@399',    // Geocentryczny układ odniesienia (centrum Ziemi)
-  MAKE_EPHEM: 'YES',    // Generowanie efemeryd
-  TABLE_TYPE: 'VECTORS', // Wektory pozycji/prędkości
-  START_TIME: '2024-11-25', // Data początkowa
-  STOP_TIME: '2024-11-30',  // Data końcowa
-  STEP_SIZE: '1d',         // Krok czasowy (1 dzień)
-};
-
-
-
-
 const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
     const [pictures2, setPictures2] = useState<NasaPictureData[]>([]);
