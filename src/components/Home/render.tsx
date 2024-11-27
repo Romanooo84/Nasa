@@ -21,7 +21,7 @@ interface PictureRenderProps {
     pictures: Picture[]; 
 }
 
-const bounce = keyframes`
+/*const bounce = keyframes`
   0% { 
     box-shadow: 0px 15px 30px -5px rgb(116 124 216 / 56%); 
     transform: scale(1); 
@@ -34,13 +34,8 @@ const bounce = keyframes`
     box-shadow: 0px 15px 30px -5px rgb(116 124 216 / 56%);
     transform: scale(1);  
   }
-`;
+`;*/
 
-const AnimatedBox = styled(Box)`
-  ${() => css`
-    animation: ${bounce} 4s infinite ease;
-  `}
-`;
 
 const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
     const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);  
@@ -89,7 +84,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
       useCarouselEffect(pictureRender,selectedClass)
 
     return (
-        <AnimatedBox
+        <Box
             overflow='hidden'
             boxShadow='0px 15px 30px -5px rgb(116 124 216 / 56%)' 
             height='400px'
@@ -123,7 +118,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
                     <Heading as="h3" color="white">No pictures available</Heading>
                 </Flex>
             )}
-        </AnimatedBox>
+        </Box>
     );
 }
 

@@ -1,0 +1,10 @@
+https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%2710193%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500@399%27&START_TIME=%272006-01-01%27&STOP_TIME=%272006-01-20%27&STEP_SIZE=%271%20d%27&QUANTITIES=%271,9,20,23,24,29%27 przykład dla komety
+https://ssd-api.jpl.nasa.gov/sb_ident.api?sb-kind=a&mpc-code=568&obs-time=2021-02-09_00:00:00&mag-required=true&two-pass=true&suppress-first-pass=true&req-elem=false&vmag-lim=20&fov-ra-lim=10-10-00%2C10-20-00&fov-dec-lim=10-00-00,10-30-00 lista ciał za okres
+https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY - kolejne za okres
+
+koordynaty xyz
+https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=399&EPHEM_TYPE=VECTORS&CENTER=500@0&START_TIME=2024-11-26&STOP_TIME=2024-11-27&STEP_SIZE=1d&OUT_UNITS=KM-S&VEC_TABLE=2&REF_PLANE=ECLIPTIC
+
+wykaz asteroid
+
+https://api.nasa.gov/neo/rest/v1/feed?start_date=2024-11-01&end_date=2024-11-27&api_key=DEMO_KEY
