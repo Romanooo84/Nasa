@@ -144,15 +144,17 @@ export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]>
       }
     }
 
-    export const nearObjecDetails =async (objectId:number) =>{
-      const url =`https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=${objectId}&EPHEM_TYPE=VECTORS&CENTER=500@0&START_TIME=2024-11-26&STOP_TIME=2024-11-27&STEP_SIZE=1d&OUT_UNITS=KM-S&VEC_TABLE=2&REF_PLANE=ECLIPTIC`
+    export const nearObjecDetails =async (objectId:number, startDate:string, endDate:string) =>{
+      console.log(startDate)
+      const url =`https://romanpisarski.pl/nasa/neodetails?id=${objectId}&startDate=${startDate}&endDate=${endDate}`
+      console.log(url)
       try {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const downloadedData = await response.json();
-        return downloadedData.n
+        return downloadedData
         ; 
       } catch (error) {
           console.error("Data error:", error);

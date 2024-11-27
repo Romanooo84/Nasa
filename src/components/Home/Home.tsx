@@ -81,7 +81,7 @@ const Home=() => {
           }
           
          console.log(idList);
-         const noDetails= await nearObjecDetails(2415711)
+         const noDetails = await nearObjecDetails(27334, '2024-11-26', '2024-11-27')
          console.log(noDetails)
           
         } catch (error) {
