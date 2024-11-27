@@ -59,7 +59,7 @@
       width: 100%;
       height: auto;
       opacity: 0;
-      animation: fade 30s infinite;
+      animation: fade 2s infinite;
   }
 
   @keyframes fade {

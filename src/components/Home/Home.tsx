@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchPolimaticImageCamera} from '../../hooks/download'
 import { Heading, Flex, Image, Box } from "@chakra-ui/react"
-import Shadow from './Shadow'
+//import Shadow from './Shadow'
 import { useData } from '../../hooks/usaData';
 import { Link} from "react-router-dom"
 import useCarouselEffect from '../../hooks/useCarousel';
@@ -10,7 +10,7 @@ import buttonsList from "../../data/buttonList";
 import PictureRender from './render';
 import css from'./Home.module.css'
 import EarthAnimation from '../earthAnimation/earthAnimation';
-import { fetchHorizonsData } from '../../hooks/download';
+import { nearObjectList } from '../../hooks/download';
 
 interface NasaPictureData {
   url: string;
@@ -76,7 +76,7 @@ const Home=() => {
 
     useEffect(()=>{
       try {
-        fetchHorizonsData(requestBody)
+        nearObjectList()
             .then(data =>
               console.log(data)
             )
@@ -92,14 +92,12 @@ const Home=() => {
 
     useEffect(() => {
       if(pictureOfAday.length>0){
-        console.log(pictureOfAday)
       setPictures(pictureOfAday as NasaPictureData[])
     }
     }, [pictureOfAday]);
 
     useEffect(()=>{
       if(marsPictures.length>0){
-        console.log(marsPictures)
         setPictures2(marsPictures as NasaPictureData[])
       }
     }, [marsPictures])
@@ -135,37 +133,46 @@ const Home=() => {
                 <Link to={`/${buttonsList[0]}`}>
                     <PictureRender pictures={pictures} />
                 </Link>
-                <Shadow/>
               </Flex>
               <Flex
                 flexDirection='column'
                 alignItems='center'
+                transition='transform 2s ease-out'
+                _hover={{
+                  transform: "scale(1.1)", // Optional: adds a slight scaling effect
+                }}
+                
               >
                 <Heading>{buttonsList[1]}</Heading>
                 <Link to={`/${buttonsList[1]}`}>
                     <PictureRender pictures={picturesForGallery} />
                 </Link>
-                <Shadow/>
               </Flex>
               <Flex
                 flexDirection='column'
                 alignItems='center'
+                transition='transform 2s ease-out'
+                _hover={{
+                  transform: "scale(1.1)", // Optional: adds a slight scaling effect
+                }}
               >
                 <Heading>{buttonsList[2]}</Heading>
                 <Link to={`/${buttonsList[2]}`}>
                     <PictureRender pictures={pictures2} />
                 </Link>
-                <Shadow/>
               </Flex>
               <Flex
                 flexDirection='column'
                 alignItems='center'
+                transition='transform 2s ease-out'
+                _hover={{
+                  transform: "scale(1.1)", // Optional: adds a slight scaling effect
+                }}
               >
                 <Heading>{buttonsList[2]}</Heading>
                 <Link to={`/${buttonsList[3]}`}>
                   <PictureRender pictures={picturesForGallery} />
                 </Link>
-                <Shadow/>
               </Flex>
             </Flex>
          </Flex>

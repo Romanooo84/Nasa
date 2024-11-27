@@ -12,11 +12,11 @@ const useCarouselEffect = (picturesData: JSX.Element[], Class: string) => {
         if (carouselContent && carouselContent.children.length > 0) {
           Array.from(carouselContent.children).forEach((child, index) => {
             (child as HTMLElement).style.opacity = index === i ? '1' : '0';
-            (child as HTMLElement).style.transition = 'opacity 1.5s ease';
+            (child as HTMLElement).style.transition = 'opacity 1s ease';
           });
           i = (i + 1) % carouselContent.children.length;
         }
-      }, 10000);
+      }, 1500);
       return () => clearInterval(intervalId);
     }
   }, [picturesData, Class]);

@@ -28,22 +28,8 @@ interface MarsPicturesResponse {
   photos: MarsPicture[];
 }
 
-interface HorizonsRequest {
-  format: string;
-  COMMAND: string;
-  CENTER: string;
-  MAKE_EPHEM: string;
-  TABLE_TYPE: string;
-  START_TIME: string;
-  STOP_TIME: string;
-  STEP_SIZE: string;
-}
 
-interface HorizonsResponse {
-  rawData: string; // Surowa odpowiedź z API
-}
 
-const horizonsApiUrl = 'https://ssd.jpl.nasa.gov/api/horizons.api';
 
 export const fetchPicture = async (StartDate: string, endDate: string): Promise<NasaPictureData[]> => {
    
@@ -142,24 +128,18 @@ export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]>
         }
       }
 
-    export const fetchHorizonsData = async (requestBody: HorizonsRequest): Promise<HorizonsResponse> => {
+    export const nearObjectList =async (/*StartDate: string, endDate: string*/) =>{
+      const url ='https://api.nasa.gov/neo/rest/v1/feed?start_date=2024-11-20&end_date=2024-11-27&api_key=DEMO_KEY'
       try {
-        const response = await fetch(horizonsApiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-          mode: 'no-cors'
-        });
-    
+        const response = await fetch(url);
         if (!response.ok) {
-          throw new Error(`API returned status code ${response.status}`);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    
-        const rawData = await response.text(); // Pobierz odpowiedź jako tekst
-        return { rawData };
+        const downloadedData = await response.json();
+        return downloadedData.near_earth_objects
+        ; 
       } catch (error) {
-        throw new Error(`Error fetching Horizons data: ${error instanceof Error ? error.message : String(error)}`);
+          console.error("Data error:", error);
+          return []
       }
-    };
+    }
