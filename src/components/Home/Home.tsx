@@ -10,7 +10,7 @@ import buttonsList from "../../data/buttonList";
 import PictureRender from './render';
 import css from'./Home.module.css'
 import EarthAnimation from '../earthAnimation/earthAnimation';
-import { nearObjectList } from '../../hooks/download';
+import { nearObjectList, nearObjecDetails } from '../../hooks/download';
 
 interface NasaPictureData {
   url: string;
@@ -60,21 +60,37 @@ const Home=() => {
       }
     },[]) 
 
-    useEffect(()=>{
-      try {
-        nearObjectList()
-            .then(data =>
-              console.log(data)
-            )
-            .catch(error => {
-                console.error("Error fetching gallery data:", error);
-            })
-      }
-      catch (error) {
-          console.error("Unexpected error:", error);
-      }
-
-    },[])
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const data = await nearObjectList(); // Assume nearObjectList() is a function that returns a promise. 
+          const tempData = Object.keys(data);
+          let idList = [];
+          for (let i = 0; i < tempData.length; i++) {
+            const tempArray = data[tempData[i]];
+            for (let l = 0; l < tempArray.length; l++) {
+              idList.push({
+                [tempArray[l].neo_reference_id]: {
+                  'name': tempArray[l].name,
+                  'isHazardous': tempArray[l].is_potentially_hazardous_asteroid,
+                  'diameterMeters': tempArray[l].estimated_diameter.meters,
+                  'self': tempArray[l].nasa_jpl_url
+                }
+              });
+            }
+          }
+          
+         console.log(idList);
+         const noDetails= await nearObjecDetails(2415711)
+         console.log(noDetails)
+          
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+    }, []);
+    
 
     useEffect(() => {
       if(pictureOfAday.length>0){
