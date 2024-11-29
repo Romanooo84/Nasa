@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchPolimaticImageCamera} from '../../hooks/download'
 import { Heading, Flex, Image, Box } from "@chakra-ui/react"
-//import Shadow from './Shadow'
 import { useData } from '../../hooks/usaData';
 import { Link} from "react-router-dom"
 import useCarouselEffect from '../../hooks/useCarousel';
@@ -28,12 +27,37 @@ interface NasaPictureData {
   type:string
 }
 
+interface NeoDetails {
+  name: string;
+  isHazardous: boolean;
+  diameterMeters: {
+    estimated_min: number;
+    estimated_max: number;
+  };
+  self: string;
+}
+
+type NeoList = {
+  [key: string]: NeoDetails;
+};
+
+interface ObjectData {
+  id: string;
+  data: any;
+  coordinates: {
+    X:number
+    Y:number
+    Z:number
+  }
+}
+
 const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
     const [pictures2, setPictures2] = useState<NasaPictureData[]>([]);
     const [earthPictures, setEarthPictures] = useState<JSX.Element[]>([]);
     const {Data}=useData()
     const {pictureOfAday, marsPictures}=Data
+    const [neoIdList, setNeoIDList] = useState<NeoList[]>([]);
 
 
     useEffect(()=>{
@@ -63,9 +87,9 @@ const Home=() => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const data = await nearObjectList(); // Assume nearObjectList() is a function that returns a promise. 
+          const data = await nearObjectList('2024-11-22', '2024-11-28')
           const tempData = Object.keys(data);
-          const idList = [];
+          const idList:NeoList[] = [];
           for (let i = 0; i < tempData.length; i++) {
             const tempArray = data[tempData[i]];
             for (let l = 0; l < tempArray.length; l++) {
@@ -79,14 +103,52 @@ const Home=() => {
               });
             }
           }
+          setNeoIDList(idList)
+          const allKeys = Object.values(idList).map(item => Object.keys(item)[0]);
+          const objectDataList: ObjectData[] = []
           
-         console.log(idList);
-         const noDetails = await nearObjecDetails(27334, '2024-11-26', '2024-11-27')
-         console.log(noDetails)
-          
-        } catch (error) {
-          console.error("Error fetching data:", error);
+          const fetchNearObjectDetails= async(allKeys:string[])=> {
+            for (let i = 0; i < allKeys.length; i++) {
+                try {
+                    const neoDetails = await nearObjecDetails(`DES=${allKeys[i]}`, '2024-11-27', '2024-11-28');
+                    const startIndex = neoDetails.indexOf('$$SOE')
+                    const endIndex = neoDetails.indexOf("$$EOE");
+                    const extracted = neoDetails.substring(startIndex, endIndex).trim()
+                    const data=extracted.split('TDB')
+
+                    const XdirectionStartIndex = data[2].indexOf('X =')
+                    const XdirectionEndIndex = data[2].indexOf('Y')
+                    const Xdirection= Number(data[2].substring(XdirectionStartIndex+4 , XdirectionEndIndex).trim())
+                   
+                    const YdirectionStartIndex = data[2].indexOf('Y =')
+                    const YdirectionEndIndex = data[2].indexOf('Z')
+                    const Ydirection = Number(data[2].substring(YdirectionStartIndex+4 , YdirectionEndIndex).trim())
+                
+                    const ZdirectionStartIndex = data[2].indexOf(' Z =')
+                    const ZdirectionEndIndex = data[2].indexOf('VX')
+                    const Zdirection = Number(data[2].substring(ZdirectionStartIndex+4 , ZdirectionEndIndex).trim())
+           
+
+                    objectDataList.push({
+                      id: allKeys[i],
+                      data: neoDetails,
+                      coordinates: {
+                        X:Xdirection,
+                        Y:Ydirection,
+                        Z:Zdirection}
+                    });
+                } catch (error) {
+                    console.error(`Error fetching details for ID ${allKeys[i]}:`, error);
+                }
+            }
+            console.log(objectDataList)
         }
+
+        fetchNearObjectDetails(allKeys)
+          
+      } catch (error) {
+          console.error("Error fetching data:", error);
+      }
       };
       fetchData();
     }, []);

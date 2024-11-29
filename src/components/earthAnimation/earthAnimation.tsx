@@ -28,7 +28,7 @@ const EarthAnimation = () => {
     const earthTexture = textureLoader.load(image);
 
     // Sphere geometry
-    const sphereRadius = 2;
+    const sphereRadius = 1;
     const geometry = new THREE.SphereGeometry(sphereRadius, 100, 100);
     const material = new THREE.MeshBasicMaterial({ map: earthTexture });
     const sphere = new THREE.Mesh(geometry, material);
@@ -77,7 +77,7 @@ const EarthAnimation = () => {
       scene.add(sprite);
     });
 
-    camera.position.z = 8;
+    camera.position.z = 3;
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
 

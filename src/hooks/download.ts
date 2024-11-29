@@ -128,8 +128,8 @@ export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]>
         }
       }
 
-    export const nearObjectList =async (/*StartDate: string, endDate: string*/) =>{
-      const url =`https://api.nasa.gov/neo/rest/v1/feed?start_date=2024-11-20&end_date=2024-11-27&&api_key=${token}`
+    export const nearObjectList =async (StartDate: string, endDate: string) =>{
+      const url =`https://api.nasa.gov/neo/rest/v1/feed?start_date=${StartDate}-20&end_date=${endDate}&&api_key=${token}`
       try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -144,10 +144,8 @@ export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]>
       }
     }
 
-    export const nearObjecDetails =async (objectId:number, startDate:string, endDate:string) =>{
-      console.log(startDate)
+    export const nearObjecDetails =async (objectId:string, startDate:string, endDate:string) =>{
       const url =`https://romanpisarski.pl/nasa/neodetails?id=${objectId}&startDate=${startDate}&endDate=${endDate}`
-      console.log(url)
       try {
         const response = await fetch(url);
         if (!response.ok) {
