@@ -8,3 +8,5 @@ https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=399&EPHEM_TYPE=VEC
 wykaz asteroid
 
 https://api.nasa.gov/neo/rest/v1/feed?start_date=2024-11-01&end_date=2024-11-27&api_key=DEMO_KEY
+
+https://ssd-api.jpl.nasa.gov/cad.api?dist-max=0.1LD&date-min=2014-01-01&sort=dist
