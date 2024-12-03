@@ -10,6 +10,8 @@ import PictureRender from './render';
 import css from'./Home.module.css'
 import EarthAnimation from '../earthAnimation/earthAnimation';
 import { nearObjectList, nearObjecDetails } from '../../hooks/download';
+import { createDate } from '../../hooks/createDate';
+import { coordinates } from '../../hooks/coordinates';
 
 interface NasaPictureData {
   url: string;
@@ -45,10 +47,21 @@ interface ObjectData {
   id: string;
   data: any;
   coordinates: {
-    X:number
-    Y:number
-    Z:number
+    x: number;
+    y: number;
+    z: number;
   }
+  earthCoordinates: {
+    x: number;
+    y: number;
+    z: number;
+  }
+}
+
+interface markup{
+  id: string;
+  nearDate: string;
+  today: string;
 }
 
 const Home=() => {
@@ -86,65 +99,45 @@ const Home=() => {
 
     useEffect(() => {
       const fetchData = async () => {
-        try {
-          const data = await nearObjectList('2024-11-22', '2024-11-28')
-          const tempData = Object.keys(data);
-          const idList:NeoList[] = [];
-          for (let i = 0; i < tempData.length; i++) {
-            const tempArray = data[tempData[i]];
-            for (let l = 0; l < tempArray.length; l++) {
-              idList.push({
-                [tempArray[l].neo_reference_id]: {
-                  'name': tempArray[l].name,
-                  'isHazardous': tempArray[l].is_potentially_hazardous_asteroid,
-                  'diameterMeters': tempArray[l].estimated_diameter.meters,
-                  'self': tempArray[l].nasa_jpl_url
-                }
-              });
-            }
-          }
-          setNeoIDList(idList)
-          const allKeys = Object.values(idList).map(item => Object.keys(item)[0]);
-          const objectDataList: ObjectData[] = []
-          
-          const fetchNearObjectDetails= async(allKeys:string[])=> {
-            for (let i = 0; i < allKeys.length; i++) {
+        const todaydate:Date=new Date()
+        const dif=new Date(todaydate.getTime() - 30 * 24 * 60 * 60 * 1000)
+        const month=createDate(dif)
+        const today=createDate(todaydate)
+        try { 
+          const data = await nearObjectList(month)
+          console.log(data)
+          const markup = data.data.map((item: string) => {
+            const date=new Date(item[3])
+            const newDate=createDate(date)
+            return(
+              { id:item[0],
+                nearDate:newDate,
+                today
+              }
+            )
+          })     
+          const fetchNearObjectDetails= async(markup: markup[])=> {
+            const objectDataList:ObjectData[]=[]
+            for (let i = 0; i < markup.length; i++) {
                 try {
-                    const neoDetails = await nearObjecDetails(`DES=${allKeys[i]}`, '2024-11-27', '2024-11-28');
-                    const startIndex = neoDetails.indexOf('$$SOE')
-                    const endIndex = neoDetails.indexOf("$$EOE");
-                    const extracted = neoDetails.substring(startIndex, endIndex).trim()
-                    const data=extracted.split('TDB')
-
-                    const XdirectionStartIndex = data[2].indexOf('X =')
-                    const XdirectionEndIndex = data[2].indexOf('Y')
-                    const Xdirection= Number(data[2].substring(XdirectionStartIndex+4 , XdirectionEndIndex).trim())
-                   
-                    const YdirectionStartIndex = data[2].indexOf('Y =')
-                    const YdirectionEndIndex = data[2].indexOf('Z')
-                    const Ydirection = Number(data[2].substring(YdirectionStartIndex+4 , YdirectionEndIndex).trim())
-                
-                    const ZdirectionStartIndex = data[2].indexOf(' Z =')
-                    const ZdirectionEndIndex = data[2].indexOf('VX')
-                    const Zdirection = Number(data[2].substring(ZdirectionStartIndex+4 , ZdirectionEndIndex).trim())
-           
-
+                    const neoDetails = await nearObjecDetails(`${markup[i].id}`, `${markup[i].nearDate}`, `${markup[i].today}`);
+                    const objectCoordinates = coordinates(neoDetails)
+                    const earthDetails = await nearObjecDetails(`399`, `${markup[i].nearDate}`, `${markup[i].today}`);
+                    const earthCoordinates = coordinates(earthDetails)
                     objectDataList.push({
-                      id: allKeys[i],
+                      id: markup[i].id,
                       data: neoDetails,
-                      coordinates: {
-                        X:Xdirection,
-                        Y:Ydirection,
-                        Z:Zdirection}
+                      coordinates: objectCoordinates,
+                      earthCoordinates: earthCoordinates 
                     });
                 } catch (error) {
-                    console.error(`Error fetching details for ID ${allKeys[i]}:`, error);
+                    console.error(`Error fetching details for ID ${markup[i]}:`, error);
                 }
             }
             console.log(objectDataList)
         }
 
-        fetchNearObjectDetails(allKeys)
+        fetchNearObjectDetails(markup)
           
       } catch (error) {
           console.error("Error fetching data:", error);
