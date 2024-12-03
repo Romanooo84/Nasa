@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchPolimaticImageCamera} from '../../hooks/download'
 import { Heading, Flex, Image, Box } from "@chakra-ui/react"
-//import Shadow from './Shadow'
 import { useData } from '../../hooks/usaData';
 import { Link} from "react-router-dom"
 import useCarouselEffect from '../../hooks/useCarousel';
@@ -11,6 +10,8 @@ import PictureRender from './render';
 import css from'./Home.module.css'
 import EarthAnimation from '../earthAnimation/earthAnimation';
 import { nearObjectList, nearObjecDetails } from '../../hooks/download';
+import { createDate } from '../../hooks/createDate';
+import { coordinates, fetchNearObjectDetails } from '../../hooks/coordinates';
 
 interface NasaPictureData {
   url: string;
@@ -28,12 +29,28 @@ interface NasaPictureData {
   type:string
 }
 
+interface NeoDetails {
+  name: string;
+  isHazardous: boolean;
+  diameterMeters: {
+    estimated_min: number;
+    estimated_max: number;
+  };
+  self: string;
+}
+
+type NeoList = {
+  [key: string]: NeoDetails;
+};
+
+
 const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
     const [pictures2, setPictures2] = useState<NasaPictureData[]>([]);
     const [earthPictures, setEarthPictures] = useState<JSX.Element[]>([]);
     const {Data}=useData()
     const {pictureOfAday, marsPictures}=Data
+    const [neoIdList, setNeoIDList] = useState<NeoList[]>([]);
 
 
     useEffect(()=>{
@@ -62,31 +79,27 @@ const Home=() => {
 
     useEffect(() => {
       const fetchData = async () => {
-        try {
-          const data = await nearObjectList(); // Assume nearObjectList() is a function that returns a promise. 
-          const tempData = Object.keys(data);
-          const idList = [];
-          for (let i = 0; i < tempData.length; i++) {
-            const tempArray = data[tempData[i]];
-            for (let l = 0; l < tempArray.length; l++) {
-              idList.push({
-                [tempArray[l].neo_reference_id]: {
-                  'name': tempArray[l].name,
-                  'isHazardous': tempArray[l].is_potentially_hazardous_asteroid,
-                  'diameterMeters': tempArray[l].estimated_diameter.meters,
-                  'self': tempArray[l].nasa_jpl_url
-                }
-              });
-            }
-          }
-          
-         console.log(idList);
-         const noDetails= await nearObjecDetails(2415711)
-         console.log(noDetails)
-          
-        } catch (error) {
+        const todaydate:Date=new Date()
+        const dif=new Date(todaydate.getTime() - 30 * 24 * 60 * 60 * 1000)
+        const month=createDate(dif)
+        const today=createDate(todaydate)
+        try { 
+          const data = await nearObjectList(month)
+          console.log(data)
+          const markup = data.data.map((item: string) => {
+            const date=new Date(item[3])
+            const newDate=createDate(date)
+            return(
+              { id:item[0],
+                nearDate:newDate,
+                today
+              }
+            )
+          })          
+        fetchNearObjectDetails(markup)
+      } catch (error) {
           console.error("Error fetching data:", error);
-        }
+      }
       };
       fetchData();
     }, []);
