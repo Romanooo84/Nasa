@@ -11,7 +11,7 @@ import css from'./Home.module.css'
 import EarthAnimation from '../earthAnimation/earthAnimation';
 import { nearObjectList, nearObjecDetails } from '../../hooks/download';
 import { createDate } from '../../hooks/createDate';
-import { coordinates } from '../../hooks/coordinates';
+import { coordinates, fetchNearObjectDetails } from '../../hooks/coordinates';
 
 interface NasaPictureData {
   url: string;
@@ -43,26 +43,6 @@ type NeoList = {
   [key: string]: NeoDetails;
 };
 
-interface ObjectData {
-  id: string;
-  data: any;
-  coordinates: {
-    x: number;
-    y: number;
-    z: number;
-  }
-  earthCoordinates: {
-    x: number;
-    y: number;
-    z: number;
-  }
-}
-
-interface markup{
-  id: string;
-  nearDate: string;
-  today: string;
-}
 
 const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
@@ -115,30 +95,8 @@ const Home=() => {
                 today
               }
             )
-          })     
-          const fetchNearObjectDetails= async(markup: markup[])=> {
-            const objectDataList:ObjectData[]=[]
-            for (let i = 0; i < markup.length; i++) {
-                try {
-                    const neoDetails = await nearObjecDetails(`${markup[i].id}`, `${markup[i].nearDate}`, `${markup[i].today}`);
-                    const objectCoordinates = coordinates(neoDetails)
-                    const earthDetails = await nearObjecDetails(`399`, `${markup[i].nearDate}`, `${markup[i].today}`);
-                    const earthCoordinates = coordinates(earthDetails)
-                    objectDataList.push({
-                      id: markup[i].id,
-                      data: neoDetails,
-                      coordinates: objectCoordinates,
-                      earthCoordinates: earthCoordinates 
-                    });
-                } catch (error) {
-                    console.error(`Error fetching details for ID ${markup[i]}:`, error);
-                }
-            }
-            console.log(objectDataList)
-        }
-
+          })          
         fetchNearObjectDetails(markup)
-          
       } catch (error) {
           console.error("Error fetching data:", error);
       }
