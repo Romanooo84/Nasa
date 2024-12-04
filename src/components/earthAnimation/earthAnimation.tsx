@@ -3,7 +3,18 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import image from '../../media/flat_earth_Largest_still.0330.jpg';
 
-const EarthAnimation = (coordinates) => {
+interface Coordinate {
+  x: number;
+  y: number;
+  z: number;
+  id: string;
+}
+
+interface CoordinatesProps {
+  coordinates: Coordinate[];
+}
+
+const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const earthRadius = 6378
 
@@ -108,7 +119,7 @@ const EarthAnimation = (coordinates) => {
         mountNode.removeChild(renderer.domElement);
       }
     };
-  }, []);
+  }, [coordinates.coordinates]);
 
   return <div ref={mountRef} />;
 };
