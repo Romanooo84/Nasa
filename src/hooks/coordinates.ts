@@ -26,30 +26,34 @@ interface ObjectData {
 
   
 
-export const coordinates=(objectData:string)=>{
+export const coordinates=(objectData:string, id:string)=>{
+                    console.log(objectData)
                     const startIndex = objectData.indexOf('$$SOE')
                     const endIndex = objectData.indexOf("$$EOE");
                     const extracted = objectData.substring(startIndex, endIndex).trim()
                     const data=extracted.split('TDB')
-
-                    const XdirectionStartIndex = data[2].indexOf('X =')
-                    const XdirectionEndIndex = data[2].indexOf('Y')
-                    const Xdirection= Number(data[2].substring(XdirectionStartIndex+4 , XdirectionEndIndex).trim())
+                    console.log(data)
+  
+                    const XdirectionStartIndex = data[1].indexOf('X =')
+                    const XdirectionEndIndex = data[1].indexOf('Y')
+                    const Xdirection= Number(data[1].substring(XdirectionStartIndex+4 , XdirectionEndIndex).trim())
+                    console.log(Xdirection)
                    
-                    const YdirectionStartIndex = data[2].indexOf('Y =')
-                    const YdirectionEndIndex = data[2].indexOf('Z')
-                    const Ydirection = Number(data[2].substring(YdirectionStartIndex+4 , YdirectionEndIndex).trim())
+                    const YdirectionStartIndex = data[1].indexOf('Y =')
+                    const YdirectionEndIndex = data[1].indexOf('Z')
+                    const Ydirection = Number(data[1].substring(YdirectionStartIndex+4 , YdirectionEndIndex).trim())
                 
-                    const ZdirectionStartIndex = data[2].indexOf(' Z =')
-                    const ZdirectionEndIndex = data[2].indexOf('VX')
-                    const Zdirection = Number(data[2].substring(ZdirectionStartIndex+4 , ZdirectionEndIndex).trim())
+                    const ZdirectionStartIndex = data[1].indexOf(' Z =')
+                    const ZdirectionEndIndex = data[1].indexOf('VX')
+                    const Zdirection = Number(data[1].substring(ZdirectionStartIndex+4 , ZdirectionEndIndex).trim())
 
                     const coordinatesXYZ={
                         x:Xdirection,
                         y:Ydirection,
-                        z:Zdirection
+                        z:Zdirection,
+                        id
                     }
-
+                    console.log(coordinatesXYZ)
                     return (coordinatesXYZ)
 }
 
@@ -58,11 +62,9 @@ export const  fetchNearObjectDetails= async(markup: markup[])=> {
   for (let i = 0; i < markup.length; i++) {
       try {
           const neoDetails = await nearObjecDetails(`${markup[i].id}`, `${markup[i].nearDate}`, `${markup[i].today}`);
-          if (markup[i].id!='399'){
-          console.log(neoDetails)}
-          const objectCoordinates = coordinates(neoDetails)
+          const objectCoordinates = coordinates(neoDetails, markup[i].id)
           const earthDetails = await nearObjecDetails(`399`, `${markup[i].nearDate}`, `${markup[i].today}`);
-          const earthCoordinates = coordinates(earthDetails)
+          const earthCoordinates = coordinates(earthDetails,'399')
           objectDataList.push({
             id: markup[i].id,
             data: neoDetails,
@@ -70,6 +72,7 @@ export const  fetchNearObjectDetails= async(markup: markup[])=> {
             earthCoordinates: earthCoordinates,
             dist_min:markup[i].dist_min
           });
+
       } catch (error) {
           console.error(`Error fetching details for ID ${markup[i]}:`, error);
       }
@@ -112,7 +115,6 @@ export const countCoorodinates = async () =>{
   }
   try {
     const data = await findCoordinates();
-    console.log(data)
     const lunarDayKM = 384399
     const astronomicalUnitKM = 149597870.7
     const objectCorodinatesKM = data?.map(item=>{
@@ -130,7 +132,7 @@ export const countCoorodinates = async () =>{
       const scaledZObject =  newZObjectCoordinate*proportion*astronomicalUnitKM
 
       const scaledCoordinates:Scaled={x:scaledXObject, y:scaledYObject, z:scaledZObject, id:item.id}
-      
+      console.log(scaledCoordinates)
       return (scaledCoordinates)
     })
     return objectCorodinatesKM

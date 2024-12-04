@@ -69,7 +69,6 @@ const Home=() => {
     useEffect(() => {
       const fetchData = async () => {
         const data = await countCoorodinates();
-        console.log(data);
         setCoordinates(data)
       };
       fetchData();

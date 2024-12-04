@@ -20,7 +20,6 @@ const EarthAnimation = (coordinates) => {
     
     const scale = 1/earthRadius
 
-    console.log(coordinates)
     const boxes =[]
     for(let i=0; i<coordinates.coordinates.length; i++){ 
       boxes.push({
@@ -31,8 +30,6 @@ const EarthAnimation = (coordinates) => {
         label: coordinates.coordinates[i].id
       }) 
     }
-
-  console.log(boxes)
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
