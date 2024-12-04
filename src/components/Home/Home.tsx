@@ -31,6 +31,7 @@ interface Scaled {
   x: number;
   y: number;
   z: number;
+  id: string
 }
 
 const Home=() => {
