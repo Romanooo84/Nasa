@@ -3,7 +3,7 @@ import { createDate } from "./createDate";
 
 interface ObjectData {
     id: string;
-    data: any;
+    data: string;
     coordinates: {
       x: number;
       y: number;
