@@ -146,9 +146,7 @@ export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]>
     }
 
     export const nearObjecDetails =async (objectId:string, startDate:string, endDate:string) =>{
-      console.log(objectId)
       const url =`https://romanpisarski.pl/nasa/neodetails?id=${objectId}&startDate=${startDate}&endDate=${endDate}`
-      console.log(url)
       try {
         const response = await fetch(url);
         if (!response.ok) {
