@@ -3,8 +3,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import image from '../../media/flat_earth_Largest_still.0330.jpg';
 
-const EarthAnimation = () => {
+const EarthAnimation = (coordinates) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
+  const earthRadius = 6378
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -16,6 +17,22 @@ const EarthAnimation = () => {
       0.1,
       100
     );
+    
+    const scale = 1/earthRadius
+
+    console.log(coordinates)
+    const boxes =[]
+    for(let i=0; i<coordinates.coordinates.length; i++){ 
+      boxes.push({
+        x:coordinates.coordinates[i].x*scale,
+        y:coordinates.coordinates[i].y*scale,
+        z:coordinates.coordinates[i].z*scale,
+        color: 'grey',
+        label: coordinates.coordinates[i].id
+      }) 
+    }
+
+  console.log(boxes)
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -38,45 +55,46 @@ const EarthAnimation = () => {
     sphere.rotation.y = tiltAngle;
     scene.add(sphere);
 
-    const boxes = [
-      { x: sphereRadius + 0.1, y: 0, z: 0, color: 0xff0000, label: 'box 1' },
-      { x: 0, y: sphereRadius + 0.3, z: 0, color: 0x00ff00, label: 'box 2' },
-      { x: 0, y: 0, z: sphereRadius + 0.5, color: 0x0000ff, label: 'box 334434534534534' },
-      { x: -sphereRadius - 0.7, y: 0, z: 0, color: 0xffff00, label: 'box 4' },
-      { x: 0, y: -sphereRadius - 0.9, z: 0, color: 0xff00ff, label: 'box 5' },
-    ];
-
-    boxes.map(({ x, y, z, color, label }) => {
+    boxes.map(item => {
+      // Box size
       const boxSize = 0.05;
       const boxGeometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
-      const boxMaterial = new THREE.MeshBasicMaterial({ color });
+      
+      // Material with correct color format
+      const boxMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(item.color) });
+      
+      // Create the 3D box
       const box = new THREE.Mesh(boxGeometry, boxMaterial);
-      box.position.set(x, y, z);
+      box.position.set(item.x, item.y, item.z);
       scene.add(box);
-
+    
+      // Create label texture using canvas
       const createLabelTexture = (label: string) => {
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
         if (!context) return new THREE.Texture(canvas);
-
+    
         context.font = '50px Arial';
         context.fillStyle = 'white';
-        context.fillText(label, 100, 40);
+        context.fillText(label, 10, 40); // Adjust the text position if needed
         const texture = new THREE.Texture(canvas);
         texture.needsUpdate = true;
         return texture;
       };
-
+    
+      // Sprite material for the label
       const spriteMaterial = new THREE.SpriteMaterial({
-        map: createLabelTexture(label),
+        map: createLabelTexture(item.label),
         transparent: true
       });
+    
+      // Create sprite for the label and position it above the box
       const sprite = new THREE.Sprite(spriteMaterial);
-      sprite.position.set(x, y, z);
-      sprite.scale.set(0.2, 0.2, 1);
+      sprite.position.set(item.x, item.y + 0.1, item.z); // Adjust Y to place the label above the box
+      sprite.scale.set(0.2, 0.2, 1); // Scale the label to fit properly
       scene.add(sprite);
     });
-
+    
     camera.position.z = 3;
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;

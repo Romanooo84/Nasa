@@ -9,9 +9,7 @@ import buttonsList from "../../data/buttonList";
 import PictureRender from './render';
 import css from'./Home.module.css'
 import EarthAnimation from '../earthAnimation/earthAnimation';
-import { nearObjectList, nearObjecDetails } from '../../hooks/download';
-import { createDate } from '../../hooks/createDate';
-import { coordinates, fetchNearObjectDetails } from '../../hooks/coordinates';
+import { countCoorodinates } from '../../hooks/coordinates';
 
 interface NasaPictureData {
   url: string;
@@ -29,28 +27,19 @@ interface NasaPictureData {
   type:string
 }
 
-interface NeoDetails {
-  name: string;
-  isHazardous: boolean;
-  diameterMeters: {
-    estimated_min: number;
-    estimated_max: number;
-  };
-  self: string;
+interface Scaled {
+  x: number;
+  y: number;
+  z: number;
 }
-
-type NeoList = {
-  [key: string]: NeoDetails;
-};
-
 
 const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
     const [pictures2, setPictures2] = useState<NasaPictureData[]>([]);
     const [earthPictures, setEarthPictures] = useState<JSX.Element[]>([]);
+    const [coordinates, setCoordinates] = useState<Scaled[] | undefined>(undefined)
     const {Data}=useData()
     const {pictureOfAday, marsPictures}=Data
-    const [neoIdList, setNeoIDList] = useState<NeoList[]>([]);
 
 
     useEffect(()=>{
@@ -79,27 +68,9 @@ const Home=() => {
 
     useEffect(() => {
       const fetchData = async () => {
-        const todaydate:Date=new Date()
-        const dif=new Date(todaydate.getTime() - 30 * 24 * 60 * 60 * 1000)
-        const month=createDate(dif)
-        const today=createDate(todaydate)
-        try { 
-          const data = await nearObjectList(month)
-          console.log(data)
-          const markup = data.data.map((item: string) => {
-            const date=new Date(item[3])
-            const newDate=createDate(date)
-            return(
-              { id:item[0],
-                nearDate:newDate,
-                today
-              }
-            )
-          })          
-        fetchNearObjectDetails(markup)
-      } catch (error) {
-          console.error("Error fetching data:", error);
-      }
+        const data = await countCoorodinates();
+        console.log(data);
+        setCoordinates(data)
       };
       fetchData();
     }, []);
@@ -141,7 +112,7 @@ const Home=() => {
                 alignItems='center'
                 transition='transform 2s ease-out'
                 _hover={{
-                  transform: "scale(1.1)", // Optional: adds a slight scaling effect
+                  transform: "scale(1.1)"
                 }}
               >
                 <Heading>{buttonsList[0]}</Heading>
@@ -154,7 +125,7 @@ const Home=() => {
                 alignItems='center'
                 transition='transform 2s ease-out'
                 _hover={{
-                  transform: "scale(1.1)", // Optional: adds a slight scaling effect
+                  transform: "scale(1.1)"
                 }}
                 
               >
@@ -197,7 +168,8 @@ const Home=() => {
                 marginTop='50px'>
                 {earthPictures}
             </Box>
-          <EarthAnimation/>
+          
+          {coordinates && <EarthAnimation coordinates={coordinates}/>}
       </Flex> 
     );
   }
