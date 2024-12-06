@@ -34,11 +34,14 @@ interface Scaled {
   id: string
 }
 
+
+
 const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
     const [pictures2, setPictures2] = useState<NasaPictureData[]>([]);
     const [earthPictures, setEarthPictures] = useState<JSX.Element[]>([]);
     const [coordinates, setCoordinates] = useState<Scaled[] | undefined>(undefined)
+  
     const {Data}=useData()
     const {pictureOfAday, marsPictures}=Data
 
@@ -72,7 +75,8 @@ const Home=() => {
         const data = await countCoorodinates();
         setCoordinates(data)
       };
-      fetchData();
+      fetchData ()
+
     }, []);
     
 
@@ -169,7 +173,8 @@ const Home=() => {
                 {earthPictures}
             </Box>
           
-          {coordinates && <EarthAnimation coordinates={coordinates}/>}
+            {coordinates && ( <EarthAnimation coordinates={coordinates} />
+)}
       </Flex> 
     );
   }
