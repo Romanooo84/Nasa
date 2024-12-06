@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import image from '../../media/flat_earth_Largest_still.0330.jpg';
+import moonImage from '../../media/j341xwrkvrduzmdlcsiymq8wz6ev.jpg'
+import asteroidImage from '../../media/g6zx8pfyhftrfsut3xcq-680x383.jpg'
 import { countCoorodinates } from '../../hooks/coordinates';
 
 
@@ -43,9 +45,9 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
-      75,
+      20,
       window.innerWidth / window.innerHeight,
-      0.1,
+      1,
       1000
     );
     
@@ -85,10 +87,12 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
 
     //moon geometry
 
-    // Sphere geometry
+    const moonTextureLoader = new THREE.TextureLoader();
+    const moonTexture = moonTextureLoader .load(moonImage);
+
     const moonRadius = 3475*scale ;
     const moonGeometry = new THREE.SphereGeometry(moonRadius , 100, 100);
-    const moonMaterial = new THREE.MeshBasicMaterial({ map: earthTexture });
+    const moonMaterial = new THREE.MeshBasicMaterial({ map: moonTexture });
     const moonSphere = new THREE.Mesh(moonGeometry, moonMaterial);
     if (moonCoordinates) {
       moonSphere.position.set(
@@ -131,12 +135,16 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     scene.add(sprite);
 
     boxes.map(item => {
+
+      const asteroidTextureLoader = new THREE.TextureLoader();
+      const asteroidTexture = asteroidTextureLoader .load(asteroidImage);
+
       // Box size
       const objectSize = 0.05;
-      const objectGeometry = new THREE.SphereGeometry(objectSize, 3, 5);
+      const objectGeometry = new THREE.SphereGeometry(objectSize, 10, 5);
       
       // Material with correct color format
-      const objectMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(item.color) });
+      const objectMaterial = new THREE.MeshBasicMaterial({ map: asteroidTexture});
       
       // Create the 3D box
       const object = new THREE.Mesh(objectGeometry, objectMaterial);
@@ -170,7 +178,7 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
       scene.add(sprite);
     });
     
-    camera.position.z = 3;
+    camera.position.z = 8;
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
 
