@@ -182,10 +182,9 @@ export const countCoorodinates = async (planetID:string='no planet', distance:nu
     return objectCorodinatesKM
   } else {
     const data = await planetDetails(planetID, distance);
-    const lunarDayKM = 384399
     const astronomicalUnitKM = 149597870.7
     
-      const distanceKM = lunarDayKM*distance
+      const distanceKM = distance
 
       const newXObjectCoordinate = (data.coordinates.x-data.earthCoordinates.x)
       const newYObjectCoordinate = (data.coordinates.y-data.earthCoordinates.y)

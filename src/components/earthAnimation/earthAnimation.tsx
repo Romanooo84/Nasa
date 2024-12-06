@@ -45,14 +45,11 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
-      0.01,
+      0.1,
       1000
     );
     
     const scale = 1/earthRadius
-
-   
-    moonCoordinates? console.log(moonCoordinates[0].x*scale):null
 
     const boxes =[]
     for(let i=0; i<coordinates.coordinates.length; i++){ 
@@ -89,15 +86,37 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     //moon geometry
 
     // Sphere geometry
-    const moonRadius = 10;
+    const moonRadius = 3475*scale ;
     const moonGeometry = new THREE.SphereGeometry(moonRadius , 100, 100);
     const moonMaterial = new THREE.MeshBasicMaterial({ map: earthTexture });
     const moonSphere = new THREE.Mesh(moonGeometry, moonMaterial);
     moonCoordinates?  moonSphere.position.set(moonCoordinates[0].x*scale, moonCoordinates[0].y*scale, moonCoordinates[0].z*scale): null
-    //const tiltAngle = -15.5 * (Math.PI / 180);
-    //sphere.rotation.x = tiltAngle;
-    //sphere.rotation.y = tiltAngle;
     scene.add(moonSphere);
+
+    const createLabelTexture = (label: string) => {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      if (!context) return new THREE.Texture(canvas);
+  
+      context.font = '50px Arial';
+      context.fillStyle = 'white';
+      context.fillText(label, 10, 40); // Adjust the text position if needed
+      const texture = new THREE.Texture(canvas);
+      texture.needsUpdate = true;
+      return texture;
+    };
+  
+    // Sprite material for the label
+    const spriteMaterial = new THREE.SpriteMaterial({
+      map: createLabelTexture('Moon'),
+      transparent: true
+    });
+  
+    // Create sprite for the label and position it above the box
+    const sprite = new THREE.Sprite(spriteMaterial);
+    moonCoordinates?  sprite.position.set(moonCoordinates[0].x*scale, moonCoordinates[0].y*scale+0.3, moonCoordinates[0].z*scale): null // Adjust Y to place the label above the box
+    sprite.scale.set(2, 2, 1); // Scale the label to fit properly
+    scene.add(sprite);
 
     boxes.map(item => {
       // Box size
