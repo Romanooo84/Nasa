@@ -24,20 +24,22 @@ interface ObjectData {
     dist_min: number
   }
 
-  
+  interface Scaled{
+    x: number;
+    y: number;
+    z: number;
+    id:string;
+  }  
 
 export const coordinates=(objectData:string, id:string)=>{
-                    console.log(objectData)
                     const startIndex = objectData.indexOf('$$SOE')
                     const endIndex = objectData.indexOf("$$EOE");
                     const extracted = objectData.substring(startIndex, endIndex).trim()
                     const data=extracted.split('TDB')
-                    console.log(data)
   
                     const XdirectionStartIndex = data[1].indexOf('X =')
                     const XdirectionEndIndex = data[1].indexOf('Y')
                     const Xdirection= Number(data[1].substring(XdirectionStartIndex+4 , XdirectionEndIndex).trim())
-                    console.log(Xdirection)
                    
                     const YdirectionStartIndex = data[1].indexOf('Y =')
                     const YdirectionEndIndex = data[1].indexOf('Z')
@@ -53,7 +55,6 @@ export const coordinates=(objectData:string, id:string)=>{
                         z:Zdirection,
                         id
                     }
-                    console.log(coordinatesXYZ)
                     return (coordinatesXYZ)
 }
 
@@ -79,6 +80,53 @@ export const  fetchNearObjectDetails= async(markup: markup[])=> {
   }
   return objectDataList
 }
+
+export const planetDetails = async (planetID: string, distance: number) => {
+  interface PlanetData {
+    id: string;
+    data: string;
+    coordinates: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    earthCoordinates: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    distance: number;
+  }
+
+  const todayDate: Date = new Date();
+  const diff = new Date(todayDate.getTime() - 1 * 24 * 60 * 60 * 1000); // Yesterday's date
+  const oneDay = createDate(diff);
+  const today = createDate(todayDate);
+
+  try {
+    // Fetch details for the object
+    const neoDetails = await nearObjecDetails(planetID, `${oneDay}`, `${today}`);
+    const objectCoordinates = coordinates(neoDetails, planetID);
+
+    // Fetch details for Earth (if different)
+    const earthDetails = await nearObjecDetails('399', `${oneDay}`, `${today}`);
+    const earthCoordinates = coordinates(earthDetails, '399');
+
+    // Construct and return the result
+    const planetData: PlanetData = {
+      id: planetID,
+      data: neoDetails,
+      coordinates: objectCoordinates,
+      earthCoordinates: earthCoordinates,
+      distance,
+    };
+    return planetData;
+  } catch (error) {
+    console.error(`Error fetching details for ID ${planetID}:`, error);
+    throw error; // Re-throw error to handle it in the caller function
+  }
+};
+
 
 
 export const findCoordinates = async () => {
@@ -106,15 +154,12 @@ export const findCoordinates = async () => {
   }
 };
 
-export const countCoorodinates = async () =>{
-  interface Scaled{
-    x: number;
-    y: number;
-    z: number;
-    id:string;
-  }
+export const countCoorodinates = async (planetID:string='no planet', distance:number=0) : Promise<Scaled[] | undefined> =>{
+
   try {
-    const data = await findCoordinates();
+    if(planetID==='no planet')
+    {
+    const data = await findCoordinates()
     const lunarDayKM = 384399
     const astronomicalUnitKM = 149597870.7
     const objectCorodinatesKM = data?.map(item=>{
@@ -132,11 +177,30 @@ export const countCoorodinates = async () =>{
       const scaledZObject =  newZObjectCoordinate*proportion*astronomicalUnitKM
 
       const scaledCoordinates:Scaled={x:scaledXObject, y:scaledYObject, z:scaledZObject, id:item.id}
-      console.log(scaledCoordinates)
       return (scaledCoordinates)
     })
     return objectCorodinatesKM
+  } else {
+    const data = await planetDetails(planetID, distance);
+    const astronomicalUnitKM = 149597870.7
     
+      const distanceKM = distance
+
+      const newXObjectCoordinate = (data.coordinates.x-data.earthCoordinates.x)
+      const newYObjectCoordinate = (data.coordinates.y-data.earthCoordinates.y)
+      const newZObjectCoordinate = (data.coordinates.z-data.earthCoordinates.z)
+
+      const obectDistanceByCoordinatesKM = astronomicalUnitKM *Math.sqrt(newXObjectCoordinate*2+newYObjectCoordinate*2+newZObjectCoordinate*2)
+      const proportion = distanceKM/obectDistanceByCoordinatesKM
+
+      const scaledXObject =  newXObjectCoordinate*proportion*astronomicalUnitKM
+      const scaledYObject =  newYObjectCoordinate*proportion*astronomicalUnitKM
+      const scaledZObject =  newZObjectCoordinate*proportion*astronomicalUnitKM
+
+      const scaledCoordinates:Scaled={x:scaledXObject, y:scaledYObject, z:scaledZObject, id:data.id}
+
+      return [scaledCoordinates]
+  }
   } catch (error) {
     console.error("Failed to fetch coordinates:", error);
   }
