@@ -5,6 +5,7 @@ import image from '../../media/flat_earth_Largest_still.0330.jpg';
 import moonImage from '../../media/j341xwrkvrduzmdlcsiymq8wz6ev.jpg'
 import asteroidImage from '../../media/g6zx8pfyhftrfsut3xcq-680x383.jpg'
 import { countCoorodinates } from '../../hooks/coordinates';
+import { plnatesData } from '../../data/planetsData';
 
 
 interface Coordinate {
@@ -31,10 +32,12 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const earthRadius = 6378
 
+  console.log
+
   useEffect(() => {
   
     const fetchMoonData = async () => {
-      const data = await countCoorodinates('499',384400);
+      const data = await countCoorodinates('301',78340000);
       setmoonCoordinates(data)
     };
     fetchMoonData ();
