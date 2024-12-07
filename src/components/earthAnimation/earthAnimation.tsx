@@ -5,7 +5,7 @@ import image from '../../media/flat_earth_Largest_still.0330.jpg';
 import moonImage from '../../media/j341xwrkvrduzmdlcsiymq8wz6ev.jpg'
 import asteroidImage from '../../media/g6zx8pfyhftrfsut3xcq-680x383.jpg'
 import { countCoorodinates } from '../../hooks/coordinates';
-import { plnatesData } from '../../data/planetsData';
+import { planetsData } from '../../data/planetsData';
 
 
 interface Coordinate {
@@ -32,12 +32,12 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const earthRadius = 6378
 
-  console.log
+  console.log(planetsData)
 
   useEffect(() => {
   
     const fetchMoonData = async () => {
-      const data = await countCoorodinates('301',78340000);
+      const data = await countCoorodinates('301',384400);
       setmoonCoordinates(data)
     };
     fetchMoonData ();
@@ -93,7 +93,7 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     const moonTextureLoader = new THREE.TextureLoader();
     const moonTexture = moonTextureLoader .load(moonImage);
 
-    const moonRadius = 3475*scale ;
+    const moonRadius = 100 ;
     const moonGeometry = new THREE.SphereGeometry(moonRadius , 100, 100);
     const moonMaterial = new THREE.MeshBasicMaterial({ map: moonTexture });
     const moonSphere = new THREE.Mesh(moonGeometry, moonMaterial);
