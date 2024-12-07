@@ -106,6 +106,7 @@ export const planetDetails = async (planetID: string, distance: number) => {
   try {
     // Fetch details for the object
     const neoDetails = await nearObjecDetails(planetID, `${oneDay}`, `${today}`);
+    console.log(neoDetails)
     const objectCoordinates = coordinates(neoDetails, planetID);
 
     // Fetch details for Earth (if different)
@@ -120,6 +121,7 @@ export const planetDetails = async (planetID: string, distance: number) => {
       earthCoordinates: earthCoordinates,
       distance,
     };
+    console.log(planetData)
     return planetData;
   } catch (error) {
     console.error(`Error fetching details for ID ${planetID}:`, error);
@@ -182,22 +184,23 @@ export const countCoorodinates = async (planetID:string='no planet', distance:nu
     return objectCorodinatesKM
   } else {
     const data = await planetDetails(planetID, distance);
-    const astronomicalUnitKM = 149597870.7
+    const astronomicalUnitKM = 149597870
     
       const distanceKM = distance
 
       const newXObjectCoordinate = (data.coordinates.x-data.earthCoordinates.x)
       const newYObjectCoordinate = (data.coordinates.y-data.earthCoordinates.y)
-      const newZObjectCoordinate = (data.coordinates.z-data.earthCoordinates.z)
+      const newZObjectCoordinate = (data.coordinates.z - data.earthCoordinates.z)
+      
 
-      const obectDistanceByCoordinatesKM = astronomicalUnitKM *Math.sqrt(newXObjectCoordinate*2+newYObjectCoordinate*2+newZObjectCoordinate*2)
-      const proportion = distanceKM/obectDistanceByCoordinatesKM
+      const obectDistanceByCoordinatesKM = astronomicalUnitKM * Math.sqrt(newXObjectCoordinate ** 2 + newYObjectCoordinate ** 2 + newZObjectCoordinate ** 2)
+      const proportion = distanceKM / obectDistanceByCoordinatesKM
 
       const scaledXObject =  newXObjectCoordinate*proportion*astronomicalUnitKM
       const scaledYObject =  newYObjectCoordinate*proportion*astronomicalUnitKM
-      const scaledZObject =  newZObjectCoordinate*proportion*astronomicalUnitKM
+      const scaledZObject = newZObjectCoordinate * proportion * astronomicalUnitKM
 
-      const scaledCoordinates:Scaled={x:scaledXObject, y:scaledYObject, z:scaledZObject, id:data.id}
+      const scaledCoordinates: Scaled = { x: scaledXObject, y: scaledYObject, z: scaledZObject, id: data.id }
 
       return [scaledCoordinates]
   }

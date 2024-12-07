@@ -93,7 +93,7 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     const moonTextureLoader = new THREE.TextureLoader();
     const moonTexture = moonTextureLoader .load(moonImage);
 
-    const moonRadius = 100 ;
+    const moonRadius = 1737*scale ;
     const moonGeometry = new THREE.SphereGeometry(moonRadius , 100, 100);
     const moonMaterial = new THREE.MeshBasicMaterial({ map: moonTexture });
     const moonSphere = new THREE.Mesh(moonGeometry, moonMaterial);
@@ -177,7 +177,7 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
       // Create sprite for the label and position it above the box
       const sprite = new THREE.Sprite(spriteMaterial);
       sprite.position.set(item.x, item.y + 0.1, item.z); // Adjust Y to place the label above the box
-      sprite.scale.set(2, 2, 1); // Scale the label to fit properly
+      sprite.scale.set(2, 2, 2); // Scale the label to fit properly
       scene.add(sprite);
     });
     
