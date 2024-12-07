@@ -1,4 +1,4 @@
-export const plnatesData=[
+export const planetsData=[
     {Merkury:{
         planetID:199, 
         planetDistance:91691000,
@@ -29,7 +29,7 @@ export const plnatesData=[
     {Uran: 
         {planetID:799, 
         planetDistance: 2723950000, 
-        radius: 50,724/2
+        radius: 50724/2
         }
     },
     {Neptun: {
