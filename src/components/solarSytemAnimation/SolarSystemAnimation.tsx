@@ -68,7 +68,7 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     }
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth/1.5, window.innerHeight/1.5);
+    renderer.setSize(window.innerWidth/1.25, window.innerHeight/1.25);
     const mountNode = mountRef.current; // Capture the mountRef value in a variable
 
     mountNode.appendChild(renderer.domElement);
@@ -184,16 +184,13 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     camera.position.z = 20;
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.rotateSpeed = 0.3
     controls.minDistance = 10; // Minimalna odległość
     controls.maxDistance = 300; // Maksymalna odległość
-    controls.addEventListener('change', () => {
-      console.log(camera.position)
-      console.log(`camera=${camera.position.z}`)
-      sprite.scale.set(camera.position.z / 10, camera.position.z / 10, camera.position.z / 10)
-      scene.add(sprite);
-      
-  });
+
+    console.log(controls)
+    console.log(`camera=${camera}`)
+    console.log(`camera=${camera.position.z}`)
+
     // Ograniczenie zoomu (dla kamer ortograficznych lub perspektywicznych)
     //controls.minZoom = 0.5; // Minimalny zoom
     //controls.maxZoom = 2; // Maksymalny zoom

@@ -196,6 +196,8 @@ export const countCoorodinates = async (planetID:string='no planet', distance:nu
       const obectDistanceByCoordinatesKM = astronomicalUnitKM * Math.sqrt(newXObjectCoordinate ** 2 + newYObjectCoordinate ** 2 + newZObjectCoordinate ** 2)
       const proportion = distanceKM / obectDistanceByCoordinatesKM
 
+
+
       const scaledXObject =  newXObjectCoordinate*proportion*astronomicalUnitKM
       const scaledYObject =  newYObjectCoordinate*proportion*astronomicalUnitKM
       const scaledZObject = newZObjectCoordinate * proportion * astronomicalUnitKM
