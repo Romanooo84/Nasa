@@ -5,7 +5,6 @@ import image from '../../media/flat_earth_Largest_still.0330.jpg';
 import moonImage from '../../media/j341xwrkvrduzmdlcsiymq8wz6ev.jpg'
 import asteroidImage from '../../media/g6zx8pfyhftrfsut3xcq-680x383.jpg'
 import { countCoorodinates } from '../../hooks/coordinates';
-import { planetsData } from '../../data/planetsData';
 
 
 interface Coordinate {
@@ -32,8 +31,6 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const earthRadius = 6378
 
-  console.log(planetsData)
-
   useEffect(() => {
   
     const fetchMoonData = async () => {
@@ -45,6 +42,7 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
 
   useEffect(() => {
     if (!mountRef.current) return;
+    
     const scale = 1/earthRadius
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -67,8 +65,16 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
       })
     }
 
+   
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth/1.5, window.innerHeight/1.5);
+    renderer.setSize(window.innerWidth*0.8, window.innerHeight*0.8);
+
+    window.addEventListener('resize', () => {
+      renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+  });
+
     const mountNode = mountRef.current; // Capture the mountRef value in a variable
     mountNode.appendChild(renderer.domElement);
 
