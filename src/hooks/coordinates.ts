@@ -31,6 +31,7 @@ interface ObjectData {
     id:string;
   }  
 
+ 
 export const coordinates=(objectData:string, id:string)=>{
                     const startIndex = objectData.indexOf('$$SOE')
                     const endIndex = objectData.indexOf("$$EOE");
@@ -62,7 +63,7 @@ export const  fetchNearObjectDetails= async(markup: markup[])=> {
   const objectDataList:ObjectData[]=[]
   for (let i = 0; i < markup.length; i++) {
       try {
-          const neoDetails = await nearObjecDetails(`${markup[i].id}`, `${markup[i].nearDate}`, `${markup[i].today}`);
+          const neoDetails= await nearObjecDetails(`${markup[i].id}`, `${markup[i].nearDate}`, `${markup[i].today}`);
           const objectCoordinates = coordinates(neoDetails, markup[i].id)
           const earthDetails = await nearObjecDetails(`399`, `${markup[i].nearDate}`, `${markup[i].today}`);
           const earthCoordinates = coordinates(earthDetails,'399')

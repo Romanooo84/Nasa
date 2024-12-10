@@ -9,7 +9,7 @@ import buttonsList from "../../data/buttonList";
 import PictureRender from './render';
 import css from'./Home.module.css'
 import EarthAnimation from '../earthAnimation/earthAnimation';
-import { countCoorodinates } from '../../hooks/coordinates';
+import { asteroidCoordinates } from '../../hooks/download';
 
 interface NasaPictureData {
   url: string;
@@ -72,7 +72,7 @@ const Home=() => {
 
     useEffect(() => {
       const fetchData = async () => {
-        const data = await countCoorodinates();
+        const data = await asteroidCoordinates();
         setCoordinates(data)
       };
       fetchData ()

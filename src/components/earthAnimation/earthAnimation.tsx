@@ -45,7 +45,7 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
 
   useEffect(() => {
     if (!mountRef.current) return;
-
+    const scale = 1/earthRadius
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       20,
@@ -54,45 +54,42 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
       1000
     );
     
-    const scale = 1/earthRadius
-
     const boxes =[]
     for(let i=0; i<coordinates.coordinates.length; i++){ 
+      if (coordinates.coordinates[i].x===null)
+      {continue}
       boxes.push({
         x:coordinates.coordinates[i].x*scale,
         y:coordinates.coordinates[i].y*scale,
         z:coordinates.coordinates[i].z*scale,
         color: 'white',
         label: coordinates.coordinates[i].id
-      }) 
+      })
     }
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth/1.5, window.innerHeight/1.5);
     const mountNode = mountRef.current; // Capture the mountRef value in a variable
-
     mountNode.appendChild(renderer.domElement);
 
-    // Load texture
+    // Earth texture
     const textureLoader = new THREE.TextureLoader();
     const earthTexture = textureLoader.load(image);
 
-    // Sphere geometry
+    // Earth  geometry
     const sphereRadius = 1;
     const geometry = new THREE.SphereGeometry(sphereRadius, 100, 100);
     const material = new THREE.MeshBasicMaterial({ map: earthTexture });
     const sphere = new THREE.Mesh(geometry, material);
     sphere.position.set(0, 0, 0);
-    //const tiltAngle = -15.5 * (Math.PI / 180);
-    //sphere.rotation.x = tiltAngle;
-    //sphere.rotation.y = tiltAngle;
     scene.add(sphere);
 
-    //moon geometry
-
+    
+    // Moon texture
     const moonTextureLoader = new THREE.TextureLoader();
     const moonTexture = moonTextureLoader .load(moonImage);
 
+    // Moon geometry
     const moonRadius = 1737*scale ;
     const moonGeometry = new THREE.SphereGeometry(moonRadius , 100, 100);
     const moonMaterial = new THREE.MeshBasicMaterial({ map: moonTexture });
@@ -106,6 +103,7 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     }
     scene.add(moonSphere);
 
+    // Moon label
     const createLabelTexture = (label: string) => {
       const canvas = document.createElement('canvas');
       const context = canvas.getContext('2d');
@@ -113,19 +111,17 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
   
       context.font = '50px Arial';
       context.fillStyle = 'white';
-      context.fillText(label, 10, 40); // Adjust the text position if needed
+      context.fillText(label, 10, 40);
       const texture = new THREE.Texture(canvas);
       texture.needsUpdate = true;
       return texture;
     };
   
-    // Sprite material for the label
     const spriteMaterial = new THREE.SpriteMaterial({
       map: createLabelTexture('Moon'),
       transparent: true
     });
   
-    // Create sprite for the label and position it above the box
     const sprite = new THREE.Sprite(spriteMaterial);
     if (moonCoordinates) {
       sprite.position.set(
@@ -133,28 +129,25 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
         moonCoordinates[0].y * scale + 0.3,
         moonCoordinates[0].z * scale
       );
-    } // Adjust Y to place the label above the box
-    sprite.scale.set(2, 2, 1); // Scale the label to fit properly
+    } 
+    sprite.scale.set(2, 2, 1); 
     scene.add(sprite);
 
+    // Ateroid
     boxes.map(item => {
 
       const asteroidTextureLoader = new THREE.TextureLoader();
       const asteroidTexture = asteroidTextureLoader .load(asteroidImage);
 
-      // Box size
+      // Asteroid size
       const objectSize = 0.05;
       const objectGeometry = new THREE.SphereGeometry(objectSize, 10, 5);
-      
-      // Material with correct color format
       const objectMaterial = new THREE.MeshBasicMaterial({ map: asteroidTexture});
-      
-      // Create the 3D box
       const object = new THREE.Mesh(objectGeometry, objectMaterial);
       object.position.set(item.x, item.y, item.z);
       scene.add(object);
     
-      // Create label texture using canvas
+      // Asteroid abel
       const createLabelTexture = (label: string) => {
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
@@ -162,22 +155,20 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     
         context.font = '50px Arial';
         context.fillStyle = 'white';
-        context.fillText(label, 10, 40); // Adjust the text position if needed
+        context.fillText(label, 10, 40); 
         const texture = new THREE.Texture(canvas);
         texture.needsUpdate = true;
         return texture;
       };
     
-      // Sprite material for the label
       const spriteMaterial = new THREE.SpriteMaterial({
         map: createLabelTexture(item.label),
         transparent: true
       });
     
-      // Create sprite for the label and position it above the box
       const sprite = new THREE.Sprite(spriteMaterial);
-      sprite.position.set(item.x, item.y + 0.1, item.z); // Adjust Y to place the label above the box
-      sprite.scale.set(2, 2, 2); // Scale the label to fit properly
+      sprite.position.set(item.x, item.y + 0.1, item.z); 
+      sprite.scale.set(2, 2, 2); 
       scene.add(sprite);
     });
     
@@ -185,19 +176,8 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.rotateSpeed = 0.3
-    controls.minDistance = 10; // Minimalna odległość
-    controls.maxDistance = 300; // Maksymalna odległość
-    controls.addEventListener('change', () => {
-      console.log(camera.position)
-      console.log(`camera=${camera.position.z}`)
-      sprite.scale.set(camera.position.z / 10, camera.position.z / 10, camera.position.z / 10)
-      scene.add(sprite);
-      
-  });
-    // Ograniczenie zoomu (dla kamer ortograficznych lub perspektywicznych)
-    //controls.minZoom = 0.5; // Minimalny zoom
-    //controls.maxZoom = 2; // Maksymalny zoom
-
+    controls.minDistance = 10; 
+    controls.maxDistance = 300; 
     const renderScene = () => {
       controls.update();
       renderer.render(scene, camera);
@@ -206,7 +186,7 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     renderer.setAnimationLoop(renderScene);
 
     return () => {
-      if (mountNode) { // Now we use the captured mountNode
+      if (mountNode) { 
         mountNode.removeChild(renderer.domElement);
       }
     };
