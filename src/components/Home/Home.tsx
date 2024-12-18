@@ -10,6 +10,7 @@ import PictureRender from './render';
 import css from'./Home.module.css'
 import EarthAnimation from '../earthAnimation/earthAnimation';
 import { asteroidCoordinates } from '../../hooks/download';
+import AsteroidInfo from '../earthAnimation/asteroidInfo'
 
 interface NasaPictureData {
   url: string;
@@ -69,6 +70,7 @@ const Home=() => {
           console.error("Unexpected error:", error);
       }
     },[]) 
+
 
     useEffect(() => {
       const fetchData = async () => {
@@ -173,8 +175,9 @@ const Home=() => {
                 {earthPictures}
             </Box>
           
-            {coordinates && ( <EarthAnimation coordinates={coordinates} />
-)}
+            {coordinates && ( <EarthAnimation coordinates={coordinates} />)}
+            {coordinates && ( <AsteroidInfo coordinates={coordinates}  />)}
+
       </Flex> 
     );
   }
