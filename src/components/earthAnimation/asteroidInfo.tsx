@@ -1,11 +1,39 @@
 import { useEffect, useState } from "react";
-import { Flex, Text, Box } from "@chakra-ui/react";
+import { Flex, Text} from "@chakra-ui/react";
+import Select from "react-select"
 
 interface Coordinate {
     x: number;
     y: number;
     z: number;
     id: string;
+    asteroidInfo: {
+        orbital_data:{
+            first_observation_date:string
+            last_observation_date:string,
+            orbital_period:number,
+            orbit_determination_date:string
+            orbit_class:{
+                orbit_class_description:string
+            }
+        },
+        estimated_diameter:{
+            meters:{
+                estimated_diameter_max:number
+            },
+            miles:{
+                estimated_diameter_max:number
+            },
+            feet:{
+                estimated_diameter_max:number
+            }
+        }
+        close_approach_data:string,
+        designation:string, 
+        absolute_magnitude_h:string
+        is_potentially_hazardous_asteroid:boolean,
+        
+    }
 
   }
   
@@ -19,25 +47,21 @@ interface CoordinatesProps {
   const AsteroidInfo: React.FC<CoordinatesProps>  = ({coordinates}) => {
 
     const [info, setInfo]=useState<JSX.Element[] | null>(null)
+    const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
+    const [selectedOption, setSelectedOption] = useState<{ label: string; value: string } | null>(null);
+    
 
 
     useEffect(()=>{
-        console.log(coordinates)
         if(coordinates && coordinates.length > 0){
+            let idtempList: { label: string; value: string }[]=[]
             const markup = coordinates.map(item=>{
-                let firstObservationDate= item.asteroidInfo.orbital_data.first_observation_date
-                let lastOnservationDate= item.asteroidInfo.orbital_data.last_observation_date
-                firstObservationDate=Date.parse(firstObservationDate)
-                lastOnservationDate = Date.parse(lastOnservationDate)
-                console.log(firstObservationDate)
-                console.log(lastOnservationDate)
-                const closeAoproach = item.asteroidInfo.close_approach_data.filter(date=> {
-                    console.log(Date.parse(date))
-                    return(firstObservationDate<=Date.parse(date)&&Date.parse(date)<=lastOnservationDate)})
-                console.log(closeAoproach)
-                    
+                const id = item.asteroidInfo.designation
+                idtempList.push(
+                    {label: `${id}`, value: `${id}`})
                 return(
-                    <Flex key={item.asteroidInfo.designation}
+                    <>
+                    <Flex key={id}
                         flexDirection='column'
                         >
                         <Flex gap='10px'>
@@ -65,17 +89,42 @@ interface CoordinatesProps {
                             <Text>{item.asteroidInfo.is_potentially_hazardous_asteroid===true? ('Yes'):('No')}</Text>
                         </Flex>
                         <Flex gap='10px'>
+                            <Text>Orbital period </Text>
+                            <Text>{`${Math.floor(item.asteroidInfo.orbital_data.orbital_period)} days`}</Text>
+                        </Flex>
+                        <Flex gap='10px'>
                             <Text>First observation date </Text>
                             <Text>{item.asteroidInfo.orbital_data.first_observation_date}</Text>
                         </Flex>
+                        <Flex gap='10px'>
+                            <Text>Last observation date </Text>
+                            <Text>{item.asteroidInfo.orbital_data.last_observation_date}</Text>
+                        </Flex>
+                        <Flex gap='10px'>
+                            <Text>Orbit Determination Date </Text>
+                            <Text>{item.asteroidInfo.orbital_data.orbit_determination_date}</Text>
+                        </Flex>
                     </Flex>
+                    </>
                 )
             })
             setInfo(markup)
+            setOptions(idtempList)
         }
-    },[coordinates])
+    },[coordinates, setOptions])
 
-    return <>{info}</>
+    const onChange = (selected: SingleValue<{ label: string; value: string }>) => {
+        setSelectedOption(selected);
+        console.log("Selected option:", selected);
+      };
+
+    return (
+            <Flex flexDirection='column'>
+                 <Select   placeholder={'wpisz cos'} value={selectedOption} options={options} onChange={onChange} //onInputChange={onInputChange} 
+                 />
+                {info}
+            </Flex>
+            )
   }
 
   export default AsteroidInfo;
