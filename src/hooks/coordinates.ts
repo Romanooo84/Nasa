@@ -107,7 +107,6 @@ export const planetDetails = async (planetID: string, distance: number) => {
   try {
     // Fetch details for the object
     const neoDetails = await nearObjecDetails(planetID, `${oneDay}`, `${today}`);
-    console.log(neoDetails)
     const objectCoordinates = coordinates(neoDetails, planetID);
 
     // Fetch details for Earth (if different)
@@ -122,7 +121,6 @@ export const planetDetails = async (planetID: string, distance: number) => {
       earthCoordinates: earthCoordinates,
       distance,
     };
-    console.log(planetData)
     return planetData;
   } catch (error) {
     console.error(`Error fetching details for ID ${planetID}:`, error);

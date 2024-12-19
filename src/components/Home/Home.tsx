@@ -33,15 +33,48 @@ interface Scaled {
   y: number;
   z: number;
   id: string
+  asteroidInfo: {
+        orbital_data:{
+            first_observation_date:string
+            last_observation_date:string,
+            orbital_period:number,
+            orbit_determination_date:string
+            orbit_class:{
+                orbit_class_description:string
+            }
+        },
+        estimated_diameter:{
+            meters:{
+                estimated_diameter_max:number
+            },
+            miles:{
+                estimated_diameter_max:number
+            },
+            feet:{
+                estimated_diameter_max:number
+            }
+        }
+        close_approach_data:string,
+        designation:string, 
+        absolute_magnitude_h:string
+        is_potentially_hazardous_asteroid:boolean,
+        
+    }
 }
 
+interface Data {
+  x: number;
+  y: number;
+  z: number;
+  id: string
+}
 
 
 const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
     const [pictures2, setPictures2] = useState<NasaPictureData[]>([]);
     const [earthPictures, setEarthPictures] = useState<JSX.Element[]>([]);
-    const [coordinates, setCoordinates] = useState<Scaled[] | undefined>(undefined)
+    const [coordinates, setCoordinates] = useState<Data[]>([])
   
     const {Data}=useData()
     const {pictureOfAday, marsPictures}=Data
@@ -73,13 +106,14 @@ const Home=() => {
 
 
     useEffect(() => {
-      const fetchData = async () => {
-        const data = await asteroidCoordinates();
-        setCoordinates(data)
-      };
-      fetchData ()
-
-    }, []);
+    const fetchData = async () => {
+      const data = await asteroidCoordinates();
+      if (data) {
+        setCoordinates(data); // Now this is definitely a Scaled[] array
+      }
+    };
+  fetchData();
+}, []);
     
 
     useEffect(() => {
