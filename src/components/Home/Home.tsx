@@ -28,45 +28,57 @@ interface NasaPictureData {
   type:string
 }
 
-interface Scaled {
-  x: number;
-  y: number;
-  z: number;
-  id: string
-  asteroidInfo: {
-        orbital_data:{
-            first_observation_date:string
-            last_observation_date:string,
-            orbital_period:number,
-            orbit_determination_date:string
-            orbit_class:{
-                orbit_class_description:string
-            }
-        },
-        estimated_diameter:{
-            meters:{
-                estimated_diameter_max:number
-            },
-            miles:{
-                estimated_diameter_max:number
-            },
-            feet:{
-                estimated_diameter_max:number
-            }
-        }
-        close_approach_data:string,
-        designation:string, 
-        absolute_magnitude_h:string
-        is_potentially_hazardous_asteroid:boolean,
-        
-    }
+interface CloseApproachData {
+  close_approach_date: string;
+  close_approach_date_full: string;
+  epoch_date_close_approach: number;
+  relative_velocity: {
+    kilometers_per_second: string;
+    kilometers_per_hour: string;
+    miles_per_hour: string;
+  };
+  miss_distance: {
+    astronomical: string;
+    lunar: string;
+    kilometers: string;
+    miles: string;
+  };
+  orbiting_body: string;
 }
 
-interface Data {
+
+
+interface CoordinatesData {
   x: number;
-  y: number;
-  z: number;
-  id: string
+    y: number;
+    z: number;
+    id: string;
+    asteroidInfo: {
+      orbital_data: {
+        first_observation_date: string;
+        last_observation_date: string;
+        orbital_period: number;
+        orbit_determination_date: string;
+        orbit_class: {
+          orbit_class_description: string;
+        };
+      };
+      estimated_diameter: {
+        meters: {
+          estimated_diameter_max: number;
+        };
+        miles: {
+          estimated_diameter_max: number;
+        };
+        feet: {
+          estimated_diameter_max: number;
+        };
+      };
+      close_approach_data: CloseApproachData[];
+      designation: string;
+      absolute_magnitude_h: string;
+      is_potentially_hazardous_asteroid: boolean;
+    };
 }
 
 
@@ -74,7 +86,7 @@ const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
     const [pictures2, setPictures2] = useState<NasaPictureData[]>([]);
     const [earthPictures, setEarthPictures] = useState<JSX.Element[]>([]);
-    const [coordinates, setCoordinates] = useState<Data[]>([])
+    const [coordinates, setCoordinates] = useState<CoordinatesData[]>([])
   
     const {Data}=useData()
     const {pictureOfAday, marsPictures}=Data
@@ -106,14 +118,22 @@ const Home=() => {
 
 
     useEffect(() => {
-    const fetchData = async () => {
-      const data = await asteroidCoordinates();
-      if (data) {
-        setCoordinates(data); // Now this is definitely a Scaled[] array
-      }
-    };
-  fetchData();
-}, []);
+      const fetchData = async () => {
+        const downloadedData: CoordinatesData[] = await asteroidCoordinates(); // Assuming the API returns a Scaled[] array
+        if (downloadedData) {
+          // Map the Scaled[] data to the Data[] structure
+          const mappedData: CoordinatesData[] = downloadedData.map(item => ({
+            x: item.x,
+            y: item.y,
+            z: item.z,
+            id: item.id,
+            asteroidInfo: item.asteroidInfo, // Ensure asteroidInfo is included
+          }));
+          setCoordinates(mappedData);
+        }
+      };
+      fetchData();
+    }, []);
     
 
     useEffect(() => {

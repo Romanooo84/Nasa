@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import image from '../../media/flat_earth_Largest_still.0330.jpg';
+import image from '../../media/3884071286_92de0b5a98_o.jpg';
 import moonImage from '../../media/j341xwrkvrduzmdlcsiymq8wz6ev.jpg'
 import asteroidImage from '../../media/g6zx8pfyhftrfsut3xcq-680x383.jpg'
 import { countCoorodinates } from '../../hooks/coordinates';
@@ -32,7 +32,7 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
   const earthRadius = 6378
 
   useEffect(() => {
-  
+    
     const fetchMoonData = async () => {
       const data = await countCoorodinates('301',384400);
       setmoonCoordinates(data)
@@ -41,8 +41,8 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
   }, []);
 
   useEffect(() => {
+    console.log(coordinates)
     if (!mountRef.current) return;
-    
     const scale = 1/earthRadius
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(

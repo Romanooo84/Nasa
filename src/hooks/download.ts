@@ -28,11 +28,55 @@ interface MarsPicturesResponse {
   photos: MarsPicture[];
 }
 
+interface CloseApproachData {
+  close_approach_date: string;
+  close_approach_date_full: string;
+  epoch_date_close_approach: number;
+  relative_velocity: {
+    kilometers_per_second: string;
+    kilometers_per_hour: string;
+    miles_per_hour: string;
+  };
+  miss_distance: {
+    astronomical: string;
+    lunar: string;
+    kilometers: string;
+    miles: string;
+  };
+  orbiting_body: string;
+}
+
 interface Scaled {
   x: number;
-  y: number;
-  z: number;
-  id: string
+    y: number;
+    z: number;
+    id: string;
+    asteroidInfo: {
+      orbital_data: {
+        first_observation_date: string;
+        last_observation_date: string;
+        orbital_period: number;
+        orbit_determination_date: string;
+        orbit_class: {
+          orbit_class_description: string;
+        };
+      };
+      estimated_diameter: {
+        meters: {
+          estimated_diameter_max: number;
+        };
+        miles: {
+          estimated_diameter_max: number;
+        };
+        feet: {
+          estimated_diameter_max: number;
+        };
+      };
+      close_approach_data: CloseApproachData[];
+      designation: string;
+      absolute_magnitude_h: string;
+      is_potentially_hazardous_asteroid: boolean;
+    };
 }
 
 
