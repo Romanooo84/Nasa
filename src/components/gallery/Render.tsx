@@ -16,7 +16,7 @@ interface GalleryRenderProps {
 }
 
 const mainColor = 'rgb(81 119 227)'
-const ColorBackground = "black"
+const ColorBackground:string = "black"
 
 export const GalleryRender = ({ gallery, isLoading, setIsLoading, newSearch, setNewSearch, onButtonClick }: GalleryRenderProps) => {
     const [render, setRender] = useState<JSX.Element[]>([]);

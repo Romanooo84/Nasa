@@ -2,7 +2,7 @@
 import { GalleryData } from "./GalleryData";
 import { fetchGallery } from "../../../download";
 import { useState} from "react";
-import { Flex, Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react"
+import { Flex, Input, Button } from "@chakra-ui/react"
 import { IoSearch, } from "react-icons/io5";
 
 interface SearchBarProps {
@@ -37,8 +37,6 @@ const SearchBar =({ setGallery, setIsLoading, setNewSearch }: SearchBarProps)=>{
             transition="transform 0.5s ease-in-out" 
             _hover={{ transform: "scale(1.05)" }}  
         >
-            <InputGroup>
-            <InputRightElement>
                 <Button 
                     padding='0' 
                     width='40px'
@@ -52,14 +50,13 @@ const SearchBar =({ setGallery, setIsLoading, setNewSearch }: SearchBarProps)=>{
                             color={mainColor}
                             />
                 </Button>
-            </InputRightElement>
+
                 <Input 
                 color={mainColor}
                 fontSize='20px'
                 backgroundColor='#3e6ebb70'
                 placeholder='Find NASA media'
                 onChange={event=>setInputValue(event.target.value)}></Input>
-            </InputGroup>
         </Flex>
     )
 }
