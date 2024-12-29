@@ -194,7 +194,7 @@ const AsteroidInfo: React.FC<CoordinatesProps> = ({ coordinates }) => {
 
   useEffect(() => {
     if (coordinates && coordinates.length > 0) {
-      let idtempList: { label: string; value: string }[] = [];
+      const idtempList: { label: string; value: string }[] = [];
       const markup = coordinates.map((item) => {
         const id = item.asteroidInfo.designation;
         idtempList.push({ label: `${id}`, value: `${id}` });
