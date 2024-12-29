@@ -8,9 +8,7 @@ import picturesForGallery from '../../data/pic_for_gallery';
 import buttonsList from "../../data/buttonList";
 import PictureRender from './render';
 import css from'./Home.module.css'
-import EarthAnimation from '../earthAnimation/earthAnimation';
-import { asteroidCoordinates } from '../../hooks/download';
-import AsteroidInfo from '../earthAnimation/asteroidInfo'
+import NearObjectDetails from '../earthAnimation/nearObjectDetails';
 
 interface NasaPictureData {
   url: string;
@@ -28,65 +26,15 @@ interface NasaPictureData {
   type:string
 }
 
-interface CloseApproachData {
-  close_approach_date: string;
-  close_approach_date_full: string;
-  epoch_date_close_approach: number;
-  relative_velocity: {
-    kilometers_per_second: string;
-    kilometers_per_hour: string;
-    miles_per_hour: string;
-  };
-  miss_distance: {
-    astronomical: string;
-    lunar: string;
-    kilometers: string;
-    miles: string;
-  };
-  orbiting_body: string;
-}
 
 
-
-interface CoordinatesData {
-  x: number;
-    y: number;
-    z: number;
-    id: string;
-    asteroidInfo: {
-      orbital_data: {
-        first_observation_date: string;
-        last_observation_date: string;
-        orbital_period: number;
-        orbit_determination_date: string;
-        orbit_class: {
-          orbit_class_description: string;
-        };
-      };
-      estimated_diameter: {
-        meters: {
-          estimated_diameter_max: number;
-        };
-        miles: {
-          estimated_diameter_max: number;
-        };
-        feet: {
-          estimated_diameter_max: number;
-        };
-      };
-      close_approach_data: CloseApproachData[];
-      designation: string;
-      absolute_magnitude_h: string;
-      is_potentially_hazardous_asteroid: boolean;
-    };
-}
 
 
 const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
     const [pictures2, setPictures2] = useState<NasaPictureData[]>([]);
     const [earthPictures, setEarthPictures] = useState<JSX.Element[]>([]);
-    const [coordinates, setCoordinates] = useState<CoordinatesData[]>([])
+ 
   
     const {Data}=useData()
     const {pictureOfAday, marsPictures}=Data
@@ -116,24 +64,6 @@ const Home=() => {
       }
     },[]) 
 
-
-    useEffect(() => {
-      const fetchData = async () => {
-        const downloadedData: CoordinatesData[] = await asteroidCoordinates(); // Assuming the API returns a Scaled[] array
-        if (downloadedData) {
-          // Map the Scaled[] data to the Data[] structure
-          const mappedData: CoordinatesData[] = downloadedData.map(item => ({
-            x: item.x,
-            y: item.y,
-            z: item.z,
-            id: item.id,
-            asteroidInfo: item.asteroidInfo, // Ensure asteroidInfo is included
-          }));
-          setCoordinates(mappedData);
-        }
-      };
-      fetchData();
-    }, []);
     
 
     useEffect(() => {
@@ -152,7 +82,7 @@ const Home=() => {
 
     return (
       <Flex 
-          alignItems='flex-start'
+          alignItems='center'
           color='#949aa3'
           fontFamily="Garamond"
           gap='40px'
@@ -161,8 +91,7 @@ const Home=() => {
           flexDirection={{ sm: 'column', md: 'column' }}
           >
           <Flex flexDirection='column'
-          alignItems='center'
-          width='100%'>
+          alignItems='center'>
             <Flex gap='40px'
                flexWrap='wrap'
                justifyContent='space-between'
@@ -222,16 +151,14 @@ const Home=() => {
               </Flex>
             </Flex>
          </Flex>
-            <Box className={css.earthImageDiv}
+          <Box className={css.earthImageDiv}
                 width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
                 height={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
                 marginTop='50px'>
                 {earthPictures}
-            </Box>
-          
-            {coordinates && ( <EarthAnimation coordinates={coordinates} />)}
-            {coordinates && ( <AsteroidInfo coordinates={coordinates}  />)}
-
+        </Box>
+        <NearObjectDetails/>
+        
       </Flex> 
     );
   }

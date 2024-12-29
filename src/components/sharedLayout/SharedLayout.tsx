@@ -51,9 +51,11 @@ const SharedLayout = () => {
             >
                 <Header />
                      <main>
-                        <Box width={{ sm: '320px', md: '740px', lg: '900px', xl: '1100px', '2xl': '1400px' }}> 
+                    <Flex width={{ sm: '320px', md: '740px', lg: '900px', xl: '1100px', '2xl': '1400px' }}
+                        alignItems='center'
+                    justifyContent='center'> 
                             {pathname==='/'?<Home/>:<Outlet />}
-                        </Box>
+                        </Flex>
                     </main>
                 <Footer />
             </Flex>

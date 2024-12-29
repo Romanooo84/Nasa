@@ -1,0 +1,14 @@
+.asteroidInfo>*:nth-child(odd) {
+    background-color: #e0e0e030;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.asteroidInfo>*:nth-child(even) {
+    background-color: transparent;
+}
+
+.NODmainDiv{
+    background-color: transparent;
+}

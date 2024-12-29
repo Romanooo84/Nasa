@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Flex, Text } from "@chakra-ui/react";
 import Select, { SingleValue } from "react-select";
+import css from './asteroidInfo.module.css'
 
 interface CloseApproachData {
   close_approach_date: string;
@@ -96,77 +97,86 @@ const AsteroidInfo: React.FC<CoordinatesProps> = ({ coordinates }) => {
   const [selectedOption, setSelectedOption] = useState<{ label: string; value: string } | null>(null);
 
   const AsteroidDetails: React.FC<{ item: Asteroid }> = ({ item }) => {
-    const firstDay = item.asteroidInfo.orbital_data.first_observation_date;
-    const newFirstDay = new Date(firstDay);
-    newFirstDay.setDate(newFirstDay.getDate() - 1);
-    const lastDay = item.asteroidInfo.orbital_data.last_observation_date;
-    const newLastDay = new Date(lastDay);
-    newLastDay.setDate(newLastDay.getDate() + 1);
+    try {
+      const firstDay = item.asteroidInfo.orbital_data.first_observation_date;
+      const newFirstDay = new Date(firstDay);
+      newFirstDay.setDate(newFirstDay.getDate() - 1);
+      const lastDay = item.asteroidInfo.orbital_data.last_observation_date;
+      const newLastDay = new Date(lastDay);
+      newLastDay.setDate(newLastDay.getDate() + 1);
+    
 
-    item.asteroidInfo.close_approach_data.find((date: CloseApproachData) => {
-      const foundDate = date.close_approach_date;
-      const newFoundDate = new Date(foundDate);
+      item.asteroidInfo.close_approach_data.find((date: CloseApproachData) => {
+        const foundDate = date.close_approach_date;
+        const newFoundDate = new Date(foundDate);
 
-      if (newFoundDate >= newFirstDay && newFoundDate <= newLastDay) {
-        missDistance = date.miss_distance;
-        relativeVelocity = date.relative_velocity;
-        return true;
-      }
-      return false;
-    });
-
+        if (newFoundDate >= newFirstDay && newFoundDate <= newLastDay) {
+          missDistance = date.miss_distance;
+          relativeVelocity = date.relative_velocity;
+          return true;
+        }
+        return false;
+      });
     return (
-      <Flex key={item.asteroidInfo.designation} 
-      flexDirection="row"
-      paddingTop='40px'
-      gap="10px">
+      <Flex key={item.asteroidInfo.designation}
+        flexDirection="row"
+        marginTop='60px'
+        gap="10px"
+        boxShadow='0px 10px 30px -5px rgb(116 124 216 / 56%)'>
         <Flex gap="10px"
-            flexDirection="column"
-            width='300px'>
-          <Text>Designation: </Text>
-          <Text>Description: </Text>
-          <Text>{`Absolute magnitude (h)`}</Text>
-          <Text>Estimated diameter: </Text>
-          {missDistance && relativeVelocity && (
-            <>
-                <Text>Miss distance:</Text>
-                <Text>Relative velocity:</Text>
-            </>
-            )}
-          <Text>Is potentially hazardous asteroid: </Text>
-          <Text>Orbital period: </Text>
-          <Text>First observation date: </Text>
-          <Text>Last observation date: </Text>
-          <Text>Orbit determination date: </Text>
-          
+          flexDirection="column"
+          width="300px">
+          {[
+            "Designation:",
+            "Description:",
+            "Absolute magnitude (h):",
+            "Estimated diameter:",
+            missDistance && relativeVelocity && "Miss distance:",
+            missDistance && relativeVelocity && "Relative velocity:",
+            "Is potentially hazardous asteroid:",
+            "Orbital period:",
+            "First observation date:",
+            "Last observation date:",
+            "Orbit determination date:",
+          ]
+            .filter(Boolean) // Usunięcie wartości `false` w przypadku warunkowych
+            .map((text, index) => (
+              <Text key={index} style={{
+                backgroundColor: index % 2 === 0 ? "#e0e0e030" : "black"
+              
+              }}>
+                {text}
+              </Text>
+            ))}
         </Flex>
         <Flex flexDirection='column'
-           gap='10px'
-           alignItems='center'
-           width='600px'>
+          gap='10px'
+          alignItems='center'
+          width='600px'
+          className={css.asteroidInfo}>
           <Text>{item.asteroidInfo.designation}</Text>
           <Text>{item.asteroidInfo.orbital_data.orbit_class.orbit_class_description}</Text>
           <Text>{item.asteroidInfo.absolute_magnitude_h}</Text>
-        <Flex flexDirection="row"
+          <Flex flexDirection="row"
             gap='40px'
-       >
+          >
             <Text>{`${item.asteroidInfo.estimated_diameter.meters.estimated_diameter_max.toFixed(2)} meters`}</Text>
             <Text>{`${item.asteroidInfo.estimated_diameter.miles.estimated_diameter_max.toFixed(2)} miles`}</Text>
             <Text>{`${item.asteroidInfo.estimated_diameter.feet.estimated_diameter_max.toFixed(2)} feet`}</Text>
-        </Flex>
+          </Flex>
           {missDistance && relativeVelocity && (
             <>
               <Flex flexDirection="row"
-              gap='40px'
+                gap='40px'
               >
                 <Text>{`${missDistance.kilometers} kilometers`}</Text>
                 <Text>{`${missDistance.miles} miles`}</Text>
               </Flex>
               <Flex flexDirection="row"
-              gap='40px'
+                gap='40px'
               >
-                    <Text>{`${relativeVelocity.kilometers_per_hour} km/h`}</Text>
-                    <Text>{`${relativeVelocity.miles_per_hour} mph`}</Text>
+                <Text>{`${relativeVelocity.kilometers_per_hour} km/h`}</Text>
+                <Text>{`${relativeVelocity.miles_per_hour} mph`}</Text>
               </Flex>
             </>
           )}
@@ -178,7 +188,9 @@ const AsteroidInfo: React.FC<CoordinatesProps> = ({ coordinates }) => {
         </Flex>
       </Flex>
     );
-  };
+    } catch (error)
+    {console.log(error)}
+};
 
   useEffect(() => {
     if (coordinates && coordinates.length > 0) {

@@ -30,6 +30,19 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
   const [moonCoordinates, setmoonCoordinates] = useState<Scaled[] | undefined>(undefined)
   const mountRef = useRef<HTMLDivElement | null>(null);
   const earthRadius = 6378
+  let mainWidth:number
+  let mainHeight:number
+
+  const mainElement = document.querySelector('main');
+  if (mainElement) {
+    mainWidth = mainElement.clientWidth
+    mainHeight = mainElement.clientHeight
+    console.log('Szerokość (clientWidth):', mainElement.clientWidth);
+    console.log('Wysokość (clientHeight):', mainElement.clientHeight);
+  } else {
+    console.warn('<main> nie istnieje w DOM.');
+  }
+
 
   useEffect(() => {
     
@@ -41,7 +54,6 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
   }, []);
 
   useEffect(() => {
-    console.log(coordinates)
     if (!mountRef.current) return;
     const scale = 1/earthRadius
     const scene = new THREE.Scene();
@@ -66,12 +78,16 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
     }
 
    
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth*0.8, window.innerHeight*0.8);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(mainWidth, mainHeight);
+    console.log(window.innerWidth * 0.65)
+    camera.aspect = mainWidth/ mainHeight;
+      renderer.setClearColor(0x000000, 0)
+       
 
     window.addEventListener('resize', () => {
-      renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);
-      camera.aspect = window.innerWidth / window.innerHeight;
+      renderer.setSize(mainWidth, mainHeight);
+      camera.aspect = mainWidth/ mainHeight;
       camera.updateProjectionMatrix();
   });
 
