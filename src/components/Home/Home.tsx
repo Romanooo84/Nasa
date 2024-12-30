@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchPolimaticImageCamera} from '../../hooks/download'
-import { Heading, Flex, Image, Box } from "@chakra-ui/react"
+import { Flex, Image, Box } from "@chakra-ui/react"
 import { useData } from '../../hooks/usaData';
 import { Link} from "react-router-dom"
 import useCarouselEffect from '../../hooks/useCarousel';
@@ -82,55 +82,55 @@ const Home=() => {
           alignItems='center'
           color='#949aa3'
           fontFamily="Garamond"
-          gap='40px'
+          gap='10px'
           marginTop='10px'
-          justifyContent='space-between'
+          //justifyContent='space-between'
           flexDirection='column'
           width='100%'
           >
             <Flex 
-               gap='40px'
+               gap='50px'
                flexWrap='wrap'
-               justifyContent='center'
+               //justifyContent='center'
                >
               <Flex
+                width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
                 flexDirection='column'
-                alignItems='center'
+                alignItems='flex-start'
                 transition='transform 2s ease-out'
                 _hover={{
                   transform: "scale(1.1)"
                 }}
               >
-                <Heading>{buttonsList[0]}</Heading>
                 <Link to={`/${buttonsList[0]}`}>
-                    <PictureRender pictures={pictures} />
+                    <PictureRender pictures={pictures} text={buttonsList[0]} />
                 </Link>
               </Flex>
-              <Flex
+          <Flex
+            width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
                 flexDirection='column'
-                alignItems='center'
+                alignItems='flex-end'
                 transition='transform 2s ease-out'
                 _hover={{
                   transform: "scale(1.1)"
                 }}
                 
               >
-                <Heading>{buttonsList[1]}</Heading>
                 <Link to={`/${buttonsList[1]}`}>
-                    <PictureRender pictures={picturesForGallery} />
+                    <PictureRender pictures={picturesForGallery} text={buttonsList[1]} />
                 </Link>
               </Flex>
               <Flex
+              width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
                 flexDirection='column'
-                alignItems='center'
+                alignItems='flex-start'
                 transition='transform 2s ease-out'
                 _hover={{
                   transform: "scale(1.1)", // Optional: adds a slight scaling effect
                 }}
               >
-                <Heading>{buttonsList[2]}</Heading>
                 <Link to={`/${buttonsList[2]}`}>
-                    <PictureRender pictures={pictures2} />
+                    <PictureRender pictures={pictures2} text={buttonsList[2]} />
                 </Link>
               </Flex>
             </Flex>

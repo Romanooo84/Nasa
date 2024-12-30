@@ -1,9 +1,8 @@
 
-import { Image, /*Text,*/ Flex, Heading, Box} from "@chakra-ui/react"
+import { Image, /*Text,*/ Flex, Box} from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import useCarouselEffect from "../../hooks/useCarousel";
 import cssStyle from './Home.module.css'
-import { rotate } from "three/webgpu";
 
 
 interface Picture {
@@ -18,12 +17,13 @@ interface Picture {
 }
 
 interface PictureRenderProps {
-    pictures: Picture[]; 
+    pictures: Picture[],
+    text:string
 }
 
-const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
+const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
     const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);  
-    
+    console.log(text)
     const selectedClass = pictures && pictures.length > 0
     ? !pictures[0].camera && !pictures[0].type
       ? cssStyle.pictureOfADayDiv
@@ -39,76 +39,77 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
             .filter((_, index) => index <= 5)
             .map((picture, index) => (
                 <Flex key={index}
-                //position='absolute'
-                transform='rotate(45dag)'
+                position='absolute'
                 >
                 {picture.title!='Caught' &&
                     <Flex     
-                        //justifyContent='flex-end'
-                         gap='0'
+                        flexDirection = 'column-reverse'
+                        justifyContent='flex-end'
                         border='none'
-                        height='400px'
-                       
-                        transition='transform 2s ease-out'
-                        
-
-                      
+                        height='300px'
                         >
                         <Image 
                             src={!pictures[0].camera?picture.url:picture.img_src} 
                             alt={picture.camera?.full_name || picture.title || "Image"}
                             objectFit='cover'
-                            width="300px"
-                            height="100%"
-                            
-                     
                             //float='left' 
-
-                            
-                            
-                        />
+                            height='100%'
+                            width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1000px' }}
+                            />
+                             <Box
+                                backgroundColor="blue"
+                                position="absolute" 
+                                bottom="0" 
+                                color="white" 
+                                fontSize='25px'   
+                                padding="5px"
+                                left='60%'
+                                width='240px'
+                                textAlign='center'
+                                clipPath='polygon(20% 0, 100% 0, 85% 100%, 0 100%)'
+                            >
+                                {text}
+                            </Box>
                     </Flex>}
                 </Flex>
             ));
-            console.log(render)
             setPictureRender(render);
         }
     }, [pictures]);
 
-      //useCarouselEffect(pictureRender,selectedClass)
+      useCarouselEffect(pictureRender,selectedClass)
 
     return (
         <Box
             overflow='hidden'
             boxShadow='0px 15px 30px -5px rgb(116 124 216 / 56%)' 
-            height='300px'
             backgroundColor='#00000000'
             border='none'
-            transform= 'skew(-20deg)'
-            >
+            clipPath='polygon(20% 0, 100% 0, 80% 100%, 0 100%)'
+            width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1000px' }}
+        >
             {pictures && pictures.length > 0 ? ( 
-                <Flex     
-              
-                    //gap='20px'
+                <Flex    
+                height='300px'    
+                    gap='20px'
                     alignItems='flex-start' 
-                    //flexWrap='wrap'
-                    width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1000px' }}
-                    /*</Box>className={
+                    flexWrap='wrap'
+                    //width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1000px' }}
+                    
+                    className={
                             !pictures[0].camera && !pictures[0].type
                             ? cssStyle.pictureOfADayDiv
                             : !pictures[0].type
                             ? cssStyle.pictureOfADayDivMars
                             : cssStyle.GalleryDiv
-                            }*/
+                            }
                     justifyContent='space-evenly'
                 >   
                     {pictureRender}
 
                 </Flex>
             ) : (
-                <Flex justifyContent="center" alignItems="center" height="100%">
-                    <Heading as="h3" color="white">No pictures available</Heading>
-                </Flex>
+               <></>
             )}
         </Box>
     );
