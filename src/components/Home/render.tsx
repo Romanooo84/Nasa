@@ -3,6 +3,7 @@ import { Image, /*Text,*/ Flex, Heading, Box} from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import useCarouselEffect from "../../hooks/useCarousel";
 import cssStyle from './Home.module.css'
+import { rotate } from "three/webgpu";
 
 
 interface Picture {
@@ -38,59 +39,67 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures }) =>{
             .filter((_, index) => index <= 5)
             .map((picture, index) => (
                 <Flex key={index}
-                position='absolute'
+                //position='absolute'
+                transform='rotate(45dag)'
                 >
                 {picture.title!='Caught' &&
                     <Flex     
-                        flexDirection = 'column-reverse'
-                        justifyContent='flex-end'
-
+                        //justifyContent='flex-end'
+                         gap='0'
                         border='none'
                         height='400px'
+                       
+                        transition='transform 2s ease-out'
                         
+
+                      
                         >
                         <Image 
                             src={!pictures[0].camera?picture.url:picture.img_src} 
                             alt={picture.camera?.full_name || picture.title || "Image"}
                             objectFit='cover'
-                            float='left' 
-                            height='100%'
-                            width='330px' 
+                            width="300px"
+                            height="100%"
+                            
+                     
+                            //float='left' 
+
+                            
+                            
                         />
                     </Flex>}
                 </Flex>
             ));
+            console.log(render)
             setPictureRender(render);
         }
     }, [pictures]);
 
-      useCarouselEffect(pictureRender,selectedClass)
+      //useCarouselEffect(pictureRender,selectedClass)
 
     return (
         <Box
             overflow='hidden'
             boxShadow='0px 15px 30px -5px rgb(116 124 216 / 56%)' 
-            height='400px'
+            height='300px'
             backgroundColor='#00000000'
             border='none'
-        >
+            transform= 'skew(-20deg)'
+            >
             {pictures && pictures.length > 0 ? ( 
                 <Flex     
-                transition='transform 2s ease-out'
-                _hover={{
-                  transform: "scale(1.1)",
-                }}
-                    gap='20px'
+              
+                    //gap='20px'
                     alignItems='flex-start' 
-                    flexWrap='wrap'
-                    width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '300px' }}
-                    className={
+                    //flexWrap='wrap'
+                    width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1000px' }}
+                    /*</Box>className={
                             !pictures[0].camera && !pictures[0].type
                             ? cssStyle.pictureOfADayDiv
                             : !pictures[0].type
                             ? cssStyle.pictureOfADayDivMars
                             : cssStyle.GalleryDiv
-                            }
+                            }*/
                     justifyContent='space-evenly'
                 >   
                     {pictureRender}

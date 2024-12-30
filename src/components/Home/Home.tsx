@@ -27,9 +27,6 @@ interface NasaPictureData {
 }
 
 
-
-
-
 const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
     const [pictures2, setPictures2] = useState<NasaPictureData[]>([]);
@@ -88,14 +85,14 @@ const Home=() => {
           gap='40px'
           marginTop='10px'
           justifyContent='space-between'
-          flexDirection={{ sm: 'column', md: 'column' }}
+          flexDirection='column'
+          width='100%'
           >
-          <Flex flexDirection='column'
-          alignItems='center'>
-            <Flex gap='40px'
+            <Flex 
+               gap='40px'
                flexWrap='wrap'
-               justifyContent='space-between'
-               width='100%'>
+               justifyContent='center'
+               >
               <Flex
                 flexDirection='column'
                 alignItems='center'
@@ -136,22 +133,8 @@ const Home=() => {
                     <PictureRender pictures={pictures2} />
                 </Link>
               </Flex>
-              <Flex
-                flexDirection='column'
-                alignItems='center'
-                transition='transform 2s ease-out'
-                _hover={{
-                  transform: "scale(1.1)", // Optional: adds a slight scaling effect
-                }}
-              >
-                <Heading>{buttonsList[2]}</Heading>
-                <Link to={`/${buttonsList[3]}`}>
-                  <PictureRender pictures={picturesForGallery} />
-                </Link>
-              </Flex>
             </Flex>
-         </Flex>
-          <Box className={css.earthImageDiv}
+        <Box className={css.earthImageDiv}
                 width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
                 height={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
                 marginTop='50px'>

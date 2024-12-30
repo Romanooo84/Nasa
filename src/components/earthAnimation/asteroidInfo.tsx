@@ -117,15 +117,20 @@ const AsteroidInfo: React.FC<CoordinatesProps> = ({ coordinates }) => {
         }
         return false;
       });
+
+      console.log(item.asteroidInfo.designation)
     return (
-      <Flex key={item.asteroidInfo.designation}
+      <Flex key={`asteroid-${item.asteroidInfo.designation}`}
+      data-key={`asteroid-${item.asteroidInfo.designation}`}
         flexDirection="row"
         marginTop='60px'
         gap="10px"
         boxShadow='0px 10px 30px -5px rgb(116 124 216 / 56%)'>
         <Flex gap="10px"
           flexDirection="column"
-          width="300px">
+          width="300px"
+          key={`${item.asteroidInfo.designation}-column1`}
+              data-key={`${item.asteroidInfo.designation}-column1`}>
           {[
             "Designation:",
             "Description:",
@@ -141,7 +146,7 @@ const AsteroidInfo: React.FC<CoordinatesProps> = ({ coordinates }) => {
           ]
             .filter(Boolean) // Usunięcie wartości `false` w przypadku warunkowych
             .map((text, index) => (
-              <Text key={index} style={{
+              <Text  style={{
                 backgroundColor: index % 2 === 0 ? "#e0e0e030" : "black"
               
               }}>
@@ -153,7 +158,9 @@ const AsteroidInfo: React.FC<CoordinatesProps> = ({ coordinates }) => {
           gap='10px'
           alignItems='center'
           width='600px'
-          className={css.asteroidInfo}>
+          className={css.asteroidInfo}
+          key={`${item.asteroidInfo.designation}key`}
+          data-key={`${item.asteroidInfo.designation}key`}>
           <Text>{item.asteroidInfo.designation}</Text>
           <Text>{item.asteroidInfo.orbital_data.orbit_class.orbit_class_description}</Text>
           <Text>{item.asteroidInfo.absolute_magnitude_h}</Text>

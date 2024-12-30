@@ -65,15 +65,14 @@ const NearObjectDetails = () => {
 
     useEffect(() => {
       const fetchData = async () => {
-        const downloadedData: CoordinatesData[] = await asteroidCoordinates(); // Assuming the API returns a Scaled[] array
+        const downloadedData: CoordinatesData[] = await asteroidCoordinates();
         if (downloadedData) {
-          // Map the Scaled[] data to the Data[] structure
           const mappedData: CoordinatesData[] = downloadedData.map(item => ({
             x: item.x,
             y: item.y,
             z: item.z,
             id: item.id,
-            asteroidInfo: item.asteroidInfo, // Ensure asteroidInfo is included
+            asteroidInfo: item.asteroidInfo, 
           }));
           setCoordinates(mappedData);
         }
