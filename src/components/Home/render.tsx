@@ -54,7 +54,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                             objectFit='cover'
                             //float='left' 
                             height='100%'
-                            width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1000px' }}
+                            width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
                             />
                              <Box
                                 backgroundColor="blue"
@@ -82,10 +82,11 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
     return (
         <Box
             overflow='hidden'
+            transform= 'skew(-20deg)'
             boxShadow='0px 15px 30px -5px rgb(116 124 216 / 56%)' 
             backgroundColor='#00000000'
             border='none'
-            clipPath='polygon(20% 0, 100% 0, 80% 100%, 0 100%)'
+            justifyContent='flex-start'
             width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1000px' }}
         >
             {pictures && pictures.length > 0 ? ( 
@@ -94,8 +95,11 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                     gap='20px'
                     alignItems='flex-start' 
                     flexWrap='wrap'
-                    //width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1000px' }}
-                    
+                    transform='skew(20deg)'
+                    clipPath='polygon(8% 0, 100% 0, 80% 100%, 0 100%)'
+                    width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
+                    position='relative'
+                    left='-10%'
                     className={
                             !pictures[0].camera && !pictures[0].type
                             ? cssStyle.pictureOfADayDiv
