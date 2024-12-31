@@ -51,7 +51,6 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                             src={!pictures[0].camera?picture.url:picture.img_src} 
                             alt={picture.camera?.full_name || picture.title || "Image"}
                             objectFit='cover'
-                            //float='left' 
                             height='100%'
                             width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
                             />
@@ -122,7 +121,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                             left='70%'
                             width='330px'
                             textAlign='center'
-                            clipPath='polygon(5% 0, 100% 0, 95% 100%, 0 100%)'
+                            clipPath='polygon(3% 0, 100% 0, 95% 100%, 0 100%)'
                         >
                             {text}
                         </Box>        
