@@ -23,7 +23,6 @@ interface PictureRenderProps {
 
 const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
     const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);  
-    console.log(text)
     const selectedClass = pictures && pictures.length > 0
     ? !pictures[0].camera && !pictures[0].type
       ? cssStyle.pictureOfADayDiv
@@ -56,20 +55,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                             height='100%'
                             width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
                             />
-                             <Box
-                                backgroundColor="blue"
-                                position="absolute" 
-                                bottom="0" 
-                                color="white" 
-                                fontSize='25px'   
-                                padding="5px"
-                                left='60%'
-                                width='240px'
-                                textAlign='center'
-                                clipPath='polygon(20% 0, 100% 0, 85% 100%, 0 100%)'
-                            >
-                                {text}
-                            </Box>
+                           
                     </Flex>}
                 </Flex>
             ));
@@ -90,8 +76,9 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
             width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1000px' }}
         >
             {pictures && pictures.length > 0 ? ( 
+            <Box>
                 <Flex    
-                height='300px'    
+                    height='300px'    
                     gap='20px'
                     alignItems='flex-start' 
                     flexWrap='wrap'
@@ -110,8 +97,38 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                     justifyContent='space-evenly'
                 >   
                     {pictureRender}
-
+                    
                 </Flex>
+                <Box
+                    position="absolute" 
+                    bottom="0" >
+                    <Box
+                        backgroundColor="blue"
+                        position="absolute" 
+                        bottom="0" 
+                        color="white" 
+                        fontSize='25px'   
+                        padding="5px"
+                        width='1000px'
+                        height='10px'
+                        >
+                        <Box
+                            backgroundColor="blue"
+                            position="absolute" 
+                            bottom="0" 
+                            color="white" 
+                            fontSize='25px'   
+                            padding="5px"
+                            left='70%'
+                            width='330px'
+                            textAlign='center'
+                            clipPath='polygon(5% 0, 100% 0, 95% 100%, 0 100%)'
+                        >
+                            {text}
+                        </Box>        
+                    </Box>
+                </Box>
+            </Box>
             ) : (
                <></>
             )}

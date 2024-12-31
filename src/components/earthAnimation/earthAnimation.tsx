@@ -197,20 +197,14 @@ const EarthAnimation: React.FC<CoordinatesProps>  = (coordinates) => {
       scene.add(sprite);
     });
     
-    camera.position.z = 20;
+    camera.position.z = 15;
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.rotateSpeed = 0.3
-    controls.minDistance = 10; 
-    controls.maxDistance = 300; 
-
-    controls.minAzimuthAngle = -Infinity; 
-    controls.maxAzimuthAngle = Infinity;
-    controls.minPolarAngle = 0; 
-    controls.maxPolarAngle = 360 * Math.PI
+    controls.minDistance = 5; 
+    controls.maxDistance = 600; 
     controls.autoRotate = true
     controls.autoRotateSpeed=2
-    console.log(controls)
     
     const rotationAngle = THREE.MathUtils.degToRad(-30); 
 

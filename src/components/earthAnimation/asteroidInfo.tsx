@@ -117,8 +117,6 @@ const AsteroidInfo: React.FC<CoordinatesProps> = ({ coordinates }) => {
         }
         return false;
       });
-
-      console.log(item.asteroidInfo.designation)
     return (
       <Flex key={`asteroid-${item.asteroidInfo.designation}`}
       data-key={`asteroid-${item.asteroidInfo.designation}`}

@@ -4,6 +4,7 @@ import EarthAnimation from "./earthAnimation"
 import { Flex } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { asteroidCoordinates } from "../../hooks/download"
+import { Box } from "@chakra-ui/react"
 import css from './asteroidInfo.module.css'
 
 interface CloseApproachData {
@@ -85,7 +86,12 @@ const NearObjectDetails = () => {
           flexDirection='column'
             align='center'
         className={css.NODmainDiv}>
-            {coordinates && (<EarthAnimation coordinates={coordinates} />)}
+            <Box 
+              boxShadow='0px 0px 14px 2px rgb(116 124 216 / 56%)' 
+              marginTop = '40px'
+              marginBottom='40px'>
+             {coordinates && (<EarthAnimation coordinates={coordinates} />)}
+            </Box>
             {coordinates && (<AsteroidInfo coordinates={coordinates} />)}
           </Flex>
 
