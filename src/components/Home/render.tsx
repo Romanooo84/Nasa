@@ -31,6 +31,10 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
       : cssStyle.GalleryDiv
     : cssStyle.defaultClass;
 
+const buttonWith={ sm: '320px', md: '450px', lg: '500px', xl: '700px', '2xl': '1000px' }
+const imageWith={ sm: '450px', md: '600px', lg: '700px', xl: '900px', '2xl': '1400px' }
+const boxLeft={ sm: '10%' , md: '30%' , lg: '40%' , xl: '60%' , '2xl': '70%' }
+const imageLeft ={ sm: '-15%' , md: '-12%' , lg: '-10%' , xl: '-10%' , '2xl': '-10%' }
 
     useEffect(() => {
         if (pictures.length > 1 && Array.isArray(pictures)) {
@@ -52,7 +56,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                             alt={picture.camera?.full_name || picture.title || "Image"}
                             objectFit='cover'
                             height='100%'
-                            width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
+                            width={imageWith}
                             />
                            
                     </Flex>}
@@ -65,14 +69,14 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                 <Flex key={"pic"} position="absolute">
                     <Flex flexDirection="column-reverse" justifyContent="flex-end" border="none" height="300px">
                         <Image
-                            left="-10%"
+                            left='-10%'
                             top="-20%"
                             position="relative"
                             height="400px"
                             src={pictures}
                             alt={"Image"}
                             objectFit="scale-down"
-                            width={{ sm: "320px", md: "300px", lg: "300px", xl: "300px", "2xl": "1400px" }}
+                            width={imageWith}
                         />
                     </Flex>
                 </Flex>,
@@ -92,7 +96,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
             backgroundColor='#00000000'
             border='none'
             justifyContent='flex-start'
-            width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1000px' }}
+            width={buttonWith}
         >
             {pictures && pictures.length > 0 ? ( 
             <Box>
@@ -103,9 +107,9 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                     flexWrap='wrap'
                     transform='skew(20deg)'
                     clipPath='polygon(8% 0, 100% 0, 80% 100%, 0 100%)'
-                    width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
+                    width={imageWith}
                     position='relative'
-                    left='-10%'
+                    left={imageLeft}
                     className={
                         Array.isArray(pictures) && pictures.length > 0
                             ? !pictures[0].camera && !pictures[0].type
@@ -129,7 +133,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                         color="white" 
                         fontSize='25px'   
                         padding="5px"
-                        width='1000px'
+                        width={buttonWith}
                         height='10px'
                         >
                         <Box
@@ -139,7 +143,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                             color="white" 
                             fontSize='25px'   
                             padding="5px"
-                            left='70%'
+                            left={boxLeft}
                             width='330px'
                             textAlign='center'
                             clipPath='polygon(3% 0, 100% 0, 95% 100%, 0 100%)'

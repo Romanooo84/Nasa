@@ -31,7 +31,7 @@ const Home=() => {
     const [pictures, setPictures] = useState<NasaPictureData[]>([]);
     const [pictures2, setPictures2] = useState<NasaPictureData[]>([]);
     const [earthPictures, setEarthPictures] = useState<JSX.Element[]>([]);
- 
+    const buttonWith={ sm: '320px', md: '300px', lg: '500px', xl: '500px', '2xl': '1400px' }
   
     const {Data}=useData()
     const {pictureOfAday, marsPictures}=Data
@@ -86,13 +86,14 @@ const Home=() => {
           marginTop='10px'
           flexDirection='column'
           width='100%'
+          
           >
             <Flex 
                gap='50px'
-               flexWrap='wrap'
+               flexDirection= {{ sm: 'column', md: 'column', lg: 'column', xl: 'column', '2xl': 'column' }}
                >
-              <Flex
-                width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
+               <Flex
+                width={buttonWith}
                 flexDirection='column'
                 alignItems='flex-start'
                 transition='transform 2s ease-out'
@@ -104,22 +105,22 @@ const Home=() => {
                     <PictureRender pictures={pictures} text={buttonsList[0]} />
                 </Link>
               </Flex>
-          <Flex
-            width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
-                flexDirection='column'
-                alignItems='flex-end'
-                transition='transform 2s ease-out'
-                _hover={{
-                  transform: "scale(1.1)"
-                }}
-                
-              >
-                <Link to={`/${buttonsList[1]}`}>
-                    <PictureRender pictures={picturesForGallery} text={buttonsList[1]} />
-                </Link>
+              <Flex
+                width={buttonWith}
+                  flexDirection='column'
+                  alignItems='flex-end'
+                  transition='transform 2s ease-out'
+                  _hover={{
+                    transform: "scale(1.1)"
+                  }}
+                  
+                >
+                  <Link to={`/${buttonsList[1]}`}>
+                      <PictureRender pictures={picturesForGallery} text={buttonsList[1]} />
+                  </Link>
               </Flex>
               <Flex
-              width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
+              width={buttonWith}
                 flexDirection='column'
                 alignItems='flex-start'
                 transition='transform 2s ease-out'
@@ -132,7 +133,7 @@ const Home=() => {
                 </Link>
               </Flex>
               <Flex
-                width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
+                width={buttonWith}
                 flexDirection='column'
                 alignItems='flex-end'
                 transition='transform 2s ease-out'
