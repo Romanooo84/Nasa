@@ -7,6 +7,7 @@ import { useData } from "./hooks/usaData";
 import {pictureOfMars, fetchPicture} from './hooks/download'
 import { useState, useEffect } from "react";
 import { createDate } from "./hooks/createDate";
+import NearObjectDetails from "./components/earthAnimation/nearObjectDetails";
 
 
 
@@ -60,6 +61,7 @@ function App() {
         <Route path="/picture of a day" element={<PictureOfADay/>}/>
         <Route path="/gallery" element={<Gallery/>}/>
         <Route path="/Mars Pictures" element={<PictureOfMars/>}/>
+        <Route path="/Near Earth Object" element={<NearObjectDetails/>}/>
       </Route>
     </Routes>
   )

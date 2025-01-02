@@ -17,13 +17,13 @@ interface Picture {
 }
 
 interface PictureRenderProps {
-    pictures: Picture[],
+    pictures: Picture[]|string,
     text:string
 }
 
 const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
     const [pictureRender, setPictureRender] = useState<JSX.Element[]>([]);  
-    const selectedClass = pictures && pictures.length > 0
+    const selectedClass = Array.isArray(pictures) && pictures.length > 0
     ? !pictures[0].camera && !pictures[0].type
       ? cssStyle.pictureOfADayDiv
       : !pictures[0].type
@@ -33,7 +33,7 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
 
 
     useEffect(() => {
-        if (pictures.length > 0 ) {
+        if (pictures.length > 1 && Array.isArray(pictures)) {
             const render = pictures
             .filter((_, index) => index <= 5)
             .map((picture, index) => (
@@ -58,6 +58,26 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                     </Flex>}
                 </Flex>
             ));
+            setPictureRender(render);
+        } else if (!Array.isArray(pictures)) {
+            console.log(pictures)
+            const render = [
+                <Flex key={"pic"} position="absolute">
+                    <Flex flexDirection="column-reverse" justifyContent="flex-end" border="none" height="300px">
+                        <Image
+                            left="-10%"
+                            top="-20%"
+                            position="relative"
+                            height="400px"
+                            src={pictures}
+                            alt={"Image"}
+                            objectFit="scale-down"
+                            width={{ sm: "320px", md: "300px", lg: "300px", xl: "300px", "2xl": "1400px" }}
+                        />
+                    </Flex>
+                </Flex>,
+            ];
+            console.log(render)
             setPictureRender(render);
         }
     }, [pictures]);
@@ -87,16 +107,17 @@ const PictureRender: React.FC<PictureRenderProps> = ({ pictures, text }) =>{
                     position='relative'
                     left='-10%'
                     className={
-                            !pictures[0].camera && !pictures[0].type
-                            ? cssStyle.pictureOfADayDiv
-                            : !pictures[0].type
-                            ? cssStyle.pictureOfADayDivMars
-                            : cssStyle.GalleryDiv
-                            }
+                        Array.isArray(pictures) && pictures.length > 0
+                            ? !pictures[0].camera && !pictures[0].type
+                                ? cssStyle.pictureOfADayDiv
+                                : !pictures[0].type
+                                ? cssStyle.pictureOfADayDivMars
+                                : cssStyle.GalleryDiv
+                            : undefined
+                    }
                     justifyContent='space-evenly'
                 >   
                     {pictureRender}
-                    
                 </Flex>
                 <Box
                     position="absolute" 

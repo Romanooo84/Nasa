@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, Box } from "@chakra-ui/react";
 import Select, { SingleValue } from "react-select";
 import css from './asteroidInfo.module.css'
+import { useCustomStyles } from "../../hooks/customStyles";
 
 interface CloseApproachData {
   close_approach_date: string;
@@ -90,11 +91,15 @@ interface CoordinatesProps {
 let missDistance: CloseApproachData["miss_distance"] | null;
 let relativeVelocity: CloseApproachData["relative_velocity"] | null;
 
+
+
 const AsteroidInfo: React.FC<CoordinatesProps> = ({ coordinates }) => {
   const [info, setInfo] = useState<JSX.Element[] | null>(null);
   const [originInfo, setOriginInfo] = useState<JSX.Element[] | null>(null);
   const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
   const [selectedOption, setSelectedOption] = useState<{ label: string; value: string } | null>(null);
+
+  const customStyles=useCustomStyles()
 
   const AsteroidDetails: React.FC<{ item: Asteroid }> = ({ item }) => {
     try {
@@ -145,7 +150,7 @@ const AsteroidInfo: React.FC<CoordinatesProps> = ({ coordinates }) => {
             .filter(Boolean) // Usunięcie wartości `false` w przypadku warunkowych
             .map((text, index) => (
               <Text  style={{
-                backgroundColor: index % 2 === 0 ? "#e0e0e030" : "black"
+                backgroundColor: index % 2 === 0 ? "#4545db2b" : "black"
               
               }}>
                 {text}
@@ -226,15 +231,25 @@ const AsteroidInfo: React.FC<CoordinatesProps> = ({ coordinates }) => {
   };
 
   return (
-    <Flex flexDirection="column">
-      <Select
-        isClearable={true}
-        placeholder={"Select object"}
-        value={selectedOption}
-        options={options}
-        onChange={onChange}
-      />
+    <Flex flexDirection="row"
+    gap='40px'>
+      <Box
+        marginTop='60px'
+        textColor='#b1a8a8'>
+        <Select
+          isClearable={true}
+          placeholder={"Select object"}
+          value={selectedOption}
+          options={options}
+          onChange={onChange}
+          styles={customStyles}
+        />
+      </Box>
+      <Flex
+      flexDirection="column"
+      textColor='#b1a8a8'>
       {info}
+      </Flex>
     </Flex>
   );
 };

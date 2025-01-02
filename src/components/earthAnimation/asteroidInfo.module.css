@@ -1,5 +1,5 @@
 .asteroidInfo>*:nth-child(odd) {
-    background-color: #e0e0e030;
+    background-color: #4545db2b;
     width: 100%;
     display: flex;
     justify-content: center;

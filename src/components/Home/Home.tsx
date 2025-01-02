@@ -8,7 +8,7 @@ import picturesForGallery from '../../data/pic_for_gallery';
 import buttonsList from "../../data/buttonList";
 import PictureRender from './render';
 import css from'./Home.module.css'
-import NearObjectDetails from '../earthAnimation/nearObjectDetails';
+import animGif from '../../media/Film bez tytułu (1) (1).gif'
 
 interface NasaPictureData {
   url: string;
@@ -84,14 +84,12 @@ const Home=() => {
           fontFamily="Garamond"
           gap='10px'
           marginTop='10px'
-          //justifyContent='space-between'
           flexDirection='column'
           width='100%'
           >
             <Flex 
                gap='50px'
                flexWrap='wrap'
-               //justifyContent='center'
                >
               <Flex
                 width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
@@ -133,15 +131,26 @@ const Home=() => {
                     <PictureRender pictures={pictures2} text={buttonsList[2]} />
                 </Link>
               </Flex>
+              <Flex
+                width={{ sm: '320px', md: '300px', lg: '300px', xl: '300px', '2xl': '1400px' }}
+                flexDirection='column'
+                alignItems='flex-end'
+                transition='transform 2s ease-out'
+                _hover={{
+                  transform: "scale(1.1)", // Optional: adds a slight scaling effect
+                }}
+              >
+                <Link to={`/${buttonsList[3]}`}>
+                    <PictureRender pictures={animGif} text={buttonsList[3]} />
+                </Link>
+              </Flex>
             </Flex>
         <Box className={css.earthImageDiv}
                 width={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
                 height={{ sm: '300px', md: '260px', lg: '260px', xl: '360px', '2xl': '450px' }}
                 marginTop='50px'>
                 {earthPictures}
-        </Box>
-        <NearObjectDetails/>
-        
+        </Box> 
       </Flex> 
     );
   }

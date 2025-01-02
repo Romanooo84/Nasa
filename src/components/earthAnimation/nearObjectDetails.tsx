@@ -87,6 +87,7 @@ const NearObjectDetails = () => {
             align='center'
         className={css.NODmainDiv}>
             <Box 
+              
               boxShadow='0px 0px 14px 2px rgb(116 124 216 / 56%)' 
               marginTop = '40px'
               marginBottom='40px'>
