@@ -179,7 +179,7 @@ export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]>
       }
 
     export const nearObjectList =async (Date: string) =>{
-      const url = `https://romanpisarski.pl/nasa/neolist?date=${Date}`
+      const url = `https://pisarskiroman.pl/nasa/neolist?date=${Date}`
       try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -195,7 +195,7 @@ export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]>
     }
 
     export const nearObjecDetails =async (objectId:string, startDate:string, endDate:string) =>{
-      const url =`https://romanpisarski.pl/nasa/neodetails?id=${objectId}&startDate=${startDate}&endDate=${endDate}`
+      const url =`https://pisarskiroman.pl/nasa/neodetails?id=${objectId}&startDate=${startDate}&endDate=${endDate}`
       try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -211,7 +211,7 @@ export const fetchPolimaticImageCamera = async():Promise<PolimaticImageCamera[]>
     }
 
     export const asteroidCoordinates =async () =>{
-      const url =`https://romanpisarski.pl/nasa/test`
+      const url =`https://pisarskiroman.pl/nasa/test`
       try {
         const response = await fetch(url);
         if (!response.ok) {
